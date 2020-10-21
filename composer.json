@@ -1,5 +1,5 @@
 {
-    "name": "misantron/dbunit",
+    "name": "bradmurray-dt/dbunit",
     "description": "DbUnit fork supporting PHPUnit 8/9",
     "type": "library",
     "keywords": [
