@@ -31,6 +31,9 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "php-coveralls/php-coveralls": "^2.2"
     },
+    "replace": {
+        "phpunit/dbunit":"*"
+    },
     "autoload": {
         "psr-4": {
             "PHPUnit\\DbUnit\\": "src/"
