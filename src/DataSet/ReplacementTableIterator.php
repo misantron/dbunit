@@ -11,25 +11,20 @@
 
 namespace PHPUnit\DbUnit\DataSet;
 
-use OuterIterator;
-
 /**
  * The default table iterator
  */
-class ReplacementTableIterator implements OuterIterator, ITableIterator
+class ReplacementTableIterator implements \OuterIterator, ITableIterator
 {
-    /**
-     * @var ITableIterator
-     */
     protected $innerIterator;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $fullReplacements;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $subStrReplacements;
 
@@ -37,13 +32,16 @@ class ReplacementTableIterator implements OuterIterator, ITableIterator
      * Creates a new replacement table iterator object.
      *
      * @param ITableIterator $innerIterator
-     * @param array          $fullReplacements
-     * @param array          $subStrReplacements
+     * @param array<string, string> $fullReplacements
+     * @param array<string, string> $subStrReplacements
      */
-    public function __construct(ITableIterator $innerIterator, array $fullReplacements = [], array $subStrReplacements = [])
-    {
-        $this->innerIterator      = $innerIterator;
-        $this->fullReplacements   = $fullReplacements;
+    public function __construct(
+        ITableIterator $innerIterator,
+        array $fullReplacements = [],
+        array $subStrReplacements = []
+    ) {
+        $this->innerIterator = $innerIterator;
+        $this->fullReplacements = $fullReplacements;
         $this->subStrReplacements = $subStrReplacements;
     }
 
@@ -55,7 +53,7 @@ class ReplacementTableIterator implements OuterIterator, ITableIterator
      * @param string $value
      * @param string $replacement
      */
-    public function addFullReplacement($value, $replacement): void
+    public function addFullReplacement(string $value, string $replacement): void
     {
         $this->fullReplacements[$value] = $replacement;
     }
@@ -63,12 +61,12 @@ class ReplacementTableIterator implements OuterIterator, ITableIterator
     /**
      * Adds a new substr replacement
      *
-     * Substr replacements will replace all occurances of the substr in every column
+     * Substr replacements will replace all occurrences of the substr in every column
      *
      * @param string $value
      * @param string $replacement
      */
-    public function addSubStrReplacement($value, $replacement): void
+    public function addSubStrReplacement(string $value, string $replacement): void
     {
         $this->subStrReplacements[$value] = $replacement;
     }
@@ -100,7 +98,11 @@ class ReplacementTableIterator implements OuterIterator, ITableIterator
      */
     public function current(): ITable
     {
-        return new ReplacementTable($this->innerIterator->current(), $this->fullReplacements, $this->subStrReplacements);
+        return new ReplacementTable(
+            $this->innerIterator->current(),
+            $this->fullReplacements,
+            $this->subStrReplacements
+        );
     }
 
     /**
@@ -139,7 +141,7 @@ class ReplacementTableIterator implements OuterIterator, ITableIterator
         return $this->innerIterator->valid();
     }
 
-    public function getInnerIterator()
+    public function getInnerIterator(): ITableIterator
     {
         return $this->innerIterator;
     }

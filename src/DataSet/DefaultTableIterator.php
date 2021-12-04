@@ -19,7 +19,7 @@ class DefaultTableIterator implements ITableIterator
     /**
      * An array of tables in the iterator.
      *
-     * @var array
+     * @var array<int, ITable>
      */
     protected $tables;
 
@@ -35,11 +35,11 @@ class DefaultTableIterator implements ITableIterator
      * Creates a new default table iterator object.
      *
      * @param array $tables
-     * @param bool  $reverse
+     * @param bool $reverse
      */
-    public function __construct(array $tables, $reverse = false)
+    public function __construct(array $tables, bool $reverse = false)
     {
-        $this->tables  = $tables;
+        $this->tables = $tables;
         $this->reverse = $reverse;
 
         $this->rewind();
@@ -68,9 +68,9 @@ class DefaultTableIterator implements ITableIterator
     /**
      * Returns the current table.
      *
-     * @return ITable|false
+     * @return ITable
      */
-    public function current()
+    public function current(): ITable
     {
         return current($this->tables);
     }
@@ -116,6 +116,6 @@ class DefaultTableIterator implements ITableIterator
      */
     public function valid(): bool
     {
-        return $this->current() !== false;
+        return current($this->tables) !== false;
     }
 }
