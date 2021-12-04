@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace PHPUnit\DbUnit\Tests\DataSet;
 
 use PHPUnit\DbUnit\DataSet\DefaultTable;
