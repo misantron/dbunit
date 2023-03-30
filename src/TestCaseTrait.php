@@ -102,7 +102,7 @@ trait TestCaseTrait
     public function assertTableRowCount($tableName, $expected, $message = ''): void
     {
         $constraint = new TableRowCount($tableName, $expected);
-        $actual     = $this->getConnection()->getRowCount($tableName);
+        $actual = $this->getConnection()->getRowCount($tableName);
 
         self::assertThat($actual, $constraint, $message);
     }

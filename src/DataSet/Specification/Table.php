@@ -64,11 +64,11 @@ class Table implements Specification, DatabaseListConsumer
      */
     public function getDataSet($dataSetSpec)
     {
-        [$dbLabel, $schema, $tables]     = explode(':', $dataSetSpec, 3);
-        $databaseInfo                    = $this->databases[$dbLabel];
+        [$dbLabel, $schema, $tables] = explode(':', $dataSetSpec, 3);
+        $databaseInfo = $this->databases[$dbLabel];
 
-        $pdoRflc      = new ReflectionClass('PDO');
-        $pdo          = $pdoRflc->newInstanceArgs(explode('|', $databaseInfo));
+        $pdoRflc = new ReflectionClass('PDO');
+        $pdo = $pdoRflc->newInstanceArgs(explode('|', $databaseInfo));
         $dbConnection = new DefaultConnection($pdo, $schema);
 
         return !empty($tables) ? $dbConnection->createDataSet(explode(',', $tables)) : $dbConnection->createDataSet();

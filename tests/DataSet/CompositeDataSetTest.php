@@ -21,10 +21,12 @@ use PHPUnit\DbUnit\TestCase;
 class CompositeDataSetTest extends \PHPUnit\Framework\TestCase
 {
     protected $expectedDataSet1;
+
     protected $expectedDataSet2;
+
     protected $expectedDataSet3;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $table1MetaData = new DefaultTableMetadata(
             'table1',

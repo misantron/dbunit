@@ -75,7 +75,7 @@ class Filter extends AbstractDataSet
             } elseif ($values === '*') {
                 $tables[] = $tableName;
             } else {
-                $this->setExcludeColumnsForTable($tableName, (array)$values);
+                $this->setExcludeColumnsForTable($tableName, (array) $values);
             }
         }
 

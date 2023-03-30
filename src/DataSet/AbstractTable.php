@@ -38,15 +38,15 @@ class AbstractTable implements ITable
     public function __toString()
     {
         $columns = $this->getTableMetaData()->getColumns();
-        $count   = \count($columns);
+        $count = \count($columns);
 
         // if count less than 0 (when table is empty), then set count to 1
-        $count         = $count >= 1 ? $count : 1;
+        $count = $count >= 1 ? $count : 1;
         $lineSeparator = str_repeat('+----------------------', $count) . "+\n";
-        $lineLength    = \strlen($lineSeparator) - 1;
+        $lineLength = \strlen($lineSeparator) - 1;
 
         $tableString = $lineSeparator;
-        $tblName     = $this->getTableMetaData()->getTableName();
+        $tblName = $this->getTableMetaData()->getTableName();
         $tableString .= '| ' . str_pad(
             $tblName,
             $lineLength - 4,

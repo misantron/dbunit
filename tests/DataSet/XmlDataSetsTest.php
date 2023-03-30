@@ -24,7 +24,7 @@ class XmlDataSetsTest extends TestCase
 {
     protected $expectedDataSet;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $table1MetaData = new DefaultTableMetadata(
             'table1',

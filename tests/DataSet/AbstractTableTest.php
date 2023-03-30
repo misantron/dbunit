@@ -26,7 +26,7 @@ class AbstractTableTest extends TestCase
      */
     protected $table;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $tableMetaData = new DefaultTableMetadata(
             'table',
@@ -56,8 +56,14 @@ class AbstractTableTest extends TestCase
     public function providerTableContainsRow(): array
     {
         return [
-            [['id' => 1, 'column1' => 'randomValue'], true],
-            [['id' => 1, 'column1' => 'notExistingValue'], false],
+            [[
+                'id' => 1,
+                'column1' => 'randomValue',
+            ], true],
+            [[
+                'id' => 1,
+                'column1' => 'notExistingValue',
+            ], false],
         ];
     }
 
@@ -175,10 +181,14 @@ class AbstractTableTest extends TestCase
             // One row, one column, matches
             [
                 [
-                    ['id' => 1],
+                    [
+                        'id' => 1,
+                    ],
                 ],
                 [
-                    ['id' => 1],
+                    [
+                        'id' => 1,
+                    ],
                 ],
                 true,
             ],
@@ -186,10 +196,14 @@ class AbstractTableTest extends TestCase
             // One row, one column, does not match
             [
                 [
-                    ['id' => 1],
+                    [
+                        'id' => 1,
+                    ],
                 ],
                 [
-                    ['id' => 2],
+                    [
+                        'id' => 2,
+                    ],
                 ],
                 false,
             ],
@@ -197,12 +211,20 @@ class AbstractTableTest extends TestCase
             // Multiple rows, one column, matches
             [
                 [
-                    ['id' => 1],
-                    ['id' => 2],
+                    [
+                        'id' => 1,
+                    ],
+                    [
+                        'id' => 2,
+                    ],
                 ],
                 [
-                    ['id' => 1],
-                    ['id' => 2],
+                    [
+                        'id' => 1,
+                    ],
+                    [
+                        'id' => 2,
+                    ],
                 ],
                 true,
             ],
@@ -210,12 +232,20 @@ class AbstractTableTest extends TestCase
             // Multiple rows, one column, do not match
             [
                 [
-                    ['id' => 1],
-                    ['id' => 2],
+                    [
+                        'id' => 1,
+                    ],
+                    [
+                        'id' => 2,
+                    ],
                 ],
                 [
-                    ['id' => 1],
-                    ['id' => 3],
+                    [
+                        'id' => 1,
+                    ],
+                    [
+                        'id' => 3,
+                    ],
                 ],
                 false,
             ],
@@ -223,12 +253,24 @@ class AbstractTableTest extends TestCase
             // Multiple rows, multiple columns, matches
             [
                 [
-                    ['id' => 1, 'name' => 'foo'],
-                    ['id' => 2, 'name' => 'bar'],
+                    [
+                        'id' => 1,
+                        'name' => 'foo',
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'bar',
+                    ],
                 ],
                 [
-                    ['id' => 1, 'name' => 'foo'],
-                    ['id' => 2, 'name' => 'bar'],
+                    [
+                        'id' => 1,
+                        'name' => 'foo',
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'bar',
+                    ],
                 ],
                 true,
             ],
@@ -236,12 +278,24 @@ class AbstractTableTest extends TestCase
             // Multiple rows, multiple columns, do not match
             [
                 [
-                    ['id' => 1, 'name' => 'foo'],
-                    ['id' => 2, 'name' => 'bar'],
+                    [
+                        'id' => 1,
+                        'name' => 'foo',
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'bar',
+                    ],
                 ],
                 [
-                    ['id' => 1, 'name' => 'foo'],
-                    ['id' => 2, 'name' => 'baz'],
+                    [
+                        'id' => 1,
+                        'name' => 'foo',
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'baz',
+                    ],
                 ],
                 false,
             ],
@@ -249,10 +303,14 @@ class AbstractTableTest extends TestCase
             // Int and int as string must match
             [
                 [
-                    ['id' => 42],
+                    [
+                        'id' => 42,
+                    ],
                 ],
                 [
-                    ['id' => '42'],
+                    [
+                        'id' => '42',
+                    ],
                 ],
                 true,
             ],
@@ -260,10 +318,14 @@ class AbstractTableTest extends TestCase
             // Float and float as string must match
             [
                 [
-                    ['id' => 15.3],
+                    [
+                        'id' => 15.3,
+                    ],
                 ],
                 [
-                    ['id' => '15.3'],
+                    [
+                        'id' => '15.3',
+                    ],
                 ],
                 true,
             ],
@@ -271,10 +333,14 @@ class AbstractTableTest extends TestCase
             // Int and float must match
             [
                 [
-                    ['id' => 18.00],
+                    [
+                        'id' => 18.00,
+                    ],
                 ],
                 [
-                    ['id' => 18],
+                    [
+                        'id' => 18,
+                    ],
                 ],
                 true,
             ],
@@ -282,10 +348,14 @@ class AbstractTableTest extends TestCase
             // 0 and empty string must not match
             [
                 [
-                    ['id' => 0],
+                    [
+                        'id' => 0,
+                    ],
                 ],
                 [
-                    ['id' => ''],
+                    [
+                        'id' => '',
+                    ],
                 ],
                 false,
             ],
@@ -293,10 +363,14 @@ class AbstractTableTest extends TestCase
             // 0 and null must not match
             [
                 [
-                    ['id' => 0],
+                    [
+                        'id' => 0,
+                    ],
                 ],
                 [
-                    ['id' => null],
+                    [
+                        'id' => null,
+                    ],
                 ],
                 false,
             ],
@@ -304,10 +378,14 @@ class AbstractTableTest extends TestCase
             // empty string and null must not match
             [
                 [
-                    ['id' => ''],
+                    [
+                        'id' => '',
+                    ],
                 ],
                 [
-                    ['id' => null],
+                    [
+                        'id' => null,
+                    ],
                 ],
                 false,
             ],

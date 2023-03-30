@@ -34,7 +34,7 @@ class Replace extends RowBased
         $databaseDataSet = $connection->createDataSet();
 
         foreach ($dataSet as $table) {
-            /* @var $table ITable */
+            /** @var ITable $table */
             $databaseTableMetaData = $databaseDataSet->getTableMetaData($table->getTableMetaData()->getTableName());
 
             $insertQuery = $insertOperation->buildOperationQuery($databaseTableMetaData, $table, $connection);

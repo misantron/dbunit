@@ -28,7 +28,7 @@ class QueryDataSetTest extends TestCase
 
     protected $pdo;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->pdo = DatabaseTestUtility::getSQLiteMemoryDB();
 
@@ -53,7 +53,10 @@ class QueryDataSetTest extends TestCase
             new DefaultTableMetadata('query1', ['tc1', 'tc2'])
         );
 
-        $expectedTable2->addRow(['tc1' => 'bar', 'tc2' => 'blah']);
+        $expectedTable2->addRow([
+            'tc1' => 'bar',
+            'tc2' => 'blah',
+        ]);
 
         self::assertTablesEqual($expectedTable1, $this->dataSet->getTable('table1'));
         self::assertTablesEqual($expectedTable2, $this->dataSet->getTable('query1'));
@@ -72,7 +75,10 @@ class QueryDataSetTest extends TestCase
             new DefaultTableMetadata('query1', ['tc1', 'tc2'])
         );
 
-        $expectedTable2->addRow(['tc1' => 'bar', 'tc2' => 'blah']);
+        $expectedTable2->addRow([
+            'tc1' => 'bar',
+            'tc2' => 'blah',
+        ]);
 
         foreach ($this->dataSet as $i => $table) {
             switch ($table->getTableMetaData()->getTableName()) {

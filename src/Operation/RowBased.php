@@ -27,6 +27,7 @@ use PHPUnit\DbUnit\DataSet\ITableMetadata;
 abstract class RowBased implements Operation
 {
     protected const ITERATOR_TYPE_FORWARD = 0;
+
     protected const ITERATOR_TYPE_REVERSE = 1;
 
     /**
@@ -55,7 +56,7 @@ abstract class RowBased implements Operation
                 continue;
             }
 
-            /* @var $table ITable */
+            /** @var ITable $table */
             $databaseTableMetaData = $databaseDataSet->getTableMetaData($table->getTableMetaData()->getTableName());
             $query = $this->buildOperationQuery($databaseTableMetaData, $table, $connection);
             $disablePrimaryKeys = $this->disablePrimaryKeys($databaseTableMetaData, $table, $connection);

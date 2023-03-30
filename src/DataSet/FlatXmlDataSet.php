@@ -29,7 +29,7 @@ class FlatXmlDataSet extends AbstractXmlDataSet
 
             if (!isset($tableColumns[$tableName])) {
                 $tableColumns[$tableName] = [];
-                $tableValues[$tableName]  = [];
+                $tableValues[$tableName] = [];
             }
 
             $values = [];

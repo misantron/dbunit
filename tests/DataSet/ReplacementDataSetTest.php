@@ -284,8 +284,12 @@ class ReplacementDataSetTest extends \PHPUnit\Framework\TestCase
         $expected = new DefaultDataSet([$table1, $table2]);
         $actual = new ReplacementDataSet(
             $this->startingDataSet,
-            ['[NULL]' => null],
-            ['%%%name%%%' => 'Mike Lively']
+            [
+                '[NULL]' => null,
+            ],
+            [
+                '%%%name%%%' => 'Mike Lively',
+            ]
         );
 
         TestCase::assertDataSetsEqual($expected, $actual);

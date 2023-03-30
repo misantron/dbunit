@@ -28,8 +28,8 @@ class TableFilter extends AbstractTable
     /**
      * Creates a new table filter using the original table
      *
-     * @param $originalTable ITable
-     * @param $excludeColumns array @deprecated, use the set* methods instead
+     * @param ITable $originalTable
+     * @param array $excludeColumns @deprecated, use the set* methods instead
      */
     public function __construct(ITable $originalTable, array $excludeColumns = [])
     {

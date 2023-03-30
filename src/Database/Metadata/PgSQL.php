@@ -111,7 +111,7 @@ class PgSQL extends AbstractMetadata
     protected function loadColumnInfo($tableName): void
     {
         $this->columns[$tableName] = [];
-        $this->keys[$tableName]    = [];
+        $this->keys[$tableName] = [];
 
         $columnQuery = '
             SELECT DISTINCT

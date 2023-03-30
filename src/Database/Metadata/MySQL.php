@@ -27,7 +27,7 @@ class MySQL extends AbstractMetadata
      */
     public function getTableNames()
     {
-        $query     = 'SHOW TABLES';
+        $query = 'SHOW TABLES';
         $statement = $this->pdo->prepare($query);
         $statement->execute();
 
@@ -50,7 +50,7 @@ class MySQL extends AbstractMetadata
      */
     public function getTableColumns($tableName)
     {
-        $query     = 'SHOW COLUMNS FROM ' . $this->quoteSchemaObject($tableName);
+        $query = 'SHOW COLUMNS FROM ' . $this->quoteSchemaObject($tableName);
         $statement = $this->pdo->prepare($query);
         $statement->execute();
 
@@ -73,7 +73,7 @@ class MySQL extends AbstractMetadata
      */
     public function getTablePrimaryKeys($tableName)
     {
-        $query     = 'SHOW INDEX FROM ' . $this->quoteSchemaObject($tableName);
+        $query = 'SHOW INDEX FROM ' . $this->quoteSchemaObject($tableName);
         $statement = $this->pdo->prepare($query);
         $statement->execute();
         $statement->setFetchMode(PDO::FETCH_ASSOC);

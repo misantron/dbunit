@@ -22,14 +22,14 @@ use ReflectionClass;
 abstract class AbstractMetadata implements Metadata
 {
     protected static $metaDataClassMap = [
-        'pgsql'    => PgSQL::class,
-        'mysql'    => MySQL::class,
-        'oci'      => Oci::class,
-        'sqlite'   => Sqlite::class,
-        'sqlite2'  => Sqlite::class,
-        'sqlsrv'   => SqlSrv::class,
+        'pgsql' => PgSQL::class,
+        'mysql' => MySQL::class,
+        'oci' => Oci::class,
+        'sqlite' => Sqlite::class,
+        'sqlite2' => Sqlite::class,
+        'sqlsrv' => SqlSrv::class,
         'firebird' => Firebird::class,
-        'dblib'    => Dblib::class,
+        'dblib' => Dblib::class,
     ];
 
     /**
@@ -119,7 +119,7 @@ abstract class AbstractMetadata implements Metadata
      */
     final public function __construct(PDO $pdo, $schema = '')
     {
-        $this->pdo    = $pdo;
+        $this->pdo = $pdo;
         $this->schema = $schema;
     }
 
@@ -142,7 +142,7 @@ abstract class AbstractMetadata implements Metadata
      */
     public function quoteSchemaObject($object)
     {
-        $parts       = explode('.', $object);
+        $parts = explode('.', $object);
         $quotedParts = [];
 
         foreach ($parts as $part) {
@@ -168,14 +168,14 @@ abstract class AbstractMetadata implements Metadata
         if (($dot = strpos($fullTableName, '.')) !== false) {
             return [
                 'schema' => substr($fullTableName, 0, $dot),
-                'table'  => substr($fullTableName, $dot + 1),
+                'table' => substr($fullTableName, $dot + 1),
             ];
         }
 
         return [
-                'schema' => null,
-                'table'  => $fullTableName,
-            ];
+            'schema' => null,
+            'table' => $fullTableName,
+        ];
     }
 
     /**

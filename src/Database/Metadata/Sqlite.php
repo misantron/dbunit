@@ -92,11 +92,11 @@ class Sqlite extends AbstractMetadata
      */
     protected function loadColumnInfo($tableName): void
     {
-        $query     = "PRAGMA table_info('{$tableName}')";
+        $query = "PRAGMA table_info('{$tableName}')";
         $statement = $this->pdo->query($query);
 
         $this->columns[$tableName] = [];
-        $this->keys[$tableName]    = [];
+        $this->keys[$tableName] = [];
 
         while ($columnData = $statement->fetch(PDO::FETCH_NUM)) {
             $this->columns[$tableName][] = $columnData[1];

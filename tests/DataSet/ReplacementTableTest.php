@@ -26,7 +26,7 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
      */
     protected $startingTable;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $tableMetaData = new DefaultTableMetadata(
             'table1',
@@ -37,24 +37,24 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
 
         $table->addRow([
             'table1_id' => 1,
-            'column1'   => 'My name is %%%name%%%',
-            'column2'   => 200,
-            'column3'   => 34.64,
-            'column4'   => 'yghkf;a  hahfg8ja h;',
+            'column1' => 'My name is %%%name%%%',
+            'column2' => 200,
+            'column3' => 34.64,
+            'column4' => 'yghkf;a  hahfg8ja h;',
         ]);
         $table->addRow([
             'table1_id' => 2,
-            'column1'   => 'hk;afg',
-            'column2'   => 654,
-            'column3'   => 46.54,
-            'column4'   => '24rwehhads',
+            'column1' => 'hk;afg',
+            'column2' => 654,
+            'column3' => 46.54,
+            'column4' => '24rwehhads',
         ]);
         $table->addRow([
             'table1_id' => 3,
-            'column1'   => 'ha;gyt',
-            'column2'   => 462,
-            'column3'   => '[NULL] not really',
-            'column4'   => '[NULL]',
+            'column1' => 'ha;gyt',
+            'column2' => 462,
+            'column3' => '[NULL] not really',
+            'column4' => '[NULL]',
         ]);
 
         $this->startingTable = $table;
@@ -79,24 +79,24 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
 
         $table->addRow([
             'table1_id' => 1,
-            'column1'   => 'My name is %%%name%%%',
-            'column2'   => 200,
-            'column3'   => 34.64,
-            'column4'   => 'yghkf;a  hahfg8ja h;',
+            'column1' => 'My name is %%%name%%%',
+            'column2' => 200,
+            'column3' => 34.64,
+            'column4' => 'yghkf;a  hahfg8ja h;',
         ]);
         $table->addRow([
             'table1_id' => 2,
-            'column1'   => 'hk;afg',
-            'column2'   => 654,
-            'column3'   => 46.54,
-            'column4'   => '24rwehhads',
+            'column1' => 'hk;afg',
+            'column2' => 654,
+            'column3' => 46.54,
+            'column4' => '24rwehhads',
         ]);
         $table->addRow([
             'table1_id' => 3,
-            'column1'   => 'ha;gyt',
-            'column2'   => 462,
-            'column3'   => '[NULL] not really',
-            'column4'   => null,
+            'column1' => 'ha;gyt',
+            'column2' => 462,
+            'column3' => '[NULL] not really',
+            'column4' => null,
         ]);
 
         $actual = new ReplacementTable($this->startingTable);
@@ -116,24 +116,24 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
 
         $table->addRow([
             'table1_id' => 1,
-            'column1'   => 'My name is Mike Lively',
-            'column2'   => 200,
-            'column3'   => 34.64,
-            'column4'   => 'yghkf;a  hahfg8ja h;',
+            'column1' => 'My name is Mike Lively',
+            'column2' => 200,
+            'column3' => 34.64,
+            'column4' => 'yghkf;a  hahfg8ja h;',
         ]);
         $table->addRow([
             'table1_id' => 2,
-            'column1'   => 'hk;afg',
-            'column2'   => 654,
-            'column3'   => 46.54,
-            'column4'   => '24rwehhads',
+            'column1' => 'hk;afg',
+            'column2' => 654,
+            'column3' => 46.54,
+            'column4' => '24rwehhads',
         ]);
         $table->addRow([
             'table1_id' => 3,
-            'column1'   => 'ha;gyt',
-            'column2'   => 462,
-            'column3'   => '[NULL] not really',
-            'column4'   => '[NULL]',
+            'column1' => 'ha;gyt',
+            'column2' => 462,
+            'column3' => '[NULL] not really',
+            'column4' => '[NULL]',
         ]);
 
         $actual = new ReplacementTable($this->startingTable);
@@ -153,30 +153,34 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
 
         $table->addRow([
             'table1_id' => 1,
-            'column1'   => 'My name is Mike Lively',
-            'column2'   => 200,
-            'column3'   => 34.64,
-            'column4'   => 'yghkf;a  hahfg8ja h;',
+            'column1' => 'My name is Mike Lively',
+            'column2' => 200,
+            'column3' => 34.64,
+            'column4' => 'yghkf;a  hahfg8ja h;',
         ]);
         $table->addRow([
             'table1_id' => 2,
-            'column1'   => 'hk;afg',
-            'column2'   => 654,
-            'column3'   => 46.54,
-            'column4'   => '24rwehhads',
+            'column1' => 'hk;afg',
+            'column2' => 654,
+            'column3' => 46.54,
+            'column4' => '24rwehhads',
         ]);
         $table->addRow([
             'table1_id' => 3,
-            'column1'   => 'ha;gyt',
-            'column2'   => 462,
-            'column3'   => '[NULL] not really',
-            'column4'   => null,
+            'column1' => 'ha;gyt',
+            'column2' => 462,
+            'column3' => '[NULL] not really',
+            'column4' => null,
         ]);
 
         $actual = new ReplacementTable(
             $this->startingTable,
-            ['[NULL]'     => null],
-            ['%%%name%%%' => 'Mike Lively']
+            [
+                '[NULL]' => null,
+            ],
+            [
+                '%%%name%%%' => 'Mike Lively',
+            ]
         );
 
         TestCase::assertTablesEqual($table, $actual);
@@ -186,17 +190,21 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
     {
         $actual = new ReplacementTable(
             $this->startingTable,
-            ['[NULL]'     => null],
-            ['%%%name%%%' => 'Mike Lively']
+            [
+                '[NULL]' => null,
+            ],
+            [
+                '%%%name%%%' => 'Mike Lively',
+            ]
         );
 
         $this->assertEquals(
             [
                 'table1_id' => 1,
-                'column1'   => 'My name is Mike Lively',
-                'column2'   => 200,
-                'column3'   => 34.64,
-                'column4'   => 'yghkf;a  hahfg8ja h;',
+                'column1' => 'My name is Mike Lively',
+                'column2' => 200,
+                'column3' => 34.64,
+                'column4' => 'yghkf;a  hahfg8ja h;',
             ],
             $actual->getRow(0)
         );
@@ -204,10 +212,10 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(
             [
                 'table1_id' => 3,
-                'column1'   => 'ha;gyt',
-                'column2'   => 462,
-                'column3'   => '[NULL] not really',
-                'column4'   => null,
+                'column1' => 'ha;gyt',
+                'column2' => 462,
+                'column3' => '[NULL] not really',
+                'column4' => null,
             ],
             $actual->getRow(2)
         );
@@ -217,8 +225,12 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
     {
         $actual = new ReplacementTable(
             $this->startingTable,
-            ['[NULL]'     => null],
-            ['%%%name%%%' => 'Mike Lively']
+            [
+                '[NULL]' => null,
+            ],
+            [
+                '%%%name%%%' => 'Mike Lively',
+            ]
         );
 
         $this->assertNull($actual->getValue(2, 'column4'));
@@ -229,8 +241,8 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
         $otherMetaData = $this->createMock(ITableMetadata::class);
-        $table         = $this->createMock(ITable::class);
-        $otherTable    = $this->createMock(ITable::class);
+        $table = $this->createMock(ITable::class);
+        $otherTable = $this->createMock(ITable::class);
 
         $table->expects($this->once())
             ->method('getTableMetaData')
@@ -253,14 +265,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
         $otherMetaData = $this->createMock(ITableMetadata::class);
-        $table         = $this->createMock(ITable::class);
-        $otherTable    = $this->createMock(ITable::class);
+        $table = $this->createMock(ITable::class);
+        $otherTable = $this->createMock(ITable::class);
 
         /** @var MockObject|ReplacementTable $replacementTable */
         $replacementTable = $this->getMockBuilder(ReplacementTable::class)
-                                 ->setConstructorArgs([$table])
-                                 ->setMethods(['getRowCount'])
-                                 ->getMock();
+            ->setConstructorArgs([$table])
+            ->setMethods(['getRowCount'])
+            ->getMock();
 
         $table->expects($this->once())
             ->method('getTableMetaData')
@@ -296,8 +308,8 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
         $otherMetaData = $this->createMock(ITableMetadata::class);
-        $table         = $this->createMock(ITable::class);
-        $otherTable    = $this->createMock(ITable::class);
+        $table = $this->createMock(ITable::class);
+        $otherTable = $this->createMock(ITable::class);
 
         $table->expects($this->once())
             ->method('getTableMetaData')
@@ -320,9 +332,9 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
 
         /** @var MockObject|ReplacementTable $replacementTable */
         $replacementTable = $this->getMockBuilder(ReplacementTable::class)
-                                 ->setConstructorArgs([$table])
-                                 ->setMethods(['getRowCount', 'getValue'])
-                                 ->getMock();
+            ->setConstructorArgs([$table])
+            ->setMethods(['getRowCount', 'getValue'])
+            ->getMock();
 
         $replacementTable
             ->method('getRowCount')
@@ -354,10 +366,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // One row, one column, matches
             [
                 [
-                    ['id' => 1],
+                    [
+                        'id' => 1,
+                    ],
                 ],
                 [
-                    ['id' => 1],
+                    [
+                        'id' => 1,
+                    ],
                 ],
                 true,
             ],
@@ -365,10 +381,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // One row, one column, does not match
             [
                 [
-                    ['id' => 1],
+                    [
+                        'id' => 1,
+                    ],
                 ],
                 [
-                    ['id' => 2],
+                    [
+                        'id' => 2,
+                    ],
                 ],
                 false,
             ],
@@ -376,12 +396,20 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // Multiple rows, one column, matches
             [
                 [
-                    ['id' => 1],
-                    ['id' => 2],
+                    [
+                        'id' => 1,
+                    ],
+                    [
+                        'id' => 2,
+                    ],
                 ],
                 [
-                    ['id' => 1],
-                    ['id' => 2],
+                    [
+                        'id' => 1,
+                    ],
+                    [
+                        'id' => 2,
+                    ],
                 ],
                 true,
             ],
@@ -389,12 +417,20 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // Multiple rows, one column, do not match
             [
                 [
-                    ['id' => 1],
-                    ['id' => 2],
+                    [
+                        'id' => 1,
+                    ],
+                    [
+                        'id' => 2,
+                    ],
                 ],
                 [
-                    ['id' => 1],
-                    ['id' => 3],
+                    [
+                        'id' => 1,
+                    ],
+                    [
+                        'id' => 3,
+                    ],
                 ],
                 false,
             ],
@@ -402,12 +438,24 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // Multiple rows, multiple columns, matches
             [
                 [
-                    ['id' => 1, 'name' => 'foo'],
-                    ['id' => 2, 'name' => 'bar'],
+                    [
+                        'id' => 1,
+                        'name' => 'foo',
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'bar',
+                    ],
                 ],
                 [
-                    ['id' => 1, 'name' => 'foo'],
-                    ['id' => 2, 'name' => 'bar'],
+                    [
+                        'id' => 1,
+                        'name' => 'foo',
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'bar',
+                    ],
                 ],
                 true,
             ],
@@ -415,12 +463,24 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // Multiple rows, multiple columns, do not match
             [
                 [
-                    ['id' => 1, 'name' => 'foo'],
-                    ['id' => 2, 'name' => 'bar'],
+                    [
+                        'id' => 1,
+                        'name' => 'foo',
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'bar',
+                    ],
                 ],
                 [
-                    ['id' => 1, 'name' => 'foo'],
-                    ['id' => 2, 'name' => 'baz'],
+                    [
+                        'id' => 1,
+                        'name' => 'foo',
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'baz',
+                    ],
                 ],
                 false,
             ],
@@ -428,10 +488,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // Int and int as string must match
             [
                 [
-                    ['id' => 42],
+                    [
+                        'id' => 42,
+                    ],
                 ],
                 [
-                    ['id' => '42'],
+                    [
+                        'id' => '42',
+                    ],
                 ],
                 true,
             ],
@@ -439,10 +503,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // Float and float as string must match
             [
                 [
-                    ['id' => 15.3],
+                    [
+                        'id' => 15.3,
+                    ],
                 ],
                 [
-                    ['id' => '15.3'],
+                    [
+                        'id' => '15.3',
+                    ],
                 ],
                 true,
             ],
@@ -450,10 +518,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // Int and float must match
             [
                 [
-                    ['id' => 18.00],
+                    [
+                        'id' => 18.00,
+                    ],
                 ],
                 [
-                    ['id' => 18],
+                    [
+                        'id' => 18,
+                    ],
                 ],
                 true,
             ],
@@ -461,10 +533,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // 0 and empty string must not match
             [
                 [
-                    ['id' => 0],
+                    [
+                        'id' => 0,
+                    ],
                 ],
                 [
-                    ['id' => ''],
+                    [
+                        'id' => '',
+                    ],
                 ],
                 false,
             ],
@@ -472,10 +548,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // 0 and null must not match
             [
                 [
-                    ['id' => 0],
+                    [
+                        'id' => 0,
+                    ],
                 ],
                 [
-                    ['id' => null],
+                    [
+                        'id' => null,
+                    ],
                 ],
                 false,
             ],
@@ -483,10 +563,14 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             // empty string and null must not match
             [
                 [
-                    ['id' => ''],
+                    [
+                        'id' => '',
+                    ],
                 ],
                 [
-                    ['id' => null],
+                    [
+                        'id' => null,
+                    ],
                 ],
                 false,
             ],

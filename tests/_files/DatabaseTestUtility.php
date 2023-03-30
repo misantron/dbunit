@@ -12,6 +12,7 @@
 class DatabaseTestUtility
 {
     protected static $connection;
+
     protected static $mySQLConnection;
 
     public static function getSQLiteMemoryDB()

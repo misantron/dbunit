@@ -68,12 +68,12 @@ class MysqlXmlDataSet extends AbstractXmlDataSet
                     }
 
                     $column = $fields[0];
-                    $attr   = $column->attributes('http://www.w3.org/2001/XMLSchema-instance');
+                    $attr = $column->attributes('http://www.w3.org/2001/XMLSchema-instance');
 
                     if (isset($attr['type']) && (string) $attr['type'] === 'xs:hexBinary') {
                         $columnValue = pack('H*', (string) $column);
                     } else {
-                        $null        = isset($column['nil']) || isset($attr[0]);
+                        $null = isset($column['nil']) || isset($attr[0]);
                         $columnValue = $null ? null : (string) $column;
                     }
 

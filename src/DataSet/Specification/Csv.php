@@ -40,8 +40,8 @@ class Csv implements Specification
     public function getDataSet($dataSetSpec)
     {
         $csvDataSetArgs = $this->getCsvOptions($dataSetSpec);
-        $csvDataSetRfl  = new ReflectionClass(CsvDataSet::class);
-        $csvDataSet     = $csvDataSetRfl->newInstanceArgs($csvDataSetArgs);
+        $csvDataSetRfl = new ReflectionClass(CsvDataSet::class);
+        $csvDataSet = $csvDataSetRfl->newInstanceArgs($csvDataSetArgs);
 
         foreach ($this->getTableFileMap($dataSetSpec) as $tableName => $file) {
             $csvDataSet->addTable($tableName, $file);
@@ -84,8 +84,8 @@ class Csv implements Specification
         $tables = [];
 
         foreach (explode(',', $dataSetSpec) as $csvfile) {
-            [$tableName, $file]     = explode(':', $csvfile, 2);
-            $tables[$tableName]     = $file;
+            [$tableName, $file] = explode(':', $csvfile, 2);
+            $tables[$tableName] = $file;
         }
 
         return $tables;

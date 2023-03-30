@@ -20,7 +20,7 @@ class FilterTest extends TestCase
 {
     protected $expectedDataSet;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->expectedDataSet = new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/FilteredTestFixture.xml');
     }
