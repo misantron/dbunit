@@ -81,7 +81,7 @@ jobs:
           dependency-versions: locked
           composer-options: --no-ansi --no-interaction --no-progress
       - name: Run PHPUnit with coverage
-        run: vendor/bin/phpunit --testsuite=unit --coverage-clover=clover.xml
+        run: vendor/bin/phpunit --testsuite=unit --colors=always --coverage-clover=clover.xml
       - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:
