@@ -81,10 +81,10 @@ jobs:
           dependency-versions: locked
           composer-options: --no-ansi --no-interaction --no-progress
       - name: Run PHPUnit with coverage
-        run: |
-          mkdir -p build/logs
-          vendor/bin/phpunit --testsuite=unit --colors=always --coverage-clover=build/logs/clover.xml
-      - name: Upload coverage report
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: vendor/bin/php-coveralls -v
+        run: vendor/bin/phpunit --testsuite=unit --coverage-clover=clover.xml
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: clover.xml
+          verbose: true
