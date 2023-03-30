@@ -44,6 +44,7 @@ class AbstractTableTest extends TestCase
     /**
      * @param array $row
      * @param bool $exists
+     *
      * @dataProvider providerTableContainsRow
      */
     public function testTableContainsRow($row, $exists): void
@@ -114,6 +115,7 @@ class AbstractTableTest extends TestCase
      * @param array $tableColumnValues
      * @param array $otherColumnValues
      * @param bool $matches
+     *
      * @dataProvider providerMatchesWithColumnValueComparisons
      */
     public function testMatchesWithColumnValueComparisons($tableColumnValues, $otherColumnValues, $matches): void

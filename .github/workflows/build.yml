@@ -3,31 +3,37 @@ name: build
 on: [push]
 
 jobs:
-  code-style:
-    name: Code style
+  coding-standards:
+    name: Coding Standards Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer dependencies
-        uses: actions/cache@v3
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: cs-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: cs-composer-
-      - name: Install dependencies
-        run: composer install --prefer-dist
+          php-version: 8.1
+          coverage: none
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          dependency-versions: locked
+          composer-options: --no-ansi --no-interaction --no-progress
       - name: Run PHP CS Fixer
         run: vendor/bin/php-cs-fixer fix --diff --dry-run -v
   tests:
     name: Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        php-versions: [ '7.2', '7.3', '7.4', '8.0', '8.1' ]
+        operating-system:
+          - ubuntu-latest
+        php-versions:
+          - 7.2
+          - 7.3
+          - 7.4
+          - 8.0
+          - 8.1
     services:
       mysql:
         image: mysql:5.7
@@ -50,17 +56,11 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: pdo_mysql, libxml, dom
           coverage: none
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer dependencies
-        uses: actions/cache@v3
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v2
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ matrix.php-versions }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ matrix.php-versions }}-composer-
-      - name: Install dependencies
-        run: composer install --prefer-dist
+          dependency-versions: locked
+          composer-options: --no-ansi --no-interaction --no-progress
       - name: Run PHPUnit
         run: vendor/bin/phpunit --colors=always
         env:
@@ -74,19 +74,13 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: 8.1
           coverage: pcov
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer dependencies
-        uses: actions/cache@v3
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v2
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: 81-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: 81-composer-
-      - name: Install dependencies
-        run: composer install --prefer-dist
+          dependency-versions: locked
+          composer-options: --no-ansi --no-interaction --no-progress
       - name: Run PHPUnit with coverage
         run: |
           mkdir -p build/logs

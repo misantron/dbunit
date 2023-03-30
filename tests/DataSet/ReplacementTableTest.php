@@ -289,6 +289,7 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
      * @param array $tableColumnValues
      * @param array $otherColumnValues
      * @param bool  $matches
+     *
      * @dataProvider providerMatchesWithColumnValueComparisons
      */
     public function testMatchesWithColumnValueComparisons($tableColumnValues, $otherColumnValues, $matches): void
