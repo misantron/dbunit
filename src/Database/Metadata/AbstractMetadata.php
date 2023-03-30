@@ -155,7 +155,7 @@ abstract class AbstractMetadata implements Metadata
     }
 
     /**
-     * Seperates the schema and the table from a fully qualified table name.
+     * Separates the schema and the table from a fully qualified table name.
      *
      * Returns an associative array containing the 'schema' and the 'table'.
      *
