@@ -3,5 +3,4 @@ parameters:
   paths:
     - src
     - tests
-  editorUrl: '%%file%%:%%line%%'
   checkGenericClassInNonGenericObjectType: false

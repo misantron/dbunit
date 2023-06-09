@@ -25,18 +25,6 @@ class QueryTableTest extends TestCase
      */
     protected $table;
 
-    public static function providerTestGetValue(): array
-    {
-        return [
-            [0, 'col1', 'value1'],
-            [0, 'col2', 'value2'],
-            [0, 'col3', 'value3'],
-            [1, 'col1', 'value4'],
-            [1, 'col2', 'value5'],
-            [1, 'col3', 'value6'],
-        ];
-    }
-
     protected function setUp(): void
     {
         $query = "
@@ -54,6 +42,18 @@ class QueryTableTest extends TestCase
             $query,
             new DefaultConnection(new PDO('sqlite::memory:'), 'test')
         );
+    }
+
+    public static function providerTestGetValue(): array
+    {
+        return [
+            [0, 'col1', 'value1'],
+            [0, 'col2', 'value2'],
+            [0, 'col3', 'value3'],
+            [1, 'col1', 'value4'],
+            [1, 'col2', 'value5'],
+            [1, 'col3', 'value6'],
+        ];
     }
 
     public function testGetEmptyTableMetaData(): void

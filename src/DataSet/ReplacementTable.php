@@ -82,9 +82,9 @@ class ReplacementTable implements ITable
      * Full replacements will only replace values if the FULL value is a match
      *
      * @param string $value
-     * @param string $replacement
+     * @param string|null $replacement
      */
-    public function addFullReplacement($value, $replacement): void
+    public function addFullReplacement(string $value, ?string $replacement): void
     {
         $this->fullReplacements[$value] = $replacement;
     }

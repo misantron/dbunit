@@ -42,7 +42,7 @@ class TableIsEqual extends Constraint
     {
         return sprintf(
             'is equal to expected %s',
-            (string) $this->value
+            $this->value->getTableMetaData()->getTableName()
         );
     }
 

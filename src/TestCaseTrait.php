@@ -33,34 +33,6 @@ trait TestCaseTrait
     protected $databaseTester;
 
     /**
-     * Asserts that two given tables are equal.
-     *
-     * @param ITable $expected
-     * @param ITable $actual
-     * @param string $message
-     */
-    public static function assertTablesEqual(ITable $expected, ITable $actual, $message = ''): void
-    {
-        $constraint = new TableIsEqual($expected);
-
-        self::assertThat($actual, $constraint, $message);
-    }
-
-    /**
-     * Asserts that two given datasets are equal.
-     *
-     * @param IDataSet $expected
-     * @param IDataSet $actual
-     * @param string $message
-     */
-    public static function assertDataSetsEqual(IDataSet $expected, IDataSet $actual, $message = ''): void
-    {
-        $constraint = new DataSetIsEqual($expected);
-
-        self::assertThat($actual, $constraint, $message);
-    }
-
-    /**
      * Performs operation returned by getSetUpOperation().
      */
     protected function setUp(): void
@@ -90,6 +62,34 @@ trait TestCaseTrait
          * from piling up.
          */
         $this->databaseTester = null;
+    }
+
+    /**
+     * Asserts that two given tables are equal.
+     *
+     * @param ITable $expected
+     * @param ITable $actual
+     * @param string $message
+     */
+    public static function assertTablesEqual(ITable $expected, ITable $actual, $message = ''): void
+    {
+        $constraint = new TableIsEqual($expected);
+
+        self::assertThat($actual, $constraint, $message);
+    }
+
+    /**
+     * Asserts that two given datasets are equal.
+     *
+     * @param IDataSet $expected
+     * @param IDataSet $actual
+     * @param string $message
+     */
+    public static function assertDataSetsEqual(IDataSet $expected, IDataSet $actual, $message = ''): void
+    {
+        $constraint = new DataSetIsEqual($expected);
+
+        self::assertThat($actual, $constraint, $message);
     }
 
     /**

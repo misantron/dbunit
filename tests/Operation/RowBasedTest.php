@@ -12,8 +12,6 @@
 namespace PHPUnit\DbUnit\Tests\Operation;
 
 use DatabaseTestUtility;
-use Exception;
-use PDOStatement;
 use PHPUnit\DbUnit\Database\Connection;
 use PHPUnit\DbUnit\Database\DefaultConnection;
 use PHPUnit\DbUnit\DataSet\DefaultDataSet;
@@ -21,6 +19,7 @@ use PHPUnit\DbUnit\DataSet\DefaultTable;
 use PHPUnit\DbUnit\DataSet\DefaultTableIterator;
 use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
 use PHPUnit\DbUnit\DataSet\FlatXmlDataSet;
+use PHPUnit\DbUnit\DataSet\IDataSet;
 use PHPUnit\DbUnit\DataSet\ITable;
 use PHPUnit\DbUnit\DataSet\ITableMetadata;
 use PHPUnit\DbUnit\Operation\Exception as OperationException;
@@ -38,12 +37,12 @@ class RowBasedTest extends TestCase
         parent::setUp();
     }
 
-    public function getConnection()
+    public function getConnection(): Connection
     {
         return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
     }
 
-    public function getDataSet()
+    public function getDataSet(): IDataSet
     {
         $tables = [
             new DefaultTable(
@@ -115,28 +114,32 @@ class RowBasedTest extends TestCase
         $mockOperation
             ->expects(self::exactly(2))
             ->method('buildOperationQuery')
-            ->withConsecutive(
-                [$connection->createDataSet()->getTableMetaData('table1'), $table1],
-                [$connection->createDataSet()->getTableMetaData('table2'), $table2]
-            )
-            ->willReturnOnConsecutiveCalls(
-                'INSERT INTO table1 (table1_id, column1, column2, column3, column4) VALUES (?, ?, ?, ?, ?)',
-                'INSERT INTO table2 (table2_id, column5, column6, column7, column8) VALUES (?, ?, ?, ?, ?)'
-            );
+            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table) use ($connection, $table1, $table2) {
+                switch ([$metadata, $table]) {
+                    case [$connection->createDataSet()->getTableMetaData('table1'), $table1]:
+                        return 'INSERT INTO table1 (table1_id, column1, column2, column3, column4) VALUES (?, ?, ?, ?, ?)';
+                    case [$connection->createDataSet()->getTableMetaData('table2'), $table2]:
+                        return 'INSERT INTO table2 (table2_id, column5, column6, column7, column8) VALUES (?, ?, ?, ?, ?)';
+                    default:
+                        throw new \InvalidArgumentException('Unexpected metadata and table provided');
+                }
+            });
 
         $mockOperation
             ->expects(self::exactly(3))
             ->method('buildOperationArguments')
-            ->withConsecutive(
-                [$connection->createDataSet()->getTableMetaData('table1'), $table1, 0],
-                [$connection->createDataSet()->getTableMetaData('table1'), $table1, 1],
-                [$connection->createDataSet()->getTableMetaData('table2'), $table2, 0]
-            )
-            ->willReturnOnConsecutiveCalls(
-                [1, 'foo', 42, 4.2, 'bar'],
-                [2, 'qwerty', 23, 2.3, 'dvorak'],
-                [1, 'fdyhkn', 64, 4568.64, 'hkladfg']
-            );
+            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table, int $row) use ($connection, $table1, $table2) {
+                switch ([$metadata, $table, $row]) {
+                    case [$connection->createDataSet()->getTableMetaData('table1'), $table1, 0]:
+                        return [1, 'foo', 42, 4.2, 'bar'];
+                    case [$connection->createDataSet()->getTableMetaData('table1'), $table1, 1]:
+                        return [2, 'qwerty', 23, 2.3, 'dvorak'];
+                    case [$connection->createDataSet()->getTableMetaData('table2'), $table2, 0]:
+                        return [1, 'fdyhkn', 64, 4568.64, 'hkladfg'];
+                    default:
+                        throw new \InvalidArgumentException('Unexpected metadata / table / row provided');
+                }
+            });
 
         $mockOperation->execute($connection, $dataSet);
 
@@ -214,11 +217,11 @@ class RowBasedTest extends TestCase
             ->method('getTableMetaData')
             ->willReturn($mockTableMetaData);
 
-        $mockPdoStatement = $this->createMock(PDOStatement::class);
+        $mockPdoStatement = $this->createMock(\PDOStatement::class);
         $mockPdoStatement
             ->expects($this->once())
             ->method('execute')
-            ->will($this->throwException(new Exception()));
+            ->will($this->throwException(new \Exception()));
         $mockPdoConnection = $this->createMock(\PDO::class);
         $mockPdoConnection
             ->expects($this->once())

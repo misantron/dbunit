@@ -53,7 +53,7 @@ class AbstractTableTest extends TestCase
         $this->assertEquals($exists, $result);
     }
 
-    public function providerTableContainsRow(): array
+    public static function providerTableContainsRow(): array
     {
         return [
             [[
@@ -174,7 +174,7 @@ class AbstractTableTest extends TestCase
         $this->assertSame($matches, $table->matches($otherTable));
     }
 
-    public function providerMatchesWithColumnValueComparisons(): array
+    public static function providerMatchesWithColumnValueComparisons(): array
     {
         return [
 

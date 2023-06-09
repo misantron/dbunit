@@ -42,7 +42,7 @@ class DataSetIsEqual extends Constraint
     {
         return sprintf(
             'is equal to expected %s',
-            (string) $this->value
+            implode(',', $this->value->getTableNames())
         );
     }
 

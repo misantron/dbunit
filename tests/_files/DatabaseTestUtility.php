@@ -50,16 +50,6 @@ class DatabaseTestUtility
         return self::$mySQLConnection;
     }
 
-    private static function buildMysqlDSN(): string
-    {
-        return sprintf(
-            'mysql:host=%s;dbname=%s;port=%s',
-            getenv('MYSQL_DB_HOST'),
-            getenv('MYSQL_DB_NAME'),
-            getenv('MYSQL_DB_PORT')
-        );
-    }
-
     protected static function setUpDatabase(PDO $connection): void
     {
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -145,6 +135,16 @@ class DatabaseTestUtility
             FOREIGN KEY (table2_id) REFERENCES table2(table2_id)
           ) ENGINE=INNODB;
         '
+        );
+    }
+
+    private static function buildMysqlDSN(): string
+    {
+        return sprintf(
+            'mysql:host=%s;dbname=%s;port=%s',
+            getenv('MYSQL_DB_HOST'),
+            getenv('MYSQL_DB_NAME'),
+            getenv('MYSQL_DB_PORT')
         );
     }
 }

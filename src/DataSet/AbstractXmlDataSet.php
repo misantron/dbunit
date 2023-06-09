@@ -102,9 +102,9 @@ abstract class AbstractXmlDataSet extends AbstractDataSet
      * @param string $tableName
      * @param mixed $tableColumns
      *
-     * @return ITable
+     * @return DefaultTable
      */
-    protected function getOrCreateTable($tableName, $tableColumns): ITable
+    protected function getOrCreateTable(string $tableName, $tableColumns): DefaultTable
     {
         if (empty($this->tables[$tableName])) {
             $tableMetaData = new DefaultTableMetadata($tableName, $tableColumns);

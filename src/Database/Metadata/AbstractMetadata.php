@@ -165,7 +165,9 @@ abstract class AbstractMetadata implements Metadata
      */
     public function splitTableName($fullTableName)
     {
-        if (($dot = strpos($fullTableName, '.')) !== false) {
+        $dot = strpos($fullTableName, '.');
+
+        if ($dot !== false) {
             return [
                 'schema' => substr($fullTableName, 0, $dot),
                 'table' => substr($fullTableName, $dot + 1),

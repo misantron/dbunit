@@ -25,7 +25,7 @@ class DefaultTableMetadata extends AbstractTableMetadata
      * @param array $columns
      * @param array $primaryKeys
      */
-    public function __construct($tableName, array $columns, array $primaryKeys = [])
+    public function __construct(string $tableName, array $columns, array $primaryKeys = [])
     {
         $this->tableName = $tableName;
         $this->columns = $columns;

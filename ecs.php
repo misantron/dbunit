@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
-use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
@@ -24,12 +22,13 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 EOF;
 
-    $ecsConfig->ruleWithConfiguration(HeaderCommentFixer::class, [
+    $ecsConfig->ruleWithConfiguration(PhpCsFixer\Fixer\Comment\HeaderCommentFixer::class, [
         'header' => $header,
     ]);
 
     $ecsConfig->skip([
-        NotOperatorWithSuccessorSpaceFixer::class,
+        PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer::class,
+        PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer::class,
     ]);
 
     $ecsConfig->sets([
@@ -38,5 +37,7 @@ EOF;
         SetList::CLEAN_CODE,
         SetList::ARRAY,
         SetList::PHPUNIT,
+        SetList::CONTROL_STRUCTURES,
+        SetList::NAMESPACES,
     ]);
 };

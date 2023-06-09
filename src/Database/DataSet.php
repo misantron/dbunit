@@ -39,6 +39,16 @@ class DataSet extends AbstractDataSet
     protected $databaseConnection;
 
     /**
+     * Creates a new dataset using the given database connection.
+     *
+     * @param Connection $databaseConnection
+     */
+    public function __construct(Connection $databaseConnection)
+    {
+        $this->databaseConnection = $databaseConnection;
+    }
+
+    /**
      * Creates the query necessary to pull all of the data from a table.
      *
      * @param ITableMetadata $tableMetaData
@@ -81,16 +91,6 @@ class DataSet extends AbstractDataSet
         }
 
         return "SELECT {$columnList} FROM {$tableName} {$orderBy}";
-    }
-
-    /**
-     * Creates a new dataset using the given database connection.
-     *
-     * @param Connection $databaseConnection
-     */
-    public function __construct(Connection $databaseConnection)
-    {
-        $this->databaseConnection = $databaseConnection;
     }
 
     /**
