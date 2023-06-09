@@ -57,6 +57,19 @@ abstract class AbstractMetadata implements Metadata
     protected $truncateCommand = 'TRUNCATE';
 
     /**
+     * Creates a new database meta data object using the given pdo connection
+     * and schema name.
+     *
+     * @param PDO    $pdo
+     * @param string $schema
+     */
+    final public function __construct(PDO $pdo, $schema = '')
+    {
+        $this->pdo = $pdo;
+        $this->schema = $schema;
+    }
+
+    /**
      * Creates a meta data object based on the driver of given $pdo object and
      * $schema name.
      *
@@ -108,19 +121,6 @@ abstract class AbstractMetadata implements Metadata
         }
 
         throw new RuntimeException("Specified class for {$pdoDriver} driver ({$className}) does not extend PHPUnit_Extensions_Database_DB_MetaData.");
-    }
-
-    /**
-     * Creates a new database meta data object using the given pdo connection
-     * and schema name.
-     *
-     * @param PDO    $pdo
-     * @param string $schema
-     */
-    final public function __construct(PDO $pdo, $schema = '')
-    {
-        $this->pdo = $pdo;
-        $this->schema = $schema;
     }
 
     /**
