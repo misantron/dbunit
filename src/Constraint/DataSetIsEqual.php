@@ -23,7 +23,7 @@ class DataSetIsEqual extends Constraint
     /**
      * @var IDataSet
      */
-    protected $value;
+    protected IDataSet $value;
 
     /**
      * @param IDataSet $value
@@ -41,8 +41,8 @@ class DataSetIsEqual extends Constraint
     public function toString(): string
     {
         return sprintf(
-            'is equal to expected %s',
-            implode(',', $this->value->getTableNames())
+            'is equal to expected dataset %s',
+            $this->value
         );
     }
 

@@ -19,9 +19,9 @@ class DefaultDataSet extends AbstractDataSet
     /**
      * An array of ITable objects.
      *
-     * @var array
+     * @var ITable[]
      */
-    protected $tables;
+    protected array $tables;
 
     /**
      * @param array $tables

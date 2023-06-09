@@ -21,14 +21,14 @@ class TableRowCountTest extends TestCase
     {
         $constraint = new TableRowCount('name', 42);
 
-        $this->assertTrue($constraint->evaluate(42, '', true));
-        $this->assertFalse($constraint->evaluate(24, '', true));
-        $this->assertSame('is equal to expected row count 42', $constraint->toString());
+        self::assertTrue($constraint->evaluate(42, '', true));
+        self::assertFalse($constraint->evaluate(24, '', true));
+        self::assertSame('is equal to expected row count 42', $constraint->toString());
 
         try {
-            $this->assertThat(24, $constraint);
+            self::assertThat(24, $constraint);
         } catch (ExpectationFailedException $e) {
-            $this->assertSame(
+            self::assertSame(
                 'Failed asserting that 24 is equal to expected row count 42.',
                 $e->getMessage()
             );

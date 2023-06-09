@@ -16,6 +16,10 @@ namespace PHPUnit\DbUnit\Database\Metadata;
  */
 class Firebird extends AbstractMetadata
 {
+    protected array $columns = [];
+
+    protected array $keys = [];
+
     /**
      * The command used to perform a TRUNCATE operation.
      *
@@ -30,17 +34,7 @@ class Firebird extends AbstractMetadata
      */
     public function getTableNames()
     {
-        $query = "
-            SELECT DISTINCT
-                TABLE_NAME
-            FROM INFORMATION_SCHEMA.TABLES
-            WHERE
-                TABLE_TYPE='BASE TABLE' AND
-                TABLE_SCHEMA = ?
-            ORDER BY TABLE_NAME
-        ";
-
-        $query = "
+        $query = '
             select
               RDB$RELATION_NAME as TABLE_NAME
             from RDB$RELATIONS
@@ -49,7 +43,7 @@ class Firebird extends AbstractMetadata
                (RDB$RELATION_TYPE is null)) and
               (RDB$SYSTEM_FLAG = 0)
             order by (RDB$RELATION_NAME)
-        ";
+        ';
 
         $statement = $this->pdo->prepare($query);
         $statement->execute([$this->getSchema()]);

@@ -20,15 +20,15 @@ abstract class AbstractDataSet implements IDataSet
 {
     public function __toString()
     {
+        /** @var ITable[] $iterator */
         $iterator = $this->getIterator();
 
-        $dataSetString = '';
-
+        $tables = [];
         foreach ($iterator as $table) {
-            $dataSetString .= $table;
+            $tables[] = $table->getTableMetadata()->getTableName();
         }
 
-        return $dataSetString;
+        return '[' . implode(',', $tables) . ']';
     }
 
     /**

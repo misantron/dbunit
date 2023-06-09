@@ -14,7 +14,7 @@ namespace PHPUnit\DbUnit\DataSet;
 /**
  * Provides a basic interface for creating and reading data from data sets.
  */
-interface IDataSet extends \IteratorAggregate
+interface IDataSet extends \IteratorAggregate, \Stringable
 {
     /**
      * Returns an array of table names contained in the dataset.

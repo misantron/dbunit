@@ -23,7 +23,7 @@ class TableIsEqual extends Constraint
     /**
      * @var ITable
      */
-    protected $value;
+    protected ITable $value;
 
     /**
      * @param ITable $value
@@ -42,7 +42,7 @@ class TableIsEqual extends Constraint
     {
         return sprintf(
             'is equal to expected %s',
-            $this->value->getTableMetaData()->getTableName()
+            $this->value
         );
     }
 

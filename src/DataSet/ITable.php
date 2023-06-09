@@ -14,7 +14,7 @@ namespace PHPUnit\DbUnit\DataSet;
 /**
  * Provides a basic interface for creating and reading data from data sets.
  */
-interface ITable
+interface ITable extends \Stringable
 {
     /**
      * Returns the table's meta data.
