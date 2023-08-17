@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         verbose="true"
+         colors="true">
+
+    <testsuites>
+        <testsuite name="all">
+            <directory>tests/</directory>
+            <exclude>tests/_files/*</exclude>
+        </testsuite>
+        <testsuite name="unit">
+            <directory>tests/</directory>
+            <exclude>tests/_files/*</exclude>
+            <exclude>tests/Operation/OperationsMySQLTest.php</exclude>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <env name="MYSQL_DB_HOST" value="127.0.0.1"/>
+        <env name="MYSQL_DB_PORT" value="3406"/>
+        <env name="MYSQL_DB_NAME" value="dbunit"/>
+        <env name="MYSQL_DB_USER" value="root"/>
+        <env name="MYSQL_DB_PASSWORD" value=""/>
+    </php>
+
+    <coverage>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+</phpunit>
