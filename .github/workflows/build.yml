@@ -61,8 +61,10 @@ jobs:
         with:
           dependency-versions: locked
           composer-options: --no-ansi --no-interaction --no-progress
+      - name: Set config
+        run: cp phpunit.xml.dist phpunit.xml
       - name: Run PHPUnit
-        run: vendor/bin/phpunit --colors=always
+        run: vendor/bin/phpunit --colors=always --config phpunit.xml
   coverage:
     name: Tests coverage
     runs-on: ubuntu-latest
