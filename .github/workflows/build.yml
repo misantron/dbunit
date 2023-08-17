@@ -61,11 +61,11 @@ jobs:
         with:
           dependency-versions: locked
           composer-options: --no-ansi --no-interaction --no-progress
-      - name: Set config
-        run: cp phpunit.xml.dist phpunit.xml
+      - name: Override config
+        run: cp ci/phpunit/phpunit.96.xml phpunit.xml.dist
         if: ${{ matrix.php-versions == '7.4' || matrix.php-versions == '8.0' }}
       - name: Run PHPUnit
-        run: vendor/bin/phpunit --colors=always --config phpunit.xml
+        run: vendor/bin/phpunit --colors=always --config phpunit.xml.dist
   coverage:
     name: Tests coverage
     runs-on: ubuntu-latest
