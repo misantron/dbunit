@@ -1,6 +1,6 @@
 {
     "name": "misantron/dbunit",
-    "description": "DbUnit fork supporting PHPUnit 9/10",
+    "description": "DbUnit fork supporting PHPUnit 9/10/11",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -18,9 +18,9 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-pdo": "*",
-        "phpunit/phpunit": "^9.5 || ^10.2",
+        "phpunit/phpunit": "^9.5 || ^10.2 || ^11.1",
         "symfony/polyfill-php80": "^1.27",
-        "symfony/yaml": "^5.4 || ^6.0"
+        "symfony/yaml": "^5.4 || ^6.4 || ^7.0"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.3",
