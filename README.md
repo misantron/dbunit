@@ -1,4 +1,4 @@
-# DbUnit fork supporting PHPUnit 8/9/10
+# DbUnit fork supporting PHPUnit 9/10/11
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/misantron/dbunit/build.yml?style=flat-square)](https://github.com/misantron/dbunit/actions)
 [![Code Coverage](https://img.shields.io/codecov/c/gh/misantron/dbunit.svg?style=flat-square)](https://app.codecov.io/gh/misantron/dbunit)
