@@ -1,5 +1,3 @@
-version: 3.x
-
 services:
   mysql:
     image: biarms/mysql:5.7

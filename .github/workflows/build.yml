@@ -12,7 +12,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: none
       - name: Install composer dependencies
         uses: ramsey/composer-install@v3
@@ -37,6 +37,7 @@ jobs:
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
     services:
       mysql:
         image: "mysql:${{ matrix.db-version }}"
@@ -75,7 +76,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: pcov
       - name: Install composer dependencies
         uses: ramsey/composer-install@v3
