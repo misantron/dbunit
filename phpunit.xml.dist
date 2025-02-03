@@ -5,14 +5,13 @@
          colors="true">
 
     <testsuites>
-        <testsuite name="all">
-            <directory>tests/</directory>
-            <exclude>tests/_files/*</exclude>
-        </testsuite>
         <testsuite name="unit">
             <directory>tests/</directory>
             <exclude>tests/_files/*</exclude>
             <exclude>tests/Operation/OperationsMySQLTest.php</exclude>
+        </testsuite>
+        <testsuite name="functional">
+            <file>tests/Operation/OperationsMySQLTest.php</file>
         </testsuite>
     </testsuites>
 
