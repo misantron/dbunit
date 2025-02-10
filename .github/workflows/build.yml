@@ -86,7 +86,7 @@ jobs:
       - name: Run PHPUnit with coverage
         run: vendor/bin/phpunit --testsuite=unit --colors=always --coverage-clover=clover.xml
       - name: Upload coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: clover.xml
