@@ -12,7 +12,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           coverage: none
       - name: Install composer dependencies
         uses: ramsey/composer-install@v3
@@ -32,12 +32,12 @@ jobs:
           - '5.7'
           - '8.0'
         php-versions:
-          - '7.4'
           - '8.0'
           - '8.1'
           - '8.2'
           - '8.3'
           - '8.4'
+          - '8.5'
     services:
       mysql:
         image: "mysql:${{ matrix.db-version }}"
@@ -62,9 +62,6 @@ jobs:
         with:
           dependency-versions: locked
           composer-options: --no-ansi --no-interaction --no-progress
-      - name: Override config
-        run: cp ci/phpunit/phpunit.96.xml phpunit.xml.dist
-        if: ${{ matrix.php-versions == '7.4' || matrix.php-versions == '8.0' }}
       - name: Run PHPUnit
         run: vendor/bin/phpunit --colors=always --config phpunit.xml.dist
   coverage:
@@ -76,7 +73,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           coverage: pcov
       - name: Install composer dependencies
         uses: ramsey/composer-install@v3

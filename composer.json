@@ -1,6 +1,6 @@
 {
     "name": "misantron/dbunit",
-    "description": "DbUnit fork supporting PHPUnit 9/10/11",
+    "description": "DbUnit fork supporting PHPUnit 10/11/12",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -16,16 +16,15 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.0",
         "ext-pdo": "*",
-        "phpunit/phpunit": "^9.5 || ^10.2 || ^11.1",
-        "symfony/polyfill-php80": "^1.27",
-        "symfony/yaml": "^5.4 || ^6.4 || ^7.0"
+        "phpunit/phpunit": "^10.5 || ^11.5 || ^12.0",
+        "symfony/yaml": "^6.4 || ^7.4 || ^8.0"
     },
     "require-dev": {
-        "phpstan/extension-installer": "^1.3",
-        "phpstan/phpstan": "^1.10 || ^2.0",
-        "symplify/easy-coding-standard": "^12.0"
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.1",
+        "symplify/easy-coding-standard": "^13.0"
     },
     "autoload": {
         "psr-4": {
