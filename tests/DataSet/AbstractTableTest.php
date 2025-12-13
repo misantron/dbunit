@@ -16,6 +16,7 @@ use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
 use PHPUnit\DbUnit\DataSet\ITable;
 use PHPUnit\DbUnit\DataSet\ITableMetadata;
 use PHPUnit\DbUnit\DataSet\QueryTable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -41,13 +42,8 @@ class AbstractTableTest extends TestCase
         ]);
     }
 
-    /**
-     * @param array $row
-     * @param bool $exists
-     *
-     * @dataProvider providerTableContainsRow
-     */
-    public function testTableContainsRow($row, $exists): void
+    #[DataProvider('providerTableContainsRow')]
+    public function testTableContainsRow(array $row, bool $exists): void
     {
         $result = $this->table->assertContainsRow($row);
         $this->assertEquals($exists, $result);
@@ -117,14 +113,8 @@ class AbstractTableTest extends TestCase
         $this->assertFalse($table->matches($otherTable));
     }
 
-    /**
-     * @param array $tableColumnValues
-     * @param array $otherColumnValues
-     * @param bool $matches
-     *
-     * @dataProvider providerMatchesWithColumnValueComparisons
-     */
-    public function testMatchesWithColumnValueComparisons($tableColumnValues, $otherColumnValues, $matches): void
+    #[DataProvider('providerMatchesWithColumnValueComparisons')]
+    public function testMatchesWithColumnValueComparisons(array $tableColumnValues, array $otherColumnValues, bool $matches): void
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
         $otherMetaData = $this->createMock(ITableMetadata::class);

@@ -56,7 +56,7 @@ class DataSet extends AbstractDataSet
      *
      * @return string
      */
-    public static function buildTableSelect(ITableMetadata $tableMetaData, Connection $databaseConnection = null): string
+    public static function buildTableSelect(ITableMetadata $tableMetaData, ?Connection $databaseConnection = null): string
     {
         if ($tableMetaData->getTableName() === '') {
             $e = new RuntimeException('Empty Table Name');

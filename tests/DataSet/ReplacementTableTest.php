@@ -17,14 +17,12 @@ use PHPUnit\DbUnit\DataSet\ITable;
 use PHPUnit\DbUnit\DataSet\ITableMetadata;
 use PHPUnit\DbUnit\DataSet\ReplacementTable;
 use PHPUnit\DbUnit\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class ReplacementTableTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var DefaultTable
-     */
-    protected $startingTable;
+    private DefaultTable $startingTable;
 
     protected function setUp(): void
     {
@@ -297,14 +295,8 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($replacementTable->matches($otherTable));
     }
 
-    /**
-     * @param array $tableColumnValues
-     * @param array $otherColumnValues
-     * @param bool  $matches
-     *
-     * @dataProvider providerMatchesWithColumnValueComparisons
-     */
-    public function testMatchesWithColumnValueComparisons($tableColumnValues, $otherColumnValues, $matches): void
+    #[DataProvider('providerMatchesWithColumnValueComparisons')]
+    public function testMatchesWithColumnValueComparisons(array $tableColumnValues, array $otherColumnValues, bool $matches): void
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
         $otherMetaData = $this->createMock(ITableMetadata::class);

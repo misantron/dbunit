@@ -11,19 +11,16 @@
 
 namespace PHPUnit\DbUnit\Tests\DataSet;
 
-use PDO;
 use PHPUnit\DbUnit\Database\DefaultConnection;
 use PHPUnit\DbUnit\DataSet\DefaultTable;
 use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
 use PHPUnit\DbUnit\DataSet\QueryTable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class QueryTableTest extends TestCase
 {
-    /**
-     * @var QueryTable
-     */
-    protected $table;
+    private QueryTable $table;
 
     protected function setUp(): void
     {
@@ -40,7 +37,7 @@ class QueryTableTest extends TestCase
         $this->table = new QueryTable(
             'table1',
             $query,
-            new DefaultConnection(new PDO('sqlite::memory:'), 'test')
+            new DefaultConnection(new \PDO('sqlite::memory:'), 'test')
         );
     }
 
@@ -60,7 +57,7 @@ class QueryTableTest extends TestCase
     {
         $metaData = new DefaultTableMetadata('table1', ['table1_id', 'column1', 'column2', 'column3', 'column4']);
 
-        $conn = new PDO('sqlite::memory:');
+        $conn = new \PDO('sqlite::memory:');
         $conn->exec(
             'CREATE TABLE IF NOT EXISTS table1 (
             table1_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -97,14 +94,8 @@ class QueryTableTest extends TestCase
         $this->assertEquals(2, $this->table->getRowCount());
     }
 
-    /**
-     * @dataProvider providerTestGetValue
-     *
-     * @param mixed $row
-     * @param mixed $column
-     * @param mixed $value
-     */
-    public function testGetValue($row, $column, $value): void
+    #[DataProvider('providerTestGetValue')]
+    public function testGetValue(int $row, string $column, string $value): void
     {
         $this->assertEquals($value, $this->table->getValue($row, $column));
     }
