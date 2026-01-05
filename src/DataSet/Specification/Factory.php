@@ -21,9 +21,7 @@ class Factory implements IFactory
     /**
      * Returns the data set
      *
-     * @param string $type
      *
-     * @return Specification
      */
     public function getDataSetSpecByType(string $type): Specification
     {

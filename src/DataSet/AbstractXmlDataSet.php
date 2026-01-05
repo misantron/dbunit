@@ -37,9 +37,7 @@ abstract class AbstractXmlDataSet extends AbstractDataSet
         );
 
         if ($this->xmlFileContents === false) {
-            $errors = array_map(static function (\LibXMLError $error) {
-                return trim($error->message);
-            }, libxml_get_errors());
+            $errors = array_map(static fn(\LibXMLError $error) => trim($error->message), libxml_get_errors());
 
             libxml_clear_errors();
 

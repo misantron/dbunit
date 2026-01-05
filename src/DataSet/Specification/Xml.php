@@ -28,9 +28,7 @@ class Xml implements Specification
     /**
      * Creates XML Data Set from a data set spec.
      *
-     * @param string $dataSetSpec
      *
-     * @return XmlDataSet
      */
     public function getDataSet(string $dataSetSpec): XmlDataSet
     {

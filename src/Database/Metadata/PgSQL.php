@@ -22,8 +22,6 @@ class PgSQL extends AbstractMetadata
 
     /**
      * Returns an array containing the names of all the tables in the database.
-     *
-     * @return array
      */
     public function getTableNames(): array
     {
@@ -53,9 +51,7 @@ class PgSQL extends AbstractMetadata
      * Returns an array containing the names of all the columns in the
      * $tableName table,
      *
-     * @param string $tableName
      *
-     * @return array
      */
     public function getTableColumns(string $tableName): array
     {
@@ -70,9 +66,7 @@ class PgSQL extends AbstractMetadata
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
      *
-     * @param string $tableName
      *
-     * @return array
      */
     public function getTablePrimaryKeys(string $tableName): array
     {
@@ -85,8 +79,6 @@ class PgSQL extends AbstractMetadata
 
     /**
      * Returns the schema for the connection.
-     *
-     * @return string
      */
     public function getSchema(): string
     {
@@ -99,8 +91,6 @@ class PgSQL extends AbstractMetadata
 
     /**
      * Returns true if the rdbms allows cascading
-     *
-     * @return bool
      */
     public function allowsCascading(): bool
     {
@@ -109,8 +99,6 @@ class PgSQL extends AbstractMetadata
 
     /**
      * Loads column info from a database table.
-     *
-     * @param string $tableName
      */
     protected function loadColumnInfo(string $tableName): void
     {

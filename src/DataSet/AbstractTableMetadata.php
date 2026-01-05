@@ -18,21 +18,14 @@ abstract class AbstractTableMetadata implements ITableMetadata
 {
     /**
      * The names of all columns in the table.
-     *
-     * @var array
      */
     protected array $columns;
 
     /**
      * The names of all the primary keys in the table.
-     *
-     * @var array
      */
     protected array $primaryKeys;
 
-    /**
-     * @var string
-     */
     protected string $tableName;
 
     /**

@@ -114,8 +114,6 @@ class ReplacementTable implements ITable
     /**
      * Returns the value for the given column on the given row.
      *
-     *
-     * @return mixed
      */
     public function getValue(int $row, string $column): mixed
     {

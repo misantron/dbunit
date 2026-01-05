@@ -96,8 +96,6 @@ abstract class AbstractMetadata implements Metadata
 
     /**
      * Returns the schema for the connection.
-     *
-     * @return string
      */
     public function getSchema(): string
     {
@@ -107,9 +105,7 @@ abstract class AbstractMetadata implements Metadata
     /**
      * Returns a quoted schema object. (table name, column name, etc)
      *
-     * @param string $object
      *
-     * @return string
      */
     public function quoteSchemaObject(string $object): string
     {
@@ -130,7 +126,6 @@ abstract class AbstractMetadata implements Metadata
      *
      * Returns an associative array containing the 'schema' and the 'table'.
      *
-     * @param string $fullTableName
      *
      * @return array{schema: string|null, table: string}
      */
@@ -153,8 +148,6 @@ abstract class AbstractMetadata implements Metadata
 
     /**
      * Returns the command for the database to truncate a table.
-     *
-     * @return string
      */
     public function getTruncateCommand(): string
     {
@@ -163,8 +156,6 @@ abstract class AbstractMetadata implements Metadata
 
     /**
      * Returns true if the rdbms allows cascading
-     *
-     * @return bool
      */
     public function allowsCascading(): bool
     {
@@ -173,8 +164,6 @@ abstract class AbstractMetadata implements Metadata
 
     /**
      * Disables primary keys if the rdbms does not allow setting them otherwise
-     *
-     * @param string $tableName
      */
     public function disablePrimaryKeys(string $tableName): void
     {
@@ -182,8 +171,6 @@ abstract class AbstractMetadata implements Metadata
 
     /**
      * Reenables primary keys after they have been disabled
-     *
-     * @param string $tableName
      */
     public function enablePrimaryKeys(string $tableName): void
     {

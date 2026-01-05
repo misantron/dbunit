@@ -130,10 +130,10 @@ class Filter extends AbstractDataSet
 
         foreach ($originalTables as $table) {
             $tableName = $table->getTableMetaData()->getTableName();
-
-            if ((!\in_array($tableName, $this->includeTables, true) && !empty($this->includeTables)) ||
-                \in_array($tableName, $this->excludeTables, true)
-            ) {
+            if (!\in_array($tableName, $this->includeTables, true) && !empty($this->includeTables)) {
+                continue;
+            }
+            if (\in_array($tableName, $this->excludeTables, true)) {
                 continue;
             }
 

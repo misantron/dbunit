@@ -21,9 +21,7 @@ interface Specification
     /**
      * Creates a data set from a data set spec string.
      *
-     * @param string $dataSetSpec
      *
-     * @return IDataSet
      */
     public function getDataSet(string $dataSetSpec): IDataSet;
 }

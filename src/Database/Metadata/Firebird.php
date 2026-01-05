@@ -29,8 +29,6 @@ class Firebird extends AbstractMetadata
 
     /**
      * Returns an array containing the names of all the tables in the database.
-     *
-     * @return array
      */
     public function getTableNames(): array
     {
@@ -61,9 +59,7 @@ class Firebird extends AbstractMetadata
      * Returns an array containing the names of all the columns in the
      * $tableName table,
      *
-     * @param string $tableName
      *
-     * @return array
      */
     public function getTableColumns(string $tableName): array
     {
@@ -78,9 +74,7 @@ class Firebird extends AbstractMetadata
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
      *
-     * @param string $tableName
      *
-     * @return array
      */
     public function getTablePrimaryKeys(string $tableName): array
     {
@@ -93,8 +87,6 @@ class Firebird extends AbstractMetadata
 
     /**
      * Returns the schema for the connection.
-     *
-     * @return string
      */
     public function getSchema(): string
     {
@@ -107,8 +99,6 @@ class Firebird extends AbstractMetadata
 
     /**
      * Returns true if the rdbms allows cascading
-     *
-     * @return bool
      */
     public function allowsCascading(): bool
     {
@@ -118,9 +108,7 @@ class Firebird extends AbstractMetadata
     /**
      * Returns a quoted schema object. (table name, column name, etc)
      *
-     * @param string $object
      *
-     * @return string
      */
     public function quoteSchemaObject(string $object): string
     {
@@ -129,8 +117,6 @@ class Firebird extends AbstractMetadata
 
     /**
      * Loads column info from a database table.
-     *
-     * @param string $tableName
      */
     protected function loadColumnInfo(string $tableName): void
     {

@@ -28,9 +28,7 @@ class Yaml implements Specification
     /**
      * Creates YAML Data Set from a data set spec.
      *
-     * @param string $dataSetSpec
      *
-     * @return YamlDataSet
      */
     public function getDataSet(string $dataSetSpec): YamlDataSet
     {

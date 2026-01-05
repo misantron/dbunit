@@ -29,8 +29,6 @@ class DefaultTable extends AbstractTable
 
     /**
      * Adds a row to the table with optional values.
-     *
-     * @param array $values
      */
     public function addRow(array $values = []): void
     {
@@ -60,10 +58,6 @@ class DefaultTable extends AbstractTable
 
     /**
      * Sets the specified column of the specified row to the specified value.
-     *
-     * @param int $row
-     * @param string $column
-     * @param mixed $value
      */
     public function setValue(int $row, string $column, mixed $value): void
     {

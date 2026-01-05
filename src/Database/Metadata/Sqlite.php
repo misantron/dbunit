@@ -26,8 +26,6 @@ class Sqlite extends AbstractMetadata
 
     /**
      * Returns an array containing the names of all the tables in the database.
-     *
-     * @return array
      */
     public function getTableNames(): array
     {
@@ -55,9 +53,7 @@ class Sqlite extends AbstractMetadata
      * Returns an array containing the names of all the columns in the
      * $tableName table,
      *
-     * @param string $tableName
      *
-     * @return array
      */
     public function getTableColumns(string $tableName): array
     {
@@ -72,9 +68,7 @@ class Sqlite extends AbstractMetadata
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
      *
-     * @param string $tableName
      *
-     * @return array
      */
     public function getTablePrimaryKeys(string $tableName): array
     {
@@ -87,8 +81,6 @@ class Sqlite extends AbstractMetadata
 
     /**
      * Loads column info from a sqlite database.
-     *
-     * @param string $tableName
      */
     protected function loadColumnInfo(string $tableName): void
     {
