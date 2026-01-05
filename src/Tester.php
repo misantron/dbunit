@@ -25,51 +25,45 @@ interface Tester
     /**
      * Closes the specified connection.
      */
-    public function closeConnection(Connection $connection);
+    public function closeConnection(Connection $connection): void;
 
     /**
      * Returns the test database connection.
-     *
-     * @return Connection
      */
-    public function getConnection();
+    public function getConnection(): Connection;
 
     /**
      * Returns the test dataset.
-     *
-     * @return IDataSet
      */
-    public function getDataSet();
+    public function getDataSet(): IDataSet;
 
     /**
      * TestCases must call this method inside setUp().
      */
-    public function onSetUp();
+    public function onSetUp(): void;
 
     /**
      * TestCases must call this method inside tearDown().
      */
-    public function onTearDown();
+    public function onTearDown(): void;
 
     /**
      * Sets the test dataset to use.
      */
-    public function setDataSet(IDataSet $dataSet);
+    public function setDataSet(IDataSet $dataSet): void;
 
     /**
      * Sets the schema value.
-     *
-     * @param string $schema
      */
-    public function setSchema($schema);
+    public function setSchema(string $schema): void;
 
     /**
      * Sets the DatabaseOperation to call when starting the test.
      */
-    public function setSetUpOperation(Operation $setUpOperation);
+    public function setSetUpOperation(Operation $setUpOperation): void;
 
     /**
      * Sets the DatabaseOperation to call when stopping the test.
      */
-    public function setTearDownOperation(Operation $tearDownOperation);
+    public function setTearDownOperation(Operation $tearDownOperation): void;
 }

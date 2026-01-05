@@ -22,17 +22,12 @@ use PHPUnit\DbUnit\DataSet\IDataSet;
 use PHPUnit\DbUnit\DataSet\ITable;
 use PHPUnit\DbUnit\DataSet\MysqlXmlDataSet;
 use PHPUnit\DbUnit\DataSet\XmlDataSet;
-use PHPUnit\DbUnit\Operation\Composite;
 use PHPUnit\DbUnit\Operation\Factory;
-use PHPUnit\DbUnit\Operation\None;
 use PHPUnit\DbUnit\Operation\Operation;
 
 trait TestCaseTrait
 {
-    /**
-     * @var Tester
-     */
-    protected $databaseTester;
+    protected ?Tester $databaseTester = null;
 
     /**
      * Performs operation returned by getSetUpOperation().
@@ -68,10 +63,8 @@ trait TestCaseTrait
 
     /**
      * Asserts that two given tables are equal.
-     *
-     * @param string $message
      */
-    public static function assertTablesEqual(ITable $expected, ITable $actual, $message = ''): void
+    public static function assertTablesEqual(ITable $expected, ITable $actual, string $message = ''): void
     {
         $constraint = new TableIsEqual($expected);
 
@@ -80,10 +73,8 @@ trait TestCaseTrait
 
     /**
      * Asserts that two given datasets are equal.
-     *
-     * @param string $message
      */
-    public static function assertDataSetsEqual(IDataSet $expected, IDataSet $actual, $message = ''): void
+    public static function assertDataSetsEqual(IDataSet $expected, IDataSet $actual, string $message = ''): void
     {
         $constraint = new DataSetIsEqual($expected);
 
@@ -97,7 +88,7 @@ trait TestCaseTrait
      * @param int    $expected  Expected amount of rows in the table
      * @param string $message   Optional message
      */
-    public function assertTableRowCount($tableName, $expected, $message = ''): void
+    public function assertTableRowCount(string $tableName, int $expected, string $message = ''): void
     {
         $constraint = new TableRowCount($tableName, $expected);
         $actual = $this->getConnection()->getRowCount($tableName);
@@ -112,7 +103,7 @@ trait TestCaseTrait
      * @param ITable $table       Table to look into
      * @param string $message     Optional message
      */
-    public function assertTableContains(array $expectedRow, ITable $table, $message = ''): void
+    public function assertTableContains(array $expectedRow, ITable $table, string $message = ''): void
     {
         self::assertThat($table->assertContainsRow($expectedRow), self::isTrue(), $message);
     }
@@ -127,10 +118,8 @@ trait TestCaseTrait
 
     /**
      * Returns the test database connection.
-     *
-     * @return Connection
      */
-    abstract protected function getConnection();
+    abstract protected function getConnection(): Connection;
 
     /**
      * Gets the IDatabaseTester for this testCase. If the IDatabaseTester is
@@ -139,7 +128,7 @@ trait TestCaseTrait
      *
      * @return Tester
      */
-    protected function getDatabaseTester()
+    protected function getDatabaseTester(): Tester
     {
         if (empty($this->databaseTester)) {
             $this->databaseTester = $this->newDatabaseTester();
@@ -153,24 +142,20 @@ trait TestCaseTrait
      *
      * @return IDataSet
      */
-    abstract protected function getDataSet();
+    abstract protected function getDataSet(): IDataSet;
 
     /**
      * Returns the database operation executed in test setup.
-     *
-     * @return Operation
      */
-    protected function getSetUpOperation(): Composite
+    protected function getSetUpOperation(): Operation
     {
         return Factory::CLEAN_INSERT();
     }
 
     /**
      * Returns the database operation executed in test cleanup.
-     *
-     * @return Operation
      */
-    protected function getTearDownOperation(): None
+    protected function getTearDownOperation(): Operation
     {
         return Factory::NONE();
     }
@@ -188,11 +173,8 @@ trait TestCaseTrait
     /**
      * Creates a new DefaultDatabaseConnection using the given PDO connection
      * and database schema name.
-     *
-     * @param string $schema
-     *
      */
-    protected function createDefaultDBConnection(\PDO $connection, $schema = ''): DefaultConnection
+    protected function createDefaultDBConnection(\PDO $connection, string $schema = ''): DefaultConnection
     {
         return new DefaultConnection($connection, $schema);
     }
@@ -219,30 +201,24 @@ trait TestCaseTrait
 
     /**
      * Creates a new FlatXmlDataSet with the given $xmlFile. (absolute path.)
-     *
-     * @param string $xmlFile
      */
-    protected function createFlatXMLDataSet($xmlFile): FlatXmlDataSet
+    protected function createFlatXMLDataSet(string $xmlFile): FlatXmlDataSet
     {
         return new FlatXmlDataSet($xmlFile);
     }
 
     /**
      * Creates a new XMLDataSet with the given $xmlFile. (absolute path.)
-     *
-     * @param string $xmlFile
      */
-    protected function createXMLDataSet($xmlFile): XmlDataSet
+    protected function createXMLDataSet(string $xmlFile): XmlDataSet
     {
         return new XmlDataSet($xmlFile);
     }
 
     /**
      * Create a a new MysqlXmlDataSet with the given $xmlFile. (absolute path.)
-     *
-     * @param string $xmlFile
      */
-    protected function createMySQLXMLDataSet($xmlFile): MysqlXmlDataSet
+    protected function createMySQLXMLDataSet(string $xmlFile): MysqlXmlDataSet
     {
         return new MysqlXmlDataSet($xmlFile);
     }

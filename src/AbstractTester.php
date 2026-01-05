@@ -21,15 +21,9 @@ use PHPUnit\DbUnit\Operation\Operation;
  */
 abstract class AbstractTester implements Tester
 {
-    /**
-     * @var Operation
-     */
-    protected $setUpOperation;
+    protected Operation $setUpOperation;
 
-    /**
-     * @var Operation
-     */
-    protected $tearDownOperation;
+    protected Operation $tearDownOperation;
 
     /**
      * @var IDataSet
@@ -60,10 +54,8 @@ abstract class AbstractTester implements Tester
 
     /**
      * Returns the test dataset.
-     *
-     * @return IDataSet
      */
-    public function getDataSet()
+    public function getDataSet(): IDataSet
     {
         return $this->dataSet;
     }
@@ -94,10 +86,8 @@ abstract class AbstractTester implements Tester
 
     /**
      * Sets the schema value.
-     *
-     * @param string $schema
      */
-    public function setSchema($schema): void
+    public function setSchema(string $schema): void
     {
         $this->schema = $schema;
     }
@@ -120,30 +110,24 @@ abstract class AbstractTester implements Tester
 
     /**
      * Returns the schema value
-     *
-     * @return string
      */
-    protected function getSchema()
+    protected function getSchema(): string
     {
         return $this->schema;
     }
 
     /**
      * Returns the database operation that will be called when starting the test.
-     *
-     * @return Operation
      */
-    protected function getSetUpOperation()
+    protected function getSetUpOperation(): Operation
     {
         return $this->setUpOperation;
     }
 
     /**
      * Returns the database operation that will be called when ending the test.
-     *
-     * @return Operation
      */
-    protected function getTearDownOperation()
+    protected function getTearDownOperation(): Operation
     {
         return $this->tearDownOperation;
     }
