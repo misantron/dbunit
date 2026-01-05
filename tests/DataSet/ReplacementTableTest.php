@@ -198,12 +198,12 @@ final class ReplacementTableTest extends \PHPUnit\Framework\TestCase
             ]
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             [
-                'table1_id' => 1,
+                'table1_id' => '1',
                 'column1' => 'My name is Mike Lively',
-                'column2' => 200,
-                'column3' => 34.64,
+                'column2' => '200',
+                'column3' => '34.64',
                 'column4' => 'yghkf;a  hahfg8ja h;',
             ],
             $actual->getRow(0)
