@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -26,7 +28,7 @@ use PHPUnit\DbUnit\Operation\Exception as OperationException;
 use PHPUnit\DbUnit\Operation\RowBased;
 use PHPUnit\DbUnit\TestCase;
 
-class RowBasedTest extends TestCase
+final class RowBasedTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -189,7 +191,7 @@ class RowBasedTest extends TestCase
         $mockPdoStatement
             ->expects($this->once())
             ->method('execute')
-            ->will($this->throwException(new \Exception()));
+            ->willThrowException(new \Exception());
         $mockPdoConnection = $this->createMock(\PDO::class);
         $mockPdoConnection
             ->expects($this->once())

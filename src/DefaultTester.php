@@ -30,10 +30,8 @@ class DefaultTester extends AbstractTester
 
     /**
      * Returns the test database connection.
-     *
-     * @return Connection
      */
-    public function getConnection()
+    public function getConnection(): Connection
     {
         return $this->connection;
     }

@@ -21,7 +21,7 @@ use PHPUnit\DbUnit\Exception\InvalidArgumentException;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
-class DataSetIsEqualTest extends TestCase
+final class DataSetIsEqualTest extends TestCase
 {
     public function testMatch(): void
     {
@@ -36,9 +36,9 @@ class DataSetIsEqualTest extends TestCase
             ),
         ]);
 
-        self::assertTrue($constraint->evaluate($dataSet, '', true));
-        self::assertFalse($constraint->evaluate(new DefaultDataSet(), '', true));
-        self::assertSame('is equal to expected dataset [table1,table2]', $constraint->toString());
+        $this->assertTrue($constraint->evaluate($dataSet, '', true));
+        $this->assertFalse($constraint->evaluate(new DefaultDataSet(), '', true));
+        $this->assertSame('is equal to expected dataset [table1,table2]', $constraint->toString());
     }
 
     public function testMatchInvalidType(): void
@@ -55,7 +55,7 @@ class DataSetIsEqualTest extends TestCase
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage('Failed asserting that [] is equal to expected dataset [table1,table2].');
 
-        self::assertThat(new DefaultDataSet(), $this->createConstraint());
+        $this->assertThat(new DefaultDataSet(), $this->createConstraint());
     }
 
     private function createConstraint(): DataSetIsEqual

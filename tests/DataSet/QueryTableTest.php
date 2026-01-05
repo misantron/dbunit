@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -18,7 +20,7 @@ use PHPUnit\DbUnit\DataSet\QueryTable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class QueryTableTest extends TestCase
+final class QueryTableTest extends TestCase
 {
     private QueryTable $table;
 
@@ -41,16 +43,14 @@ class QueryTableTest extends TestCase
         );
     }
 
-    public static function providerTestGetValue(): array
+    public static function providerTestGetValue(): \Iterator
     {
-        return [
-            [0, 'col1', 'value1'],
-            [0, 'col2', 'value2'],
-            [0, 'col3', 'value3'],
-            [1, 'col1', 'value4'],
-            [1, 'col2', 'value5'],
-            [1, 'col3', 'value6'],
-        ];
+        yield [0, 'col1', 'value1'];
+        yield [0, 'col2', 'value2'];
+        yield [0, 'col3', 'value3'];
+        yield [1, 'col1', 'value4'];
+        yield [1, 'col2', 'value5'];
+        yield [1, 'col3', 'value6'];
     }
 
     public function testGetEmptyTableMetaData(): void
@@ -91,7 +91,7 @@ class QueryTableTest extends TestCase
 
     public function testGetRowCount(): void
     {
-        $this->assertEquals(2, $this->table->getRowCount());
+        $this->assertSame(2, $this->table->getRowCount());
     }
 
     #[DataProvider('providerTestGetValue')]
@@ -102,7 +102,7 @@ class QueryTableTest extends TestCase
 
     public function testGetRow(): void
     {
-        $this->assertEquals([
+        $this->assertSame([
             'col1' => 'value1',
             'col2' => 'value2',
             'col3' => 'value3',

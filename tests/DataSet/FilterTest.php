@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -16,7 +18,7 @@ use PHPUnit\DbUnit\DataSet\Filter;
 use PHPUnit\DbUnit\DataSet\FlatXmlDataSet;
 use PHPUnit\Framework\TestCase;
 
-class FilterTest extends TestCase
+final class FilterTest extends TestCase
 {
     protected $expectedDataSet;
 
@@ -36,7 +38,7 @@ class FilterTest extends TestCase
             'table3' => 'table3_id',
         ]);
 
-        self::assertThat($filteredDataSet, $constraint);
+        $this->assertThat($filteredDataSet, $constraint);
     }
 
     public function testExcludeFilteredDataSet(): void
@@ -50,7 +52,7 @@ class FilterTest extends TestCase
         $filteredDataSet->setExcludeColumnsForTable('table1', ['table1_id']);
         $filteredDataSet->setExcludeColumnsForTable('table3', ['table3_id']);
 
-        self::assertThat($filteredDataSet, $constraint);
+        $this->assertThat($filteredDataSet, $constraint);
     }
 
     public function testIncludeFilteredDataSet(): void
@@ -64,7 +66,7 @@ class FilterTest extends TestCase
         $filteredDataSet->setIncludeColumnsForTable('table1', ['column1', 'column2', 'column3', 'column4']);
         $filteredDataSet->setIncludeColumnsForTable('table3', ['column9', 'column10', 'column11', 'column12']);
 
-        self::assertThat($filteredDataSet, $constraint);
+        $this->assertThat($filteredDataSet, $constraint);
     }
 
     public function testIncludeExcludeMixedDataSet(): void
@@ -78,6 +80,6 @@ class FilterTest extends TestCase
         $filteredDataSet->setExcludeColumnsForTable('table1', ['table1_id']);
         $filteredDataSet->setIncludeColumnsForTable('table3', ['column9', 'column10', 'column11', 'column12']);
 
-        self::assertThat($filteredDataSet, $constraint);
+        $this->assertThat($filteredDataSet, $constraint);
     }
 }

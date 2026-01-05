@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -15,11 +17,12 @@ use DatabaseTestUtility;
 use PHPUnit\DbUnit\Database\DefaultConnection;
 use PHPUnit\DbUnit\DataSet\DefaultTable;
 use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
+use PHPUnit\DbUnit\DataSet\FlatXmlDataSet;
 use PHPUnit\DbUnit\DataSet\ITable;
 use PHPUnit\DbUnit\DataSet\QueryDataSet;
 use PHPUnit\DbUnit\TestCase;
 
-class QueryDataSetTest extends TestCase
+final class QueryDataSetTest extends TestCase
 {
     /**
      * @var ITable[]
@@ -94,7 +97,7 @@ class QueryDataSetTest extends TestCase
         return $this->createDefaultDBConnection($this->pdo, 'test');
     }
 
-    protected function getDataSet()
+    protected function getDataSet(): FlatXmlDataSet
     {
         return $this->createFlatXMLDataSet(TEST_FILES_PATH . 'XmlDataSets/QueryDataSetTest.xml');
     }

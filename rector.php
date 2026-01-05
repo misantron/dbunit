@@ -25,5 +25,6 @@ return RectorConfig::configure()
         codingStyle: true,
         typeDeclarations: true,
         earlyReturn: true,
+        phpunitCodeQuality: true,
     )
 ;

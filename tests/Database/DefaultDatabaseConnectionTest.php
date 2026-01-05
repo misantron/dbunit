@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -15,7 +17,7 @@ use PDO;
 use PHPUnit\DbUnit\Database\DefaultConnection;
 use PHPUnit\Framework\TestCase;
 
-class DefaultDatabaseConnectionTest extends TestCase
+final class DefaultDatabaseConnectionTest extends TestCase
 {
     private \PDO $db;
 

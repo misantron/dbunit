@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -25,7 +27,7 @@ use PHPUnit\DbUnit\Operation\Truncate;
 use PHPUnit\DbUnit\Operation\Update;
 use PHPUnit\DbUnit\TestCase;
 
-class OperationsTest extends TestCase
+final class OperationsTest extends TestCase
 {
     protected function setUp(): void
     {

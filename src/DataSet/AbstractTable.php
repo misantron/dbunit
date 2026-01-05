@@ -56,7 +56,7 @@ class AbstractTable implements ITable
             $values = [];
 
             foreach ($columns as $columnName) {
-                if ($this->other) {
+                if ($this->other instanceof ITable) {
                     try {
                         if ($this->getValue($i, $columnName) !== $this->other->getValue($i, $columnName)) {
                             $values[] = sprintf(
@@ -78,7 +78,7 @@ class AbstractTable implements ITable
             $tableString .= $this->rowToString($values) . $lineSeparator;
         }
 
-        return ($this->other ? '(table diff enabled)' : '') . "\n" . $tableString . "\n";
+        return ($this->other instanceof ITable ? '(table diff enabled)' : '') . "\n" . $tableString . "\n";
     }
 
     /**

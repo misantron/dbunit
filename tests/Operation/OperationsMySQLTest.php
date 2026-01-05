@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -21,7 +23,7 @@ use PHPUnit\DbUnit\DataSet\FlatXmlDataSet;
 use PHPUnit\DbUnit\Operation\Truncate;
 use PHPUnit\DbUnit\TestCase;
 
-class OperationsMySQLTest extends TestCase
+final class OperationsMySQLTest extends TestCase
 {
     protected function setUp(): void
     {

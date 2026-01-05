@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -17,7 +19,7 @@ use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
 use PHPUnit\DbUnit\DataSet\ReplacementDataSet;
 use PHPUnit\DbUnit\TestCase;
 
-class ReplacementDataSetTest extends \PHPUnit\Framework\TestCase
+final class ReplacementDataSetTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var DefaultDataSet

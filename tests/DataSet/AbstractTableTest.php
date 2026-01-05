@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -20,7 +22,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class AbstractTableTest extends TestCase
+final class AbstractTableTest extends TestCase
 {
     /**
      * @var QueryTable
@@ -49,18 +51,16 @@ class AbstractTableTest extends TestCase
         $this->assertEquals($exists, $result);
     }
 
-    public static function providerTableContainsRow(): array
+    public static function providerTableContainsRow(): \Iterator
     {
-        return [
-            [[
-                'id' => 1,
-                'column1' => 'randomValue',
-            ], true],
-            [[
-                'id' => 1,
-                'column1' => 'notExistingValue',
-            ], false],
-        ];
+        yield [[
+            'id' => 1,
+            'column1' => 'randomValue',
+        ], true];
+        yield [[
+            'id' => 1,
+            'column1' => 'notExistingValue',
+        ], false];
     }
 
     public function testMatchesWithNonMatchingMetaData(): void
@@ -165,221 +165,207 @@ class AbstractTableTest extends TestCase
         $this->assertSame($matches, $table->matches($otherTable));
     }
 
-    public static function providerMatchesWithColumnValueComparisons(): array
+    public static function providerMatchesWithColumnValueComparisons(): \Iterator
     {
-        return [
-
-            // One row, one column, matches
+        // One row, one column, matches
+        yield [
             [
                 [
-                    [
-                        'id' => 1,
-                    ],
+                    'id' => 1,
                 ],
-                [
-                    [
-                        'id' => 1,
-                    ],
-                ],
-                true,
             ],
-
-            // One row, one column, does not match
             [
                 [
-                    [
-                        'id' => 1,
-                    ],
+                    'id' => 1,
                 ],
-                [
-                    [
-                        'id' => 2,
-                    ],
-                ],
-                false,
             ],
-
-            // Multiple rows, one column, matches
+            true,
+        ];
+        // One row, one column, does not match
+        yield [
             [
                 [
-                    [
-                        'id' => 1,
-                    ],
-                    [
-                        'id' => 2,
-                    ],
+                    'id' => 1,
                 ],
-                [
-                    [
-                        'id' => 1,
-                    ],
-                    [
-                        'id' => 2,
-                    ],
-                ],
-                true,
             ],
-
-            // Multiple rows, one column, do not match
             [
                 [
-                    [
-                        'id' => 1,
-                    ],
-                    [
-                        'id' => 2,
-                    ],
+                    'id' => 2,
                 ],
-                [
-                    [
-                        'id' => 1,
-                    ],
-                    [
-                        'id' => 3,
-                    ],
-                ],
-                false,
             ],
-
-            // Multiple rows, multiple columns, matches
+            false,
+        ];
+        // Multiple rows, one column, matches
+        yield [
             [
                 [
-                    [
-                        'id' => 1,
-                        'name' => 'foo',
-                    ],
-                    [
-                        'id' => 2,
-                        'name' => 'bar',
-                    ],
+                    'id' => 1,
                 ],
                 [
-                    [
-                        'id' => 1,
-                        'name' => 'foo',
-                    ],
-                    [
-                        'id' => 2,
-                        'name' => 'bar',
-                    ],
+                    'id' => 2,
                 ],
-                true,
             ],
-
-            // Multiple rows, multiple columns, do not match
             [
                 [
-                    [
-                        'id' => 1,
-                        'name' => 'foo',
-                    ],
-                    [
-                        'id' => 2,
-                        'name' => 'bar',
-                    ],
+                    'id' => 1,
                 ],
                 [
-                    [
-                        'id' => 1,
-                        'name' => 'foo',
-                    ],
-                    [
-                        'id' => 2,
-                        'name' => 'baz',
-                    ],
+                    'id' => 2,
                 ],
-                false,
             ],
-
-            // Int and int as string must match
+            true,
+        ];
+        // Multiple rows, one column, do not match
+        yield [
             [
                 [
-                    [
-                        'id' => 42,
-                    ],
+                    'id' => 1,
                 ],
                 [
-                    [
-                        'id' => '42',
-                    ],
+                    'id' => 2,
                 ],
-                true,
             ],
-
-            // Float and float as string must match
             [
                 [
-                    [
-                        'id' => 15.3,
-                    ],
+                    'id' => 1,
                 ],
                 [
-                    [
-                        'id' => '15.3',
-                    ],
+                    'id' => 3,
                 ],
-                true,
             ],
-
-            // Int and float must match
+            false,
+        ];
+        // Multiple rows, multiple columns, matches
+        yield [
             [
                 [
-                    [
-                        'id' => 18.00,
-                    ],
+                    'id' => 1,
+                    'name' => 'foo',
                 ],
                 [
-                    [
-                        'id' => 18,
-                    ],
+                    'id' => 2,
+                    'name' => 'bar',
                 ],
-                true,
             ],
-
-            // 0 and empty string must not match
             [
                 [
-                    [
-                        'id' => 0,
-                    ],
+                    'id' => 1,
+                    'name' => 'foo',
                 ],
                 [
-                    [
-                        'id' => '',
-                    ],
+                    'id' => 2,
+                    'name' => 'bar',
                 ],
-                false,
             ],
-
-            // 0 and null must not match
+            true,
+        ];
+        // Multiple rows, multiple columns, do not match
+        yield [
             [
                 [
-                    [
-                        'id' => 0,
-                    ],
+                    'id' => 1,
+                    'name' => 'foo',
                 ],
                 [
-                    [
-                        'id' => null,
-                    ],
+                    'id' => 2,
+                    'name' => 'bar',
                 ],
-                false,
             ],
-
-            // empty string and null must not match
             [
                 [
-                    [
-                        'id' => '',
-                    ],
+                    'id' => 1,
+                    'name' => 'foo',
                 ],
                 [
-                    [
-                        'id' => null,
-                    ],
+                    'id' => 2,
+                    'name' => 'baz',
                 ],
-                false,
             ],
+            false,
+        ];
+        // Int and int as string must match
+        yield [
+            [
+                [
+                    'id' => 42,
+                ],
+            ],
+            [
+                [
+                    'id' => '42',
+                ],
+            ],
+            true,
+        ];
+        // Float and float as string must match
+        yield [
+            [
+                [
+                    'id' => 15.3,
+                ],
+            ],
+            [
+                [
+                    'id' => '15.3',
+                ],
+            ],
+            true,
+        ];
+        // Int and float must match
+        yield [
+            [
+                [
+                    'id' => 18.00,
+                ],
+            ],
+            [
+                [
+                    'id' => 18,
+                ],
+            ],
+            true,
+        ];
+        // 0 and empty string must not match
+        yield [
+            [
+                [
+                    'id' => 0,
+                ],
+            ],
+            [
+                [
+                    'id' => '',
+                ],
+            ],
+            false,
+        ];
+        // 0 and null must not match
+        yield [
+            [
+                [
+                    'id' => 0,
+                ],
+            ],
+            [
+                [
+                    'id' => null,
+                ],
+            ],
+            false,
+        ];
+        // empty string and null must not match
+        yield [
+            [
+                [
+                    'id' => '',
+                ],
+            ],
+            [
+                [
+                    'id' => null,
+                ],
+            ],
+            false,
         ];
     }
 }

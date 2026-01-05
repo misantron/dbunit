@@ -22,7 +22,9 @@ use PHPUnit\DbUnit\DataSet\IDataSet;
 use PHPUnit\DbUnit\DataSet\ITable;
 use PHPUnit\DbUnit\DataSet\MysqlXmlDataSet;
 use PHPUnit\DbUnit\DataSet\XmlDataSet;
+use PHPUnit\DbUnit\Operation\Composite;
 use PHPUnit\DbUnit\Operation\Factory;
+use PHPUnit\DbUnit\Operation\None;
 use PHPUnit\DbUnit\Operation\Operation;
 
 trait TestCaseTrait
@@ -158,7 +160,7 @@ trait TestCaseTrait
      *
      * @return Operation
      */
-    protected function getSetUpOperation()
+    protected function getSetUpOperation(): Composite
     {
         return Factory::CLEAN_INSERT();
     }
@@ -168,7 +170,7 @@ trait TestCaseTrait
      *
      * @return Operation
      */
-    protected function getTearDownOperation()
+    protected function getTearDownOperation(): None
     {
         return Factory::NONE();
     }

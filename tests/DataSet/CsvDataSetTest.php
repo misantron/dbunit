@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -17,7 +19,7 @@ use PHPUnit\DbUnit\DataSet\DefaultTable;
 use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
 use PHPUnit\DbUnit\TestCase;
 
-class CsvDataSetTest extends \PHPUnit\Framework\TestCase
+final class CsvDataSetTest extends \PHPUnit\Framework\TestCase
 {
     public function testCSVDataSet(): void
     {
