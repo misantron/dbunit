@@ -1,6 +1,6 @@
 {
     "name": "misantron/dbunit",
-    "description": "DbUnit fork supporting PHPUnit 10/11/12",
+    "description": "DbUnit fork supporting modern PHPUnit versions",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -24,6 +24,7 @@
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
+        "rector/rector": "^2.3",
         "symplify/easy-coding-standard": "^13.0"
     },
     "autoload": {
