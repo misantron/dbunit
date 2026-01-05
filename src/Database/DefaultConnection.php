@@ -80,7 +80,7 @@ class DefaultConnection implements Connection
      */
     public function createDataSet(?array $tableNames = null): IDataSet
     {
-        if (empty($tableNames)) {
+        if ($tableNames === null || $tableNames === []) {
             return new DataSet($this);
         }
 

@@ -46,7 +46,7 @@ abstract class AbstractMetadata implements Metadata
      */
     final public function __construct(
         protected \PDO $pdo,
-        protected string $schema = ''
+        protected string $schema = '',
     ) {
     }
 
@@ -104,8 +104,6 @@ abstract class AbstractMetadata implements Metadata
 
     /**
      * Returns a quoted schema object. (table name, column name, etc)
-     *
-     *
      */
     public function quoteSchemaObject(string $object): string
     {

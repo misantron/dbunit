@@ -82,7 +82,7 @@ class PgSQL extends AbstractMetadata
      */
     public function getSchema(): string
     {
-        if (empty($this->schema)) {
+        if ($this->schema === '' || $this->schema === '0') {
             return 'public';
         }
 

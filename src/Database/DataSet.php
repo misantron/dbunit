@@ -62,12 +62,12 @@ class DataSet extends AbstractDataSet
 
         $columns = $tableMetaData->getColumns();
 
-        if ($databaseConnection) {
+        if ($databaseConnection instanceof Connection) {
             $columns = array_map($databaseConnection->quoteSchemaObject(...), $columns);
         }
         $columnList = implode(', ', $columns);
 
-        if ($databaseConnection) {
+        if ($databaseConnection instanceof Connection) {
             $tableName = $databaseConnection->quoteSchemaObject($tableMetaData->getTableName());
         } else {
             $tableName = $tableMetaData->getTableName();
@@ -75,15 +75,11 @@ class DataSet extends AbstractDataSet
 
         $primaryKeys = $tableMetaData->getPrimaryKeys();
 
-        if ($databaseConnection) {
+        if ($databaseConnection instanceof Connection) {
             $primaryKeys = array_map($databaseConnection->quoteSchemaObject(...), $primaryKeys);
         }
 
-        if (\count($primaryKeys)) {
-            $orderBy = 'ORDER BY ' . implode(' ASC, ', $primaryKeys) . ' ASC';
-        } else {
-            $orderBy = '';
-        }
+        $orderBy = \count($primaryKeys) ? 'ORDER BY ' . implode(' ASC, ', $primaryKeys) . ' ASC' : '';
 
         return "SELECT {$columnList} FROM {$tableName} {$orderBy}";
     }

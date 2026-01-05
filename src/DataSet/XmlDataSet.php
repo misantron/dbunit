@@ -44,7 +44,7 @@ class XmlDataSet extends AbstractXmlDataSet
             foreach ($tableElement->xpath('./column') as $columnElement) {
                 $columnName = (string) $columnElement;
 
-                if (empty($columnName)) {
+                if ($columnName === '' || $columnName === '0') {
                     throw new RuntimeException(
                         "Missing <column> elements for table $tableName. Add one or more <column> elements to the <table> element."
                     );

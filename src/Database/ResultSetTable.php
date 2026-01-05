@@ -32,11 +32,7 @@ class ResultSetTable extends AbstractTable
     {
         $this->data = $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (\count($this->data)) {
-            $columns = array_keys($this->data[0]);
-        } else {
-            $columns = [];
-        }
+        $columns = \count($this->data) ? array_keys($this->data[0]) : [];
 
         $this->setTableMetaData(new DefaultTableMetadata($tableName, $columns));
     }

@@ -90,19 +90,11 @@ class Firebird extends AbstractMetadata
      */
     public function getSchema(): string
     {
-        if (empty($this->schema)) {
+        if ($this->schema === '' || $this->schema === '0') {
             return 'public';
         }
 
         return $this->schema;
-    }
-
-    /**
-     * Returns true if the rdbms allows cascading
-     */
-    public function allowsCascading(): bool
-    {
-        return false;
     }
 
     /**

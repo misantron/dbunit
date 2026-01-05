@@ -50,7 +50,7 @@ class AbstractTable implements ITable
         $tableString .= '| ' . str_pad($tblName, $lineLength - 4) . " |\n";
         $tableString .= $lineSeparator;
         $rows = $this->rowToString($columns);
-        $tableString .= !empty($rows) ? $rows . $lineSeparator : '';
+        $tableString .= $rows === '' || $rows === '0' ? '' : $rows . $lineSeparator;
 
         $rowCount = $this->getRowCount();
 
@@ -207,7 +207,7 @@ class AbstractTable implements ITable
         }
 
         /** @see https://github.com/sebastianbergmann/dbunit/issues/195 */
-        $rowString = !empty($row) ? $rowString . "|\n" : '';
+        $rowString = $row === [] ? '' : $rowString . "|\n";
 
         return $rowString;
     }
