@@ -61,7 +61,7 @@ class QueryDataSet extends AbstractDataSet
     public function getTable(string $tableName): ITable
     {
         if (!isset($this->tables[$tableName])) {
-            throw new InvalidArgumentException("$tableName is not a table in the current database.");
+            throw new InvalidArgumentException($tableName . ' is not a table in the current database.');
         }
 
         return $this->tables[$tableName];

@@ -42,6 +42,7 @@ class AbstractTable implements ITable
 
         // if count less than 0 (when table is empty), then set count to 1
         $count = $count > 0 ? $count : 1;
+
         $lineSeparator = str_repeat('+----------------------', $count) . "+\n";
         $lineLength = \strlen($lineSeparator) - 1;
 
@@ -108,7 +109,7 @@ class AbstractTable implements ITable
     {
         if (!isset($this->data[$row]) || !\in_array($column, $this->getTableMetaData()->getColumns(), true)) {
             throw new InvalidArgumentException(
-                "The given row ({$row}) and column ({$column}) do not exist in table {$this->getTableMetaData()->getTableName()}"
+                sprintf('The given row (%d) and column (%s) do not exist in table %s', $row, $column, $this->getTableMetaData()->getTableName())
             );
         }
 
@@ -126,7 +127,7 @@ class AbstractTable implements ITable
     {
         if (!isset($this->data[$row])) {
             throw new InvalidArgumentException(
-                "The given row ({$row}) does not exist in table {$this->getTableMetaData()->getTableName()}"
+                sprintf('The given row (%d) does not exist in table %s', $row, $this->getTableMetaData()->getTableName())
             );
         }
 

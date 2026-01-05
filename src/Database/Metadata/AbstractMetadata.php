@@ -68,7 +68,7 @@ abstract class AbstractMetadata implements Metadata
             return self::registerClassWithDriver($className, $driverName)->newInstance($pdo, $schema);
         }
 
-        throw new RuntimeException("Could not find a meta data driver for {$driverName} pdo driver.");
+        throw new RuntimeException(sprintf('Could not find a meta data driver for %s pdo driver.', $driverName));
     }
 
     /**
@@ -82,7 +82,7 @@ abstract class AbstractMetadata implements Metadata
     public static function registerClassWithDriver(string $className, string $pdoDriver): \ReflectionClass
     {
         if (!class_exists($className)) {
-            throw new RuntimeException("Specified class for {$pdoDriver} driver ({$className}) does not exist.");
+            throw new RuntimeException(sprintf('Specified class for %s driver (%s) does not exist.', $pdoDriver, $className));
         }
 
         $reflection = new \ReflectionClass($className);
@@ -91,7 +91,7 @@ abstract class AbstractMetadata implements Metadata
             return self::$metaDataClassMap[$pdoDriver] = $reflection;
         }
 
-        throw new RuntimeException("Specified class for {$pdoDriver} driver ({$className}) does not extend PHPUnit_Extensions_Database_DB_MetaData.");
+        throw new RuntimeException(sprintf('Specified class for %s driver (%s) does not extend PHPUnit_Extensions_Database_DB_MetaData.', $pdoDriver, $className));
     }
 
     /**

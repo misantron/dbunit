@@ -124,10 +124,10 @@ class DefaultConnection implements Connection
      */
     public function getRowCount($tableName, $whereClause = null): int
     {
-        $query = "SELECT COUNT(*) FROM {$this->quoteSchemaObject($tableName)}";
+        $query = 'SELECT COUNT(*) FROM ' . $this->quoteSchemaObject($tableName);
 
         if (isset($whereClause)) {
-            $query .= " WHERE {$whereClause}";
+            $query .= ' WHERE ' . $whereClause;
         }
 
         return (int) $this->connection->query($query)->fetchColumn();

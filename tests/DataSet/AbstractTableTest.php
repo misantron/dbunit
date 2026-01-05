@@ -154,6 +154,7 @@ class AbstractTableTest extends TestCase
                 $otherMap[] = [$rowIndex, $columnName, $otherColumnValues[$rowIndex][$columnName]];
             }
         }
+
         $table
             ->method('getValue')
             ->willReturnMap($tableMap);

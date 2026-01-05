@@ -69,7 +69,7 @@ class TableFilter extends AbstractTable
         }
 
         throw new InvalidArgumentException(
-            "The given row ({$row}) and column ({$column}) do not exist in table {$this->getTableMetaData()->getTableName()}"
+            sprintf('The given row (%d) and column (%s) do not exist in table %s', $row, $column, $this->getTableMetaData()->getTableName())
         );
     }
 
@@ -131,8 +131,10 @@ class TableFilter extends AbstractTable
                 foreach ($this->getTableMetaData()->getColumns() as $col) {
                     $tRow[$col] = $this->getValue($row, $col);
                 }
+
                 $data[$row] = $tRow;
             }
+
             $this->data = $data;
         }
     }

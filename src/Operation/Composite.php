@@ -39,6 +39,7 @@ class Composite implements Operation
                     'Only database operation instances can be passed to a composite database operation.'
                 );
             }
+
             $this->operations[] = $operation;
         }
     }
@@ -49,13 +50,13 @@ class Composite implements Operation
             foreach ($this->operations as $operation) {
                 $operation->execute($connection, $dataSet);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             throw new Exception(
-                "COMPOSITE[{$e->getOperation()}]",
-                $e->getQuery(),
-                $e->getArgs(),
-                $e->getTable(),
-                $e->getError()
+                sprintf('COMPOSITE[%s]', $exception->getOperation()),
+                $exception->getQuery(),
+                $exception->getArgs(),
+                $exception->getTable(),
+                $exception->getError()
             );
         }
     }

@@ -36,12 +36,12 @@ class OperationsMySQLTest extends TestCase
         parent::setUp();
     }
 
-    public function getConnection()
+    protected function getConnection()
     {
         return new DefaultConnection(DatabaseTestUtility::getMySQLDB(), 'mysql');
     }
 
-    public function getDataSet()
+    protected function getDataSet()
     {
         return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsMySQLTestFixture.xml');
     }

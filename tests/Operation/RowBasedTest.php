@@ -37,12 +37,12 @@ class RowBasedTest extends TestCase
         parent::setUp();
     }
 
-    public function getConnection(): Connection
+    protected function getConnection(): Connection
     {
         return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
     }
 
-    public function getDataSet(): IDataSet
+    protected function getDataSet(): IDataSet
     {
         $tables = [
             new DefaultTable(

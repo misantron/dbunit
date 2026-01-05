@@ -52,7 +52,7 @@ class CompositeDataSet extends AbstractDataSet
 
                 if (!$table->getTableMetaData()->matches($other->getTableMetaData())) {
                     throw new InvalidArgumentException(
-                        "There is already a table named $tableName with different table definition"
+                        sprintf('There is already a table named %s with different table definition', $tableName)
                     );
                 }
 

@@ -43,11 +43,11 @@ class CsvDataSet extends AbstractDataSet
     public function addTable(string $tableName, string $csvFile): void
     {
         if (!is_file($csvFile)) {
-            throw new InvalidArgumentException("Could not find csv file: {$csvFile}");
+            throw new InvalidArgumentException('Could not find csv file: ' . $csvFile);
         }
 
         if (!is_readable($csvFile)) {
-            throw new InvalidArgumentException("Could not read csv file: {$csvFile}");
+            throw new InvalidArgumentException('Could not read csv file: ' . $csvFile);
         }
 
         $file = new \SplFileObject($csvFile, 'rb');
@@ -56,7 +56,7 @@ class CsvDataSet extends AbstractDataSet
 
         $columns = $this->getCsvRow($file);
         if ($columns === null) {
-            throw new InvalidArgumentException("Could not determine the headers from the given file {$csvFile}");
+            throw new InvalidArgumentException('Could not determine the headers from the given file ' . $csvFile);
         }
 
         $metaData = new DefaultTableMetadata($tableName, $columns);
@@ -72,8 +72,9 @@ class CsvDataSet extends AbstractDataSet
             }
 
             if ($columnsCount !== \count($row)) {
-                throw new InvalidArgumentException("Row no. {$rowNumber} in csv file {$csvFile} should have an equal number of elements as table {$tableName}");
+                throw new InvalidArgumentException(sprintf('Row no. %d in csv file %s should have an equal number of elements as table %s', $rowNumber, $csvFile, $tableName));
             }
+
             $table->addRow(array_combine($columns, $row));
             ++$rowNumber;
         }

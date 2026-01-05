@@ -27,10 +27,10 @@ class TableRowCountTest extends TestCase
 
         try {
             self::assertThat(24, $constraint);
-        } catch (ExpectationFailedException $e) {
+        } catch (ExpectationFailedException $expectationFailedException) {
             self::assertSame(
                 'Failed asserting that 24 is equal to expected row count 42.',
-                $e->getMessage()
+                $expectationFailedException->getMessage()
             );
         }
     }

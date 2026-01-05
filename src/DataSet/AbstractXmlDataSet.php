@@ -26,7 +26,7 @@ abstract class AbstractXmlDataSet extends AbstractDataSet
     public function __construct(string $xmlFile)
     {
         if (!is_file($xmlFile)) {
-            throw new InvalidArgumentException("Could not find xml file: {$xmlFile}");
+            throw new InvalidArgumentException('Could not find xml file: ' . $xmlFile);
         }
 
         libxml_use_internal_errors(true);

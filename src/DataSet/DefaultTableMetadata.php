@@ -31,6 +31,7 @@ class DefaultTableMetadata extends AbstractTableMetadata
             if (!\in_array($columnName, $this->columns, true)) {
                 throw new InvalidArgumentException('Primary key column passed that is not in the column list.');
             }
+
             $this->primaryKeys[] = $columnName;
         }
     }

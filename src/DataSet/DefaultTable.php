@@ -52,6 +52,7 @@ class DefaultTable extends AbstractTable
             foreach ($tableColumns as $columnName) {
                 $newRow[$columnName] = $table->getValue($i, $columnName);
             }
+
             $this->addRow($newRow);
         }
     }

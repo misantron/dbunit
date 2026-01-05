@@ -118,7 +118,7 @@ abstract class RowBased implements Operation
         $columnArray = [];
 
         foreach ($columns as $columnName) {
-            $columnArray[] = "{$connection->quoteSchemaObject($columnName)} = ?";
+            $columnArray[] = $connection->quoteSchemaObject($columnName) . ' = ?';
         }
 
         return $columnArray;

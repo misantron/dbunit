@@ -53,6 +53,6 @@ class Update extends RowBased
 
     protected function disablePrimaryKeys(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection): bool
     {
-        return \count($databaseTableMetaData->getPrimaryKeys()) > 0;
+        return $databaseTableMetaData->getPrimaryKeys() !== [];
     }
 }

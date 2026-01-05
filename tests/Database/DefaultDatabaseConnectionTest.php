@@ -34,8 +34,8 @@ class DefaultDatabaseConnectionTest extends TestCase
 
     public function testRowCountForTableWithTwoRowsReturnsTwo(): void
     {
-        $this->db->exec('INSERT INTO test (field1) VALUES (\'foobar\')');
-        $this->db->exec('INSERT INTO test (field1) VALUES (\'foobarbaz\')');
+        $this->db->exec("INSERT INTO test (field1) VALUES ('foobar')");
+        $this->db->exec("INSERT INTO test (field1) VALUES ('foobarbaz')");
 
         $conn = new DefaultConnection($this->db);
         $this->assertSame(2, $conn->getRowCount('test'));

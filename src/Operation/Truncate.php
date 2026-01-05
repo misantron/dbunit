@@ -35,7 +35,7 @@ class Truncate implements Operation
         $truncateCommand = $connection->getTruncateCommand();
 
         foreach ($dataSet->getReverseIterator() as $table) {
-            $query = "{$truncateCommand} {$connection->quoteSchemaObject($table->getTableMetaData()->getTableName())}";
+            $query = sprintf('%s %s', $truncateCommand, $connection->quoteSchemaObject($table->getTableMetaData()->getTableName()));
 
             if ($this->useCascade && $connection->allowsCascading()) {
                 $query .= ' CASCADE';

@@ -36,12 +36,12 @@ class OperationsTest extends TestCase
         parent::setUp();
     }
 
-    public function getConnection()
+    protected function getConnection()
     {
         return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
     }
 
-    public function getDataSet()
+    protected function getDataSet()
     {
         return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsTestFixture.xml');
     }

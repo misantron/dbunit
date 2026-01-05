@@ -133,6 +133,7 @@ class Filter extends AbstractDataSet
             if (!\in_array($tableName, $this->includeTables, true) && $this->includeTables !== []) {
                 continue;
             }
+
             if (\in_array($tableName, $this->excludeTables, true)) {
                 continue;
             }

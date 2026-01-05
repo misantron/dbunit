@@ -42,7 +42,7 @@ class FlatXmlDataSet extends AbstractXmlDataSet
                 $values[$name] = $value;
             }
 
-            if (\count($values)) {
+            if ($values !== []) {
                 $tableValues[$tableName][] = $values;
             }
         }

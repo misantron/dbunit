@@ -131,6 +131,7 @@ class QueryTable extends AbstractTable
             } else {
                 $columns = $this->databaseConnection->getMetaData()->getTableColumns($this->tableName);
             }
+
             // create metadata
             $this->tableMetaData = new DefaultTableMetadata($this->tableName, $columns);
         }

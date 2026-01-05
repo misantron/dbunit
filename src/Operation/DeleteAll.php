@@ -22,7 +22,7 @@ class DeleteAll implements Operation
     public function execute(Connection $connection, IDataSet $dataSet): void
     {
         foreach ($dataSet->getReverseIterator() as $table) {
-            $query = "DELETE FROM {$connection->quoteSchemaObject($table->getTableMetaData()->getTableName())}";
+            $query = 'DELETE FROM ' . $connection->quoteSchemaObject($table->getTableMetaData()->getTableName());
 
             try {
                 $connection->getConnection()->exec($query);

@@ -341,6 +341,7 @@ class ReplacementTableTest extends \PHPUnit\Framework\TestCase
                 $otherMap[] = [$rowIndex, $columnName, $otherColumnValues[$rowIndex][$columnName]];
             }
         }
+
         $replacementTable
             ->method('getValue')
             ->willReturnMap($tableMap);

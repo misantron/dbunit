@@ -16,10 +16,7 @@ namespace PHPUnit\DbUnit\Database;
  */
 class FilteredDataSet extends DataSet
 {
-    /**
-     * @var array
-     */
-    protected $tableNames;
+    protected array $tableNames;
 
     /**
      * Creates a new dataset using the given database connection.

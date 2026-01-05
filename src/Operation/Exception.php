@@ -31,7 +31,7 @@ class Exception extends RuntimeException
         private readonly ITable $table,
         private readonly string $error,
     ) {
-        parent::__construct("{$operation} operation failed on query: {$query} using args: " . print_r($args, true) . " [{$error}]");
+        parent::__construct(sprintf('%s operation failed on query: %s using args: ', $operation, $query) . print_r($args, true) . sprintf(' [%s]', $error));
     }
 
     public function getOperation(): string

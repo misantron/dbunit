@@ -60,7 +60,7 @@ class MysqlXmlDataSet extends AbstractXmlDataSet
                     if (!isset($fields[0])) {
                         throw new RuntimeException(
                             sprintf(
-                                '%s column doesn\'t exist in current row for table %s',
+                                "%s column doesn't exist in current row for table %s",
                                 $columnName,
                                 $tableName
                             )

@@ -61,7 +61,7 @@ class SqlSrv extends AbstractMetadata
         $query = "SELECT c.name
                     FROM syscolumns c
                LEFT JOIN sysobjects o ON c.id = o.id
-                   WHERE o.name = '$tableName'";
+                   WHERE o.name = '{$tableName}'";
 
         $statement = $this->pdo->query($query);
 
@@ -77,12 +77,10 @@ class SqlSrv extends AbstractMetadata
     /**
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
-     *
-     *
      */
     public function getTablePrimaryKeys(string $tableName): array
     {
-        $query = "EXEC sp_statistics '$tableName'";
+        $query = sprintf("EXEC sp_statistics '%s'", $tableName);
         $statement = $this->pdo->query($query);
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
 
@@ -103,7 +101,7 @@ class SqlSrv extends AbstractMetadata
     public function disablePrimaryKeys(string $tableName): void
     {
         try {
-            $query = "SET IDENTITY_INSERT $tableName ON";
+            $query = sprintf('SET IDENTITY_INSERT %s ON', $tableName);
             $this->pdo->exec($query);
         } catch (\PDOException) {
             // ignore the error here - can happen if primary key is not an identity
@@ -116,7 +114,7 @@ class SqlSrv extends AbstractMetadata
     public function enablePrimaryKeys(string $tableName): void
     {
         try {
-            $query = "SET IDENTITY_INSERT $tableName OFF";
+            $query = sprintf('SET IDENTITY_INSERT %s OFF', $tableName);
             $this->pdo->exec($query);
         } catch (\PDOException) {
             // ignore the error here - can happen if primary key is not an identity

@@ -64,7 +64,7 @@ abstract class AbstractDataSet implements IDataSet
             }
         }
 
-        throw new InvalidArgumentException("{$tableName} is not a table in the current database.");
+        throw new InvalidArgumentException($tableName . ' is not a table in the current database.');
     }
 
     /**

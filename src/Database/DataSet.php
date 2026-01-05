@@ -65,6 +65,7 @@ class DataSet extends AbstractDataSet
         if ($databaseConnection instanceof Connection) {
             $columns = array_map($databaseConnection->quoteSchemaObject(...), $columns);
         }
+
         $columnList = implode(', ', $columns);
 
         if ($databaseConnection instanceof Connection) {
@@ -81,7 +82,7 @@ class DataSet extends AbstractDataSet
 
         $orderBy = \count($primaryKeys) ? 'ORDER BY ' . implode(' ASC, ', $primaryKeys) . ' ASC' : '';
 
-        return "SELECT {$columnList} FROM {$tableName} {$orderBy}";
+        return sprintf('SELECT %s FROM %s %s', $columnList, $tableName, $orderBy);
     }
 
     /**
@@ -93,7 +94,7 @@ class DataSet extends AbstractDataSet
     public function getTable(string $tableName): ITable
     {
         if (!\in_array($tableName, $this->getTableNames(), true)) {
-            throw new InvalidArgumentException("$tableName is not a table in the current database.");
+            throw new InvalidArgumentException($tableName . ' is not a table in the current database.');
         }
 
         if (empty($this->tables[$tableName])) {
