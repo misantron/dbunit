@@ -19,17 +19,18 @@ class DefaultTableIterator implements ITableIterator
     /**
      * Creates a new default table iterator object.
      */
-    public function __construct(/**
+    public function __construct(
+        /**
      * An array of tables in the iterator.
      *
      * @var array<int, ITable>
      */
-    protected array $tables, /**
+        protected array $tables, /**
      * If this property is true then the tables will be iterated in reverse
      * order.
      */
-    protected bool $reverse = false)
-    {
+        protected bool $reverse = false
+    ) {
         $this->rewind();
     }
 

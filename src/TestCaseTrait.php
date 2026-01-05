@@ -178,7 +178,7 @@ trait TestCaseTrait
      *
      * @return Tester
      */
-    protected function newDatabaseTester()
+    protected function newDatabaseTester(): DefaultTester
     {
         return new DefaultTester($this->getConnection());
     }
@@ -209,10 +209,8 @@ trait TestCaseTrait
      *     )
      * )
      *
-     *
-     * @return ArrayDataSet
      */
-    protected function createArrayDataSet(array $data)
+    protected function createArrayDataSet(array $data): ArrayDataSet
     {
         return new ArrayDataSet($data);
     }
@@ -221,10 +219,8 @@ trait TestCaseTrait
      * Creates a new FlatXmlDataSet with the given $xmlFile. (absolute path.)
      *
      * @param string $xmlFile
-     *
-     * @return FlatXmlDataSet
      */
-    protected function createFlatXMLDataSet($xmlFile)
+    protected function createFlatXMLDataSet($xmlFile): FlatXmlDataSet
     {
         return new FlatXmlDataSet($xmlFile);
     }
@@ -233,10 +229,8 @@ trait TestCaseTrait
      * Creates a new XMLDataSet with the given $xmlFile. (absolute path.)
      *
      * @param string $xmlFile
-     *
-     * @return XmlDataSet
      */
-    protected function createXMLDataSet($xmlFile)
+    protected function createXMLDataSet($xmlFile): XmlDataSet
     {
         return new XmlDataSet($xmlFile);
     }
@@ -245,10 +239,8 @@ trait TestCaseTrait
      * Create a a new MysqlXmlDataSet with the given $xmlFile. (absolute path.)
      *
      * @param string $xmlFile
-     *
-     * @return MysqlXmlDataSet
      */
-    protected function createMySQLXMLDataSet($xmlFile)
+    protected function createMySQLXMLDataSet($xmlFile): MysqlXmlDataSet
     {
         return new MysqlXmlDataSet($xmlFile);
     }
@@ -256,10 +248,8 @@ trait TestCaseTrait
     /**
      * Returns an operation factory instance that can be used to instantiate
      * new operations.
-     *
-     * @return Factory
      */
-    protected function getOperations()
+    protected function getOperations(): Factory
     {
         return new Factory();
     }

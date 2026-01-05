@@ -19,28 +19,19 @@ namespace PHPUnit\DbUnit\DataSet;
 class ReplacementTable implements ITable
 {
     /**
-     * @var ITable
-     */
-    protected $table;
-
-    /**
      * @var array
      */
     protected $fullReplacements;
 
     /**
-     * @var array
-     */
-    protected $subStrReplacements;
-
-    /**
      * Creates a new replacement table
      */
-    public function __construct(ITable $table, array $fullReplacements = [], array $subStrReplacements = [])
-    {
-        $this->table = $table;
+    public function __construct(
+        protected ITable $table,
+        array $fullReplacements = [],
+        protected array $subStrReplacements = []
+    ) {
         $this->fullReplacements = $fullReplacements;
-        $this->subStrReplacements = $subStrReplacements;
     }
 
     public function __toString(): string

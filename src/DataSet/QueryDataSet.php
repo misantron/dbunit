@@ -29,18 +29,14 @@ class QueryDataSet extends AbstractDataSet
     protected $tables = [];
 
     /**
-     * The database connection this dataset is using.
-     *
-     * @var Connection
-     */
-    protected $databaseConnection;
-
-    /**
      * Creates a new dataset using the given database connection.
      */
-    public function __construct(Connection $databaseConnection)
-    {
-        $this->databaseConnection = $databaseConnection;
+    public function __construct(
+        /**
+         * The database connection this dataset is using.
+         */
+        protected Connection $databaseConnection
+    ) {
     }
 
     public function addTable(string $tableName, $query = null): void

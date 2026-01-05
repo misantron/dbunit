@@ -30,10 +30,7 @@ class AbstractTable implements ITable
      */
     protected $data;
 
-    /**
-     * @var ITable|null
-     */
-    private $other;
+    private ?ITable $other = null;
 
     public function __toString(): string
     {

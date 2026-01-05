@@ -23,10 +23,7 @@ class YamlDataSet extends AbstractDataSet
      */
     protected $tables = [];
 
-    /**
-     * @var IYamlParser
-     */
-    protected $parser;
+    protected IYamlParser $parser;
 
     /**
      * Creates a new YAML dataset

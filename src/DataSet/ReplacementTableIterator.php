@@ -16,8 +16,6 @@ namespace PHPUnit\DbUnit\DataSet;
  */
 class ReplacementTableIterator implements \OuterIterator, ITableIterator
 {
-    protected $innerIterator;
-
     /**
      * @var array<string, string>
      */
@@ -35,11 +33,10 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
      * @param array<string, string> $subStrReplacements
      */
     public function __construct(
-        ITableIterator $innerIterator,
+        protected ITableIterator $innerIterator,
         array $fullReplacements = [],
         array $subStrReplacements = []
     ) {
-        $this->innerIterator = $innerIterator;
         $this->fullReplacements = $fullReplacements;
         $this->subStrReplacements = $subStrReplacements;
     }

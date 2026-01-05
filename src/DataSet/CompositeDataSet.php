@@ -20,7 +20,7 @@ use PHPUnit\DbUnit\Exception\InvalidArgumentException;
  */
 class CompositeDataSet extends AbstractDataSet
 {
-    protected $motherDataSet;
+    protected DefaultDataSet $motherDataSet;
 
     /**
      * Creates a new Composite dataset

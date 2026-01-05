@@ -18,13 +18,6 @@ namespace PHPUnit\DbUnit\DataSet;
 class Filter extends AbstractDataSet
 {
     /**
-     * The dataset being decorated.
-     *
-     * @var IDataSet
-     */
-    protected $originalDataSet;
-
-    /**
      * The tables to exclude from the data set.
      *
      * @var array
@@ -62,10 +55,13 @@ class Filter extends AbstractDataSet
      *
      * @param array $excludeTables @deprecated use set* methods instead
      */
-    public function __construct(IDataSet $originalDataSet, array $excludeTables = [])
-    {
-        $this->originalDataSet = $originalDataSet;
-
+    public function __construct(
+        /**
+     * The dataset being decorated.
+     */
+        protected IDataSet $originalDataSet,
+        array $excludeTables = []
+    ) {
         $tables = [];
 
         foreach ($excludeTables as $tableName => $values) {

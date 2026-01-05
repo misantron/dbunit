@@ -36,16 +36,6 @@ class OperationsMySQLTest extends TestCase
         parent::setUp();
     }
 
-    protected function getConnection()
-    {
-        return new DefaultConnection(DatabaseTestUtility::getMySQLDB(), 'mysql');
-    }
-
-    protected function getDataSet()
-    {
-        return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsMySQLTestFixture.xml');
-    }
-
     public function testTruncate(): void
     {
         $truncateOperation = new Truncate();
@@ -112,5 +102,15 @@ class OperationsMySQLTest extends TestCase
         ]);
 
         self::assertDataSetsEqual($expectedDataSet, $this->getConnection()->createDataSet());
+    }
+
+    protected function getConnection(): DefaultConnection
+    {
+        return new DefaultConnection(DatabaseTestUtility::getMySQLDB(), 'mysql');
+    }
+
+    protected function getDataSet(): FlatXmlDataSet
+    {
+        return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsMySQLTestFixture.xml');
     }
 }

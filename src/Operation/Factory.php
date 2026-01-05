@@ -21,7 +21,7 @@ class Factory
      *
      * @return Operation
      */
-    public static function NONE()
+    public static function NONE(): None
     {
         return new None();
     }
@@ -34,7 +34,7 @@ class Factory
      *
      * @return Operation
      */
-    public static function CLEAN_INSERT(bool $cascadeTruncates = false)
+    public static function CLEAN_INSERT(bool $cascadeTruncates = false): Composite
     {
         return new Composite([
             self::TRUNCATE($cascadeTruncates),
@@ -47,7 +47,7 @@ class Factory
      *
      * @return Operation
      */
-    public static function INSERT()
+    public static function INSERT(): Insert
     {
         return new Insert();
     }
@@ -59,7 +59,7 @@ class Factory
      *
      * @return Operation
      */
-    public static function TRUNCATE($cascadeTruncates = false)
+    public static function TRUNCATE(bool $cascadeTruncates = false): Truncate
     {
         $truncate = new Truncate();
         $truncate->setCascade($cascadeTruncates);
@@ -72,7 +72,7 @@ class Factory
      *
      * @return Operation
      */
-    public static function DELETE()
+    public static function DELETE(): Delete
     {
         return new Delete();
     }
@@ -82,7 +82,7 @@ class Factory
      *
      * @return Operation
      */
-    public static function DELETE_ALL()
+    public static function DELETE_ALL(): DeleteAll
     {
         return new DeleteAll();
     }
@@ -92,7 +92,7 @@ class Factory
      *
      * @return Operation
      */
-    public static function UPDATE()
+    public static function UPDATE(): Update
     {
         return new Update();
     }

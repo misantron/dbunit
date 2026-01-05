@@ -16,16 +16,14 @@ namespace PHPUnit\DbUnit\Database;
  */
 class FilteredDataSet extends DataSet
 {
-    protected array $tableNames;
-
     /**
      * Creates a new dataset using the given database connection.
      */
-    public function __construct(Connection $databaseConnection, array $tableNames)
-    {
+    public function __construct(
+        Connection $databaseConnection,
+        protected array $tableNames
+    ) {
         parent::__construct($databaseConnection);
-
-        $this->tableNames = $tableNames;
     }
 
     /**

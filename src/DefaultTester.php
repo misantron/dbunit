@@ -20,18 +20,12 @@ use PHPUnit\DbUnit\Database\Connection;
 class DefaultTester extends AbstractTester
 {
     /**
-     * @var Connection
-     */
-    protected $connection;
-
-    /**
      * Creates a new default database tester using the given connection.
      */
-    public function __construct(Connection $connection)
-    {
+    public function __construct(
+        protected Connection $connection
+    ) {
         parent::__construct();
-
-        $this->connection = $connection;
     }
 
     /**

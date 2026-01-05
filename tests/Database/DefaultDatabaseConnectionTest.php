@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class DefaultDatabaseConnectionTest extends TestCase
 {
-    private $db;
+    private \PDO $db;
 
     protected function setUp(): void
     {

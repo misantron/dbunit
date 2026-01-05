@@ -19,21 +19,18 @@ use PHPUnit\DbUnit\Exception\InvalidArgumentException;
 class TableFilter extends AbstractTable
 {
     /**
-     * The table meta data being decorated.
-     *
-     * @var ITable
-     */
-    protected $originalTable;
-
-    /**
      * Creates a new table filter using the original table
      *
      * @param array $excludeColumns @deprecated, use the set* methods instead
      */
-    public function __construct(ITable $originalTable, array $excludeColumns = [])
-    {
-        $this->originalTable = $originalTable;
-        $this->setTableMetaData(new TableMetadataFilter($originalTable->getTableMetaData()));
+    public function __construct(
+        /**
+     * The table meta data being decorated.
+     */
+        protected ITable $originalTable,
+        array $excludeColumns = []
+    ) {
+        $this->setTableMetaData(new TableMetadataFilter($this->originalTable->getTableMetaData()));
         $this->addExcludeColumns($excludeColumns);
     }
 

@@ -37,37 +37,6 @@ class RowBasedTest extends TestCase
         parent::setUp();
     }
 
-    protected function getConnection(): Connection
-    {
-        return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
-    }
-
-    protected function getDataSet(): IDataSet
-    {
-        $tables = [
-            new DefaultTable(
-                new DefaultTableMetadata(
-                    'table1',
-                    ['table1_id', 'column1', 'column2', 'column3', 'column4']
-                )
-            ),
-            new DefaultTable(
-                new DefaultTableMetadata(
-                    'table2',
-                    ['table2_id', 'column5', 'column6', 'column7', 'column8']
-                )
-            ),
-            new DefaultTable(
-                new DefaultTableMetadata(
-                    'table3',
-                    ['table3_id', 'column9', 'column10', 'column11', 'column12']
-                )
-            ),
-        ];
-
-        return new DefaultDataSet($tables);
-    }
-
     public function testExecute(): void
     {
         $connection = $this->getConnection();
@@ -114,7 +83,7 @@ class RowBasedTest extends TestCase
         $mockOperation
             ->expects($this->exactly(2))
             ->method('buildOperationQuery')
-            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table) use ($connection, $table1, $table2) {
+            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table) use ($connection, $table1, $table2): string {
                 switch ([$metadata, $table]) {
                     case [$connection->createDataSet()->getTableMetaData('table1'), $table1]:
                         return 'INSERT INTO table1 (table1_id, column1, column2, column3, column4) VALUES (?, ?, ?, ?, ?)';
@@ -128,7 +97,7 @@ class RowBasedTest extends TestCase
         $mockOperation
             ->expects($this->exactly(3))
             ->method('buildOperationArguments')
-            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table, int $row) use ($connection, $table1, $table2) {
+            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table, int $row) use ($connection, $table1, $table2): array {
                 switch ([$metadata, $table, $row]) {
                     case [$connection->createDataSet()->getTableMetaData('table1'), $table1, 0]:
                         return [1, 'foo', 42, 4.2, 'bar'];
@@ -263,5 +232,36 @@ class RowBasedTest extends TestCase
             ->willReturn([]);
 
         $mockOperation->execute($mockConnection, $mockDataSet);
+    }
+
+    protected function getConnection(): Connection
+    {
+        return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
+    }
+
+    protected function getDataSet(): IDataSet
+    {
+        $tables = [
+            new DefaultTable(
+                new DefaultTableMetadata(
+                    'table1',
+                    ['table1_id', 'column1', 'column2', 'column3', 'column4']
+                )
+            ),
+            new DefaultTable(
+                new DefaultTableMetadata(
+                    'table2',
+                    ['table2_id', 'column5', 'column6', 'column7', 'column8']
+                )
+            ),
+            new DefaultTable(
+                new DefaultTableMetadata(
+                    'table3',
+                    ['table3_id', 'column9', 'column10', 'column11', 'column12']
+                )
+            ),
+        ];
+
+        return new DefaultDataSet($tables);
     }
 }

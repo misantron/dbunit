@@ -23,25 +23,19 @@ use PHPUnit\DbUnit\DataSet\QueryTable;
 class DefaultConnection implements Connection
 {
     /**
-     * @var \PDO
-     */
-    protected $connection;
-
-    /**
      * The metadata object used to retrieve table meta data from the database.
-     *
-     * @var Metadata
      */
-    protected $metaData;
+    protected AbstractMetadata $metaData;
 
     /**
      * Creates a new database connection
      */
-    public function __construct(\PDO $connection, string $schema = '')
-    {
-        $this->connection = $connection;
-        $this->metaData = AbstractMetadata::createMetaData($connection, $schema);
-        $connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    public function __construct(
+        protected \PDO $connection,
+        string $schema = ''
+    ) {
+        $this->metaData = AbstractMetadata::createMetaData($this->connection, $schema);
+        $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**

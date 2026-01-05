@@ -19,25 +19,16 @@ namespace PHPUnit\DbUnit\DataSet;
 class ReplacementDataSet extends AbstractDataSet
 {
     /**
-     * @var IDataSet
-     */
-    protected $dataSet;
-
-    /**
      * @var array
      */
     protected $fullReplacements;
 
-    /**
-     * @var array
-     */
-    protected $subStrReplacements;
-
-    public function __construct(IDataSet $dataSet, array $fullReplacements = [], array $subStrReplacements = [])
-    {
-        $this->dataSet = $dataSet;
+    public function __construct(
+        protected IDataSet $dataSet,
+        array $fullReplacements = [],
+        protected array $subStrReplacements = []
+    ) {
         $this->fullReplacements = $fullReplacements;
-        $this->subStrReplacements = $subStrReplacements;
     }
 
     /**

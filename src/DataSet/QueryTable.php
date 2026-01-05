@@ -19,28 +19,13 @@ use PHPUnit\DbUnit\Database\Connection;
 class QueryTable extends AbstractTable
 {
     /**
-     * @var string
-     */
-    protected $query;
-
-    /**
-     * @var Connection
-     */
-    protected $databaseConnection;
-
-    /**
-     * @var string
-     */
-    protected $tableName;
-
-    /**
      * Creates a new database query table object.
      */
-    public function __construct(string $tableName, string $query, Connection $databaseConnection)
-    {
-        $this->tableName = $tableName;
-        $this->query = $query;
-        $this->databaseConnection = $databaseConnection;
+    public function __construct(
+        protected string $tableName,
+        protected string $query,
+        protected Connection $databaseConnection
+    ) {
     }
 
     /**

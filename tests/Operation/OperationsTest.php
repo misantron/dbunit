@@ -36,16 +36,6 @@ class OperationsTest extends TestCase
         parent::setUp();
     }
 
-    protected function getConnection()
-    {
-        return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
-    }
-
-    protected function getDataSet()
-    {
-        return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsTestFixture.xml');
-    }
-
     public function testDelete(): void
     {
         $deleteOperation = new Delete();
@@ -200,5 +190,15 @@ class OperationsTest extends TestCase
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/AllEmptyTableInsertResult.xml'),
             $this->getConnection()->createDataSet()
         );
+    }
+
+    protected function getConnection(): DefaultConnection
+    {
+        return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
+    }
+
+    protected function getDataSet(): FlatXmlDataSet
+    {
+        return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsTestFixture.xml');
     }
 }

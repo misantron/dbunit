@@ -21,13 +21,6 @@ namespace PHPUnit\DbUnit\DataSet;
 class TableMetadataFilter extends AbstractTableMetadata
 {
     /**
-     * The table meta data being decorated.
-     *
-     * @var ITableMetadata
-     */
-    protected $originalMetaData;
-
-    /**
      * The columns to exclude from the meta data.
      *
      * @var array
@@ -47,9 +40,13 @@ class TableMetadataFilter extends AbstractTableMetadata
      *
      * @param array          $excludeColumns   - Deprecated. Use the set* methods instead.
      */
-    public function __construct(ITableMetadata $originalMetaData, array $excludeColumns = [])
-    {
-        $this->originalMetaData = $originalMetaData;
+    public function __construct(
+        /**
+     * The table meta data being decorated.
+     */
+        protected ITableMetadata $originalMetaData,
+        array $excludeColumns = []
+    ) {
         $this->addExcludeColumns($excludeColumns);
     }
 
