@@ -21,7 +21,7 @@ class DefaultTableIterator implements ITableIterator
      *
      * @var array<int, ITable>
      */
-    protected $tables;
+    protected array $tables;
 
     /**
      * If this property is true then the tables will be iterated in reverse
@@ -29,13 +29,10 @@ class DefaultTableIterator implements ITableIterator
      *
      * @var bool
      */
-    protected $reverse;
+    protected bool $reverse;
 
     /**
      * Creates a new default table iterator object.
-     *
-     * @param array $tables
-     * @param bool $reverse
      */
     public function __construct(array $tables, bool $reverse = false)
     {
@@ -47,8 +44,6 @@ class DefaultTableIterator implements ITableIterator
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function getTable(): ITable
     {
@@ -57,8 +52,6 @@ class DefaultTableIterator implements ITableIterator
 
     /**
      * Returns the current table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
@@ -67,8 +60,6 @@ class DefaultTableIterator implements ITableIterator
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function current(): ITable
     {
@@ -77,8 +68,6 @@ class DefaultTableIterator implements ITableIterator
 
     /**
      * Returns the name of the current table.
-     *
-     * @return string
      */
     public function key(): string
     {
@@ -111,8 +100,6 @@ class DefaultTableIterator implements ITableIterator
 
     /**
      * Returns true if the current index is valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {

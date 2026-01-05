@@ -21,24 +21,22 @@ abstract class AbstractTableMetadata implements ITableMetadata
      *
      * @var array
      */
-    protected $columns;
+    protected array $columns;
 
     /**
      * The names of all the primary keys in the table.
      *
      * @var array
      */
-    protected $primaryKeys;
+    protected array $primaryKeys;
 
     /**
      * @var string
      */
-    protected $tableName;
+    protected string $tableName;
 
     /**
      * Returns the names of the columns in the table.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -47,8 +45,6 @@ abstract class AbstractTableMetadata implements ITableMetadata
 
     /**
      * Returns the names of the primary key columns in the table.
-     *
-     * @return array
      */
     public function getPrimaryKeys(): array
     {
@@ -57,8 +53,6 @@ abstract class AbstractTableMetadata implements ITableMetadata
 
     /**
      * Returns the name of the table.
-     *
-     * @return string
      */
     public function getTableName(): string
     {
@@ -68,9 +62,7 @@ abstract class AbstractTableMetadata implements ITableMetadata
     /**
      * Asserts that the given tableMetaData matches this tableMetaData.
      *
-     * @param ITableMetadata $other
      *
-     * @return bool
      */
     public function matches(ITableMetadata $other): bool
     {

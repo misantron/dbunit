@@ -32,7 +32,7 @@ class Xml implements Specification
      *
      * @return XmlDataSet
      */
-    public function getDataSet($dataSetSpec)
+    public function getDataSet(string $dataSetSpec): XmlDataSet
     {
         return new XmlDataSet($dataSetSpec);
     }

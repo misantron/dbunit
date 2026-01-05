@@ -19,8 +19,6 @@ use PHPUnit\DbUnit\TestCase;
 
 class CsvDataSetTest extends \PHPUnit\Framework\TestCase
 {
-    protected $expectedDataSet;
-
     public function testCSVDataSet(): void
     {
         $table1MetaData = new DefaultTableMetadata(

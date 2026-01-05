@@ -19,7 +19,7 @@ use PHPUnit\DbUnit\DataSet\IDataSet;
  */
 class Truncate implements Operation
 {
-    protected $useCascade = false;
+    private bool $useCascade = false;
 
     public function setCascade(bool $cascade = true): void
     {
@@ -27,8 +27,6 @@ class Truncate implements Operation
     }
 
     /**
-     * @param Connection $connection
-     * @param IDataSet $dataSet
      *
      * @throws \Throwable
      */

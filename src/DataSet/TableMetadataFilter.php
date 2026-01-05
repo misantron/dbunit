@@ -45,7 +45,6 @@ class TableMetadataFilter extends AbstractTableMetadata
      * Creates a new filtered table meta data object filtering out
      * $excludeColumns.
      *
-     * @param ITableMetadata $originalMetaData
      * @param array          $excludeColumns   - Deprecated. Use the set* methods instead.
      */
     public function __construct(ITableMetadata $originalMetaData, array $excludeColumns = [])
@@ -56,8 +55,6 @@ class TableMetadataFilter extends AbstractTableMetadata
 
     /**
      * Returns the names of the columns in the table.
-     *
-     * @return array
      */
     public function getColumns(): array
     {
@@ -74,8 +71,6 @@ class TableMetadataFilter extends AbstractTableMetadata
 
     /**
      * Returns the names of the primary key columns in the table.
-     *
-     * @return array
      */
     public function getPrimaryKeys(): array
     {
@@ -84,8 +79,6 @@ class TableMetadataFilter extends AbstractTableMetadata
 
     /**
      * Returns the name of the table.
-     *
-     * @return string
      */
     public function getTableName(): string
     {
@@ -94,8 +87,6 @@ class TableMetadataFilter extends AbstractTableMetadata
 
     /**
      * Sets the columns to include in the table.
-     *
-     * @param array $includeColumns
      */
     public function addIncludeColumns(array $includeColumns): void
     {
@@ -112,8 +103,6 @@ class TableMetadataFilter extends AbstractTableMetadata
 
     /**
      * Sets the columns to exclude from the table.
-     *
-     * @param array $excludeColumns
      */
     public function addExcludeColumns(array $excludeColumns): void
     {

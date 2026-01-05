@@ -20,40 +20,18 @@ use PHPUnit\DbUnit\Exception\InvalidArgumentException;
  */
 class CsvDataSet extends AbstractDataSet
 {
-    /**
-     * @var array
-     */
-    protected $tables = [];
-
-    /**
-     * @var string
-     */
-    protected $delimiter = ',';
-
-    /**
-     * @var string
-     */
-    protected $enclosure = '"';
-
-    /**
-     * @var string
-     */
-    protected $escape = '"';
+    protected array $tables = [];
 
     /**
      * Creates a new CSV dataset
      *
      * You can pass in the parameters for how csv files will be read.
-     *
-     * @param string $delimiter
-     * @param string $enclosure
-     * @param string $escape
      */
-    public function __construct($delimiter = ',', $enclosure = '"', $escape = '"')
-    {
-        $this->delimiter = $delimiter;
-        $this->enclosure = $enclosure;
-        $this->escape = $escape;
+    public function __construct(
+        protected string $delimiter = ',',
+        protected string $enclosure = '"',
+        protected string $escape = '"'
+    ) {
     }
 
     /**
@@ -61,11 +39,8 @@ class CsvDataSet extends AbstractDataSet
      *
      * The table will be given the passed name. $csvFile should be a path to
      * a valid csv file (based on the arguments passed to the constructor.)
-     *
-     * @param string $tableName
-     * @param string $csvFile
      */
-    public function addTable($tableName, $csvFile): void
+    public function addTable(string $tableName, string $csvFile): void
     {
         if (!is_file($csvFile)) {
             throw new InvalidArgumentException("Could not find csv file: {$csvFile}");
@@ -75,11 +50,12 @@ class CsvDataSet extends AbstractDataSet
             throw new InvalidArgumentException("Could not read csv file: {$csvFile}");
         }
 
-        $fh = fopen($csvFile, 'rb');
-        $columns = $this->getCsvRow($fh);
-        $columnsCount = \count($columns);
+        $file = new \SplFileObject($csvFile, 'rb');
+        $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE);
+        $file->setCsvControl($this->delimiter, $this->enclosure, $this->escape);
 
-        if ($columns === false) {
+        $columns = $this->getCsvRow($file);
+        if ($columns === null) {
             throw new InvalidArgumentException("Could not determine the headers from the given file {$csvFile}");
         }
 
@@ -87,13 +63,19 @@ class CsvDataSet extends AbstractDataSet
         $table = new DefaultTable($metaData);
 
         $rowNumber = 1;
+        $columnsCount = \count($columns);
 
-        while (($row = $this->getCsvRow($fh)) !== false) {
+        while (!$file->eof()) {
+            $row = $this->getCsvRow($file);
+            if ($row === null) {
+                continue;
+            }
+
             if ($columnsCount !== \count($row)) {
                 throw new InvalidArgumentException("Row no. {$rowNumber} in csv file {$csvFile} should have an equal number of elements as table {$tableName}");
             }
             $table->addRow(array_combine($columns, $row));
-            $rowNumber++;
+            ++$rowNumber;
         }
 
         $this->tables[$tableName] = $table;
@@ -102,10 +84,6 @@ class CsvDataSet extends AbstractDataSet
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     * @param bool $reverse
-     *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {
@@ -114,17 +92,14 @@ class CsvDataSet extends AbstractDataSet
 
     /**
      * Returns a row from the csv file in an indexed array.
-     *
-     * @param resource $fh
-     *
-     * @return array|false
      */
-    protected function getCsvRow($fh)
+    private function getCsvRow(\SplFileObject $file): ?array
     {
-        if (PHP_VERSION_ID > 50300) {
-            return fgetcsv($fh, null, $this->delimiter, $this->enclosure, $this->escape);
+        $row = $file->fgetcsv();
+        if ($row === false) {
+            return null;
         }
 
-        return fgetcsv($fh, null, $this->delimiter, $this->enclosure);
+        return $row;
     }
 }

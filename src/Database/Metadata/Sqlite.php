@@ -18,9 +18,9 @@ use PDO;
  */
 class Sqlite extends AbstractMetadata
 {
-    protected $columns = [];
+    protected array $columns = [];
 
-    protected $keys = [];
+    protected array $keys = [];
 
     protected $truncateCommand = 'DELETE FROM';
 
@@ -29,7 +29,7 @@ class Sqlite extends AbstractMetadata
      *
      * @return array
      */
-    public function getTableNames()
+    public function getTableNames(): array
     {
         $query = "
             SELECT name
@@ -59,7 +59,7 @@ class Sqlite extends AbstractMetadata
      *
      * @return array
      */
-    public function getTableColumns($tableName)
+    public function getTableColumns(string $tableName): array
     {
         if (!isset($this->columns[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -76,7 +76,7 @@ class Sqlite extends AbstractMetadata
      *
      * @return array
      */
-    public function getTablePrimaryKeys($tableName)
+    public function getTablePrimaryKeys(string $tableName): array
     {
         if (!isset($this->keys[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -90,7 +90,7 @@ class Sqlite extends AbstractMetadata
      *
      * @param string $tableName
      */
-    protected function loadColumnInfo($tableName): void
+    protected function loadColumnInfo(string $tableName): void
     {
         $query = "PRAGMA table_info('{$tableName}')";
         $statement = $this->pdo->query($query);

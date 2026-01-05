@@ -23,5 +23,5 @@ interface IFactory
      *
      * @return Specification
      */
-    public function getDataSetSpecByType($type);
+    public function getDataSetSpecByType(string $type): Specification;
 }

@@ -20,32 +20,32 @@ use PHPUnit\DbUnit\DataSet\ITableMetadata;
  */
 class Insert extends RowBased
 {
-    protected $operationName = 'INSERT';
+    protected string $operationName = 'INSERT';
 
     protected function buildOperationQuery(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection): string
     {
         $columnCount = \count($table->getTableMetaData()->getColumns());
 
-        if ($columnCount > 0) {
-            $placeHolders = implode(', ', array_fill(0, $columnCount, '?'));
+        if ($columnCount === 0) {
+            return '';
+        }
 
-            $columns = '';
+        $placeHolders = implode(', ', array_fill(0, $columnCount, '?'));
 
-            foreach ($table->getTableMetaData()->getColumns() as $column) {
-                $columns .= $connection->quoteSchemaObject($column) . ', ';
-            }
+        $columns = '';
 
-            $columns = substr($columns, 0, -2);
+        foreach ($table->getTableMetaData()->getColumns() as $column) {
+            $columns .= $connection->quoteSchemaObject($column) . ', ';
+        }
 
-            return "
+        $columns = substr($columns, 0, -2);
+
+        return "
                 INSERT INTO {$connection->quoteSchemaObject($table->getTableMetaData()->getTableName())}
                 ({$columns})
                 VALUES
                 ({$placeHolders})
             ";
-        }
-
-        return '';
     }
 
     protected function buildOperationArguments(ITableMetadata $databaseTableMetaData, ITable $table, $row): array

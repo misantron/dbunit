@@ -53,8 +53,6 @@ class TableIterator implements ITableIterator
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function getTable(): ITable
     {
@@ -63,8 +61,6 @@ class TableIterator implements ITableIterator
 
     /**
      * Returns the current table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
@@ -73,8 +69,6 @@ class TableIterator implements ITableIterator
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function current(): ITable
     {
@@ -85,8 +79,6 @@ class TableIterator implements ITableIterator
 
     /**
      * Returns the name of the current table.
-     *
-     * @return string
      */
     public function key(): string
     {
@@ -119,8 +111,6 @@ class TableIterator implements ITableIterator
 
     /**
      * Returns true if the current index is valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {

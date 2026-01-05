@@ -18,15 +18,11 @@ interface ITableIterator extends \Iterator
 {
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function getTable(): ITable;
 
     /**
      * Returns the current table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata;
 }

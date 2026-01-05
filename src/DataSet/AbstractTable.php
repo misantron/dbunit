@@ -35,24 +35,19 @@ class AbstractTable implements ITable
      */
     private $other;
 
-    public function __toString()
+    public function __toString(): string
     {
         $columns = $this->getTableMetaData()->getColumns();
         $count = \count($columns);
 
         // if count less than 0 (when table is empty), then set count to 1
-        $count = $count >= 1 ? $count : 1;
+        $count = $count > 0 ? $count : 1;
         $lineSeparator = str_repeat('+----------------------', $count) . "+\n";
         $lineLength = \strlen($lineSeparator) - 1;
 
         $tableString = $lineSeparator;
         $tblName = $this->getTableMetaData()->getTableName();
-        $tableString .= '| ' . str_pad(
-            $tblName,
-            $lineLength - 4,
-            ' ',
-            STR_PAD_RIGHT
-        ) . " |\n";
+        $tableString .= '| ' . str_pad($tblName, $lineLength - 4) . " |\n";
         $tableString .= $lineSeparator;
         $rows = $this->rowToString($columns);
         $tableString .= !empty($rows) ? $rows . $lineSeparator : '';
@@ -74,7 +69,7 @@ class AbstractTable implements ITable
                         } else {
                             $values[] = $this->getValue($i, $columnName);
                         }
-                    } catch (\InvalidArgumentException $ex) {
+                    } catch (\InvalidArgumentException) {
                         $values[] = $this->getValue($i, $columnName) . ': no row';
                     }
                 } else {
@@ -90,8 +85,6 @@ class AbstractTable implements ITable
 
     /**
      * Returns the table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
@@ -100,8 +93,6 @@ class AbstractTable implements ITable
 
     /**
      * Returns the number of rows in this table.
-     *
-     * @return int
      */
     public function getRowCount(): int
     {
@@ -111,12 +102,9 @@ class AbstractTable implements ITable
     /**
      * Returns the value for the given column on the given row.
      *
-     * @param int $row
-     * @param string $column
-     *
      * @return mixed|string
      */
-    public function getValue(int $row, string $column)
+    public function getValue(int $row, string $column): mixed
     {
         if (!isset($this->data[$row]) || !\in_array($column, $this->getTableMetaData()->getColumns(), true)) {
             throw new InvalidArgumentException(
@@ -132,9 +120,7 @@ class AbstractTable implements ITable
     /**
      * Returns the an associative array keyed by columns for the given row.
      *
-     * @param int $row
      *
-     * @return array
      */
     public function getRow(int $row): array
     {
@@ -150,9 +136,7 @@ class AbstractTable implements ITable
     /**
      * Asserts that the given table matches this table.
      *
-     * @param ITable $other
      *
-     * @return bool
      */
     public function matches(ITable $other): bool
     {
@@ -190,10 +174,6 @@ class AbstractTable implements ITable
 
     /**
      * Checks if a given row is in the table
-     *
-     * @param array $row
-     *
-     * @return bool
      */
     public function assertContainsRow(array $row): bool
     {
@@ -202,8 +182,6 @@ class AbstractTable implements ITable
 
     /**
      * Sets the metadata for this table.
-     *
-     * @param ITableMetadata $tableMetaData
      *
      * @deprecated
      */

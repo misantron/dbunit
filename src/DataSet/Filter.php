@@ -60,7 +60,6 @@ class Filter extends AbstractDataSet
      * would like to exclude a full table set the value of the table's entry
      * to the special string '*'.
      *
-     * @param IDataSet $originalDataSet
      * @param array $excludeTables @deprecated use set* methods instead
      */
     public function __construct(IDataSet $originalDataSet, array $excludeTables = [])
@@ -84,8 +83,6 @@ class Filter extends AbstractDataSet
 
     /**
      * Adds tables to be included in the data set.
-     *
-     * @param array $tables
      */
     public function addIncludeTables(array $tables): void
     {
@@ -94,8 +91,6 @@ class Filter extends AbstractDataSet
 
     /**
      * Adds tables to be included in the data set.
-     *
-     * @param array $tables
      */
     public function addExcludeTables(array $tables): void
     {
@@ -106,7 +101,6 @@ class Filter extends AbstractDataSet
      * Adds columns to include in the data set for the given table.
      *
      * @param string $table
-     * @param array $columns
      */
     public function setIncludeColumnsForTable($table, array $columns): void
     {
@@ -117,7 +111,6 @@ class Filter extends AbstractDataSet
      * Adds columns to include in the data set for the given table.
      *
      * @param string $table
-     * @param array $columns
      */
     public function setExcludeColumnsForTable($table, array $columns): void
     {
@@ -128,9 +121,7 @@ class Filter extends AbstractDataSet
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
      *
-     * @param bool $reverse
      *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {

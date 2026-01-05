@@ -67,8 +67,6 @@ trait TestCaseTrait
     /**
      * Asserts that two given tables are equal.
      *
-     * @param ITable $expected
-     * @param ITable $actual
      * @param string $message
      */
     public static function assertTablesEqual(ITable $expected, ITable $actual, $message = ''): void
@@ -81,8 +79,6 @@ trait TestCaseTrait
     /**
      * Asserts that two given datasets are equal.
      *
-     * @param IDataSet $expected
-     * @param IDataSet $actual
      * @param string $message
      */
     public static function assertDataSetsEqual(IDataSet $expected, IDataSet $actual, $message = ''): void
@@ -121,8 +117,6 @@ trait TestCaseTrait
 
     /**
      * Closes the specified connection.
-     *
-     * @param Connection $connection
      */
     protected function closeConnection(Connection $connection): void
     {
@@ -193,10 +187,8 @@ trait TestCaseTrait
      * Creates a new DefaultDatabaseConnection using the given PDO connection
      * and database schema name.
      *
-     * @param \PDO    $connection
      * @param string $schema
      *
-     * @return DefaultConnection
      */
     protected function createDefaultDBConnection(\PDO $connection, $schema = ''): DefaultConnection
     {
@@ -217,7 +209,6 @@ trait TestCaseTrait
      *     )
      * )
      *
-     * @param array $data
      *
      * @return ArrayDataSet
      */

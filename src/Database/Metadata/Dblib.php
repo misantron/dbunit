@@ -33,19 +33,19 @@ class Dblib extends AbstractMetadata
     /**
      * @var array
      */
-    protected $columns = [];
+    protected array $columns = [];
 
     /**
      * @var array
      */
-    protected $keys = [];
+    protected array $keys = [];
 
     /**
      * Returns an array containing the names of all the tables in the database.
      *
      * @return array
      */
-    public function getTableNames()
+    public function getTableNames(): array
     {
         $tableNames = [];
 
@@ -70,7 +70,7 @@ class Dblib extends AbstractMetadata
      *
      * @return array
      */
-    public function getTableColumns($tableName)
+    public function getTableColumns(string $tableName): array
     {
         if (!isset($this->columns[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -87,7 +87,7 @@ class Dblib extends AbstractMetadata
      *
      * @return array
      */
-    public function getTablePrimaryKeys($tableName)
+    public function getTablePrimaryKeys(string $tableName): array
     {
         if (!isset($this->keys[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -101,7 +101,7 @@ class Dblib extends AbstractMetadata
      *
      * @param string $tableName
      */
-    protected function loadColumnInfo($tableName): void
+    protected function loadColumnInfo(string $tableName): void
     {
         $query = "SELECT name
 			FROM sys.columns

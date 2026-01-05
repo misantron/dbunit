@@ -30,9 +30,6 @@ class YamlDataSet extends AbstractDataSet
 
     /**
      * Creates a new YAML dataset
-     *
-     * @param string      $yamlFile
-     * @param IYamlParser $parser
      */
     public function __construct(string $yamlFile, IYamlParser $parser = null)
     {
@@ -43,8 +40,6 @@ class YamlDataSet extends AbstractDataSet
 
     /**
      * Adds a new yaml file to the dataset.
-     *
-     * @param string $yamlFile
      */
     public function addYamlFile(string $yamlFile): void
     {
@@ -77,9 +72,7 @@ class YamlDataSet extends AbstractDataSet
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
      *
-     * @param bool $reverse
      *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {
@@ -96,9 +89,7 @@ class YamlDataSet extends AbstractDataSet
      *
      * @params all the rows in a table.
      *
-     * @param array $rows
      *
-     * @return array
      */
     private function getColumns(array $rows): array
     {

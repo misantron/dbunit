@@ -17,8 +17,6 @@ namespace PHPUnit\DbUnit\DataSet;
 interface IYamlParser
 {
     /**
-     * @param string $yamlFile
-     *
      * @return array parsed YAML
      */
     public function parseYaml(string $yamlFile): array;

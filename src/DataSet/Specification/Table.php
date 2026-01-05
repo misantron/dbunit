@@ -14,7 +14,7 @@ namespace PHPUnit\DbUnit\DataSet\Specification;
 use PHPUnit\DbUnit\Database\DefaultConnection;
 use PHPUnit\DbUnit\DatabaseListConsumer;
 use PHPUnit\DbUnit\DataSet\IDataSet;
-use ReflectionClass;
+use Webmozart\Assert\Assert;
 
 /**
  * Creates a database dataset based off of a spec string.
@@ -41,14 +41,12 @@ use ReflectionClass;
 class Table implements Specification, DatabaseListConsumer
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
-    protected $databases = [];
+    protected array $databases = [];
 
     /**
      * Sets the database for the spec
-     *
-     * @param array $databases
      */
     public function setDatabases(array $databases): void
     {
@@ -62,15 +60,25 @@ class Table implements Specification, DatabaseListConsumer
      *
      * @return IDataSet
      */
-    public function getDataSet($dataSetSpec)
+    public function getDataSet(string $dataSetSpec): IDataSet
     {
         [$dbLabel, $schema, $tables] = explode(':', $dataSetSpec, 3);
-        $databaseInfo = $this->databases[$dbLabel];
 
-        $pdoRflc = new ReflectionClass('PDO');
+        Assert::stringNotEmpty($dbLabel);
+        Assert::stringNotEmpty($schema);
+        Assert::stringNotEmpty($tables);
+
+        $databaseInfo = $this->databases[$dbLabel] ?? null;
+
+        Assert::stringNotEmpty($databaseInfo);
+
+        $pdoRflc = new \ReflectionClass(\PDO::class);
         $pdo = $pdoRflc->newInstanceArgs(explode('|', $databaseInfo));
+
+        Assert::notNull($pdo);
+
         $dbConnection = new DefaultConnection($pdo, $schema);
 
-        return !empty($tables) ? $dbConnection->createDataSet(explode(',', $tables)) : $dbConnection->createDataSet();
+        return $tables === '' ? $dbConnection->createDataSet(explode(',', $tables)) : $dbConnection->createDataSet();
     }
 }

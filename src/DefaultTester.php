@@ -26,8 +26,6 @@ class DefaultTester extends AbstractTester
 
     /**
      * Creates a new default database tester using the given connection.
-     *
-     * @param Connection $connection
      */
     public function __construct(Connection $connection)
     {

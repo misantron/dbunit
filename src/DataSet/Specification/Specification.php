@@ -25,5 +25,5 @@ interface Specification
      *
      * @return IDataSet
      */
-    public function getDataSet($dataSetSpec);
+    public function getDataSet(string $dataSetSpec): IDataSet;
 }

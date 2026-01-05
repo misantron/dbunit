@@ -32,7 +32,7 @@ class Yaml implements Specification
      *
      * @return YamlDataSet
      */
-    public function getDataSet($dataSetSpec)
+    public function getDataSet(string $dataSetSpec): YamlDataSet
     {
         return new YamlDataSet($dataSetSpec);
     }

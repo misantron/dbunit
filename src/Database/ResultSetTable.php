@@ -27,7 +27,6 @@ class ResultSetTable extends AbstractTable
      * Creates a new result set table.
      *
      * @param string        $tableName
-     * @param \PDOStatement $pdoStatement
      */
     public function __construct($tableName, \PDOStatement $pdoStatement)
     {

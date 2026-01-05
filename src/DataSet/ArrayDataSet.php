@@ -36,8 +36,6 @@ class ArrayDataSet extends AbstractDataSet
      *         array("id" => 2, "name" => "...", "address" => "...")
      *     )
      * )
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

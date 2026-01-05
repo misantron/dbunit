@@ -20,10 +20,6 @@ class DefaultTableMetadata extends AbstractTableMetadata
 {
     /**
      * Creates a new default table meta data object.
-     *
-     * @param string $tableName
-     * @param array $columns
-     * @param array $primaryKeys
      */
     public function __construct(string $tableName, array $columns, array $primaryKeys = [])
     {

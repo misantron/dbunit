@@ -52,8 +52,6 @@ abstract class AbstractTester implements Tester
 
     /**
      * Closes the specified connection.
-     *
-     * @param Connection $connection
      */
     public function closeConnection(Connection $connection): void
     {
@@ -88,8 +86,6 @@ abstract class AbstractTester implements Tester
 
     /**
      * Sets the test dataset to use.
-     *
-     * @param IDataSet $dataSet
      */
     public function setDataSet(IDataSet $dataSet): void
     {
@@ -108,8 +104,6 @@ abstract class AbstractTester implements Tester
 
     /**
      * Sets the DatabaseOperation to call when starting the test.
-     *
-     * @param Operation $setUpOperation
      */
     public function setSetUpOperation(Operation $setUpOperation): void
     {
@@ -118,8 +112,6 @@ abstract class AbstractTester implements Tester
 
     /**
      * Sets the DatabaseOperation to call when ending the test.
-     *
-     * @param Operation $tearDownOperation
      */
     public function setTearDownOperation(Operation $tearDownOperation): void
     {

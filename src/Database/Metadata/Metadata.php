@@ -21,7 +21,7 @@ interface Metadata
      *
      * @return array
      */
-    public function getTableNames();
+    public function getTableNames(): array;
 
     /**
      * Returns an array containing the names of all the columns in the
@@ -31,7 +31,7 @@ interface Metadata
      *
      * @return array
      */
-    public function getTableColumns($tableName);
+    public function getTableColumns(string $tableName): array;
 
     /**
      * Returns an array containing the names of all the primary key columns in
@@ -41,14 +41,14 @@ interface Metadata
      *
      * @return array
      */
-    public function getTablePrimaryKeys($tableName);
+    public function getTablePrimaryKeys(string $tableName): array;
 
     /**
      * Returns the name of the default schema.
      *
      * @return string
      */
-    public function getSchema();
+    public function getSchema(): string;
 
     /**
      * Returns a quoted schema object. (table name, column name, etc)
@@ -57,26 +57,26 @@ interface Metadata
      *
      * @return string
      */
-    public function quoteSchemaObject($object);
+    public function quoteSchemaObject(string $object): string;
 
     /**
      * Returns true if the rdbms allows cascading
      *
      * @return bool
      */
-    public function allowsCascading();
+    public function allowsCascading(): bool;
 
     /**
      * Disables primary keys if rdbms does not allow setting them otherwise
      *
      * @param string $tableName
      */
-    public function disablePrimaryKeys($tableName);
+    public function disablePrimaryKeys(string $tableName): void;
 
     /**
      * Reenables primary keys after they have been disabled
      *
      * @param string $tableName
      */
-    public function enablePrimaryKeys($tableName);
+    public function enablePrimaryKeys(string $tableName): void;
 }

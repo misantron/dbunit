@@ -20,23 +20,13 @@ use PHPUnit\Framework\Constraint\Constraint;
  */
 class TableIsEqual extends Constraint
 {
-    /**
-     * @var ITable
-     */
-    protected ITable $value;
-
-    /**
-     * @param ITable $value
-     */
-    public function __construct(ITable $value)
-    {
-        $this->value = $value;
+    public function __construct(
+        protected ITable $value
+    ) {
     }
 
     /**
      * Returns a string representation of the constraint.
-     *
-     * @return string
      */
     public function toString(): string
     {
@@ -53,10 +43,8 @@ class TableIsEqual extends Constraint
      * This method can be overridden to implement the evaluation algorithm.
      *
      * @param mixed $other value or object to evaluate
-     *
-     * @return bool
      */
-    protected function matches($other): bool
+    protected function matches(mixed $other): bool
     {
         if (!$other instanceof ITable) {
             throw new InvalidArgumentException('Only table instance can be matched');
@@ -72,10 +60,8 @@ class TableIsEqual extends Constraint
      * cases. This method should return the second part of that sentence.
      *
      * @param mixed $other evaluated value or object
-     *
-     * @return string
      */
-    protected function failureDescription($other): string
+    protected function failureDescription(mixed $other): string
     {
         return $other . ' ' . $this->toString();
     }

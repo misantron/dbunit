@@ -11,7 +11,7 @@
 
 namespace PHPUnit\DbUnit\DataSet;
 
-use Symfony;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * The default YAML parser, using Symfony/Yaml.
@@ -20,6 +20,6 @@ class SymfonyYamlParser implements IYamlParser
 {
     public function parseYaml(string $yamlFile): array
     {
-        return Symfony\Component\Yaml\Yaml::parse(file_get_contents($yamlFile));
+        return Yaml::parseFile($yamlFile);
     }
 }

@@ -80,23 +80,15 @@ class QueryDataSetTest extends TestCase
             'tc2' => 'blah',
         ]);
 
-        foreach ($this->dataSet as $i => $table) {
-            switch ($table->getTableMetaData()->getTableName()) {
-                case 'table1':
-                    self::assertTablesEqual($expectedTable1, $table);
-                    break;
-                case 'query1':
-                    self::assertTablesEqual($expectedTable2, $table);
-                    break;
-                default:
-                    $this->fail('Proper keys not present from the iterator');
-            }
+        foreach ($this->dataSet as $table) {
+            match ($table->getTableMetaData()->getTableName()) {
+                'table1' => self::assertTablesEqual($expectedTable1, $table),
+                'query1' => self::assertTablesEqual($expectedTable2, $table),
+                default => $this->fail('Proper keys not present from the iterator'),
+            };
         }
     }
 
-    /**
-     * @return DefaultConnection
-     */
     protected function getConnection(): DefaultConnection
     {
         return $this->createDefaultDBConnection($this->pdo, 'test');

@@ -19,53 +19,31 @@ use PHPUnit\DbUnit\Exception\RuntimeException;
  */
 abstract class AbstractXmlDataSet extends AbstractDataSet
 {
-    /**
-     * @var array
-     */
-    protected $tables;
+    protected array $tables;
 
-    /**
-     * @var \SimpleXmlElement
-     */
-    protected $xmlFileContents;
+    protected \SimpleXmlElement|false $xmlFileContents;
 
-    /**
-     * @param string $xmlFile
-     */
     public function __construct(string $xmlFile)
     {
-        if (!\extension_loaded('dom')) {
-            throw new \LogicException('Extension DOM is required.');
-        }
-
         if (!is_file($xmlFile)) {
             throw new InvalidArgumentException("Could not find xml file: {$xmlFile}");
         }
 
-        if (\LIBXML_VERSION < 20900) {
-            $libxmlEntityLoader = libxml_disable_entity_loader(false);
-        }
-        $libxmlErrorReporting = libxml_use_internal_errors(true);
+        libxml_use_internal_errors(true);
+
         $this->xmlFileContents = simplexml_load_string(
-            file_get_contents($xmlFile),
-            'SimpleXMLElement',
-            LIBXML_COMPACT | LIBXML_PARSEHUGE
+            data: file_get_contents($xmlFile),
+            options: LIBXML_COMPACT
         );
 
-        if (!$this->xmlFileContents) {
-            $message = '';
+        if ($this->xmlFileContents === false) {
+            $errors = array_map(static function (\LibXMLError $error) {
+                return trim($error->message);
+            }, libxml_get_errors());
 
-            foreach (libxml_get_errors() as $error) {
-                $message .= print_r($error, true);
-            }
+            libxml_clear_errors();
 
-            throw new RuntimeException($message);
-        }
-
-        libxml_clear_errors();
-        libxml_use_internal_errors($libxmlErrorReporting);
-        if (\LIBXML_VERSION < 20900) {
-            libxml_disable_entity_loader($libxmlEntityLoader);
+            throw new RuntimeException(implode(', ', $errors));
         }
 
         $tableColumns = [];
@@ -78,13 +56,10 @@ abstract class AbstractXmlDataSet extends AbstractDataSet
     /**
      * Reads the simple xml object and creates the appropriate tables and meta
      * data for this dataset.
-     *
-     * @param array $tableColumns
-     * @param array $tableValues
      */
     abstract protected function getTableInfo(array &$tableColumns, array &$tableValues);
 
-    protected function createTables(array &$tableColumns, array &$tableValues): void
+    protected function createTables(array $tableColumns, array $tableValues): void
     {
         foreach ($tableValues as $tableName => $values) {
             $table = $this->getOrCreateTable($tableName, $tableColumns[$tableName]);
@@ -98,13 +73,8 @@ abstract class AbstractXmlDataSet extends AbstractDataSet
     /**
      * Returns the table with the matching name. If the table does not exist
      * an empty one is created.
-     *
-     * @param string $tableName
-     * @param mixed $tableColumns
-     *
-     * @return DefaultTable
      */
-    protected function getOrCreateTable(string $tableName, $tableColumns): DefaultTable
+    protected function getOrCreateTable(string $tableName, array $tableColumns): DefaultTable
     {
         if (empty($this->tables[$tableName])) {
             $tableMetaData = new DefaultTableMetadata($tableName, $tableColumns);
@@ -117,10 +87,6 @@ abstract class AbstractXmlDataSet extends AbstractDataSet
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     * @param bool $reverse
-     *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {

@@ -22,71 +22,39 @@ use PHPUnit\DbUnit\Exception\RuntimeException;
 class Exception extends RuntimeException
 {
     /**
-     * @var string
-     */
-    protected $operation;
-
-    /**
-     * @var string
-     */
-    protected $preparedQuery;
-
-    /**
-     * @var array
-     */
-    protected $preparedArgs;
-
-    /**
-     * @var ITable
-     */
-    protected $table;
-
-    /**
-     * @var string
-     */
-    protected $error;
-
-    /**
      * Creates a new dbunit operation exception
-     *
-     * @param string $operation
-     * @param string $current_query
-     * @param ITable $current_table
-     * @param string $error
-     * @param mixed  $current_args
      */
-    public function __construct($operation, $current_query, $current_args, $current_table, $error)
-    {
-        parent::__construct("{$operation} operation failed on query: {$current_query} using args: " . print_r($current_args, true) . " [{$error}]");
-
-        $this->operation = $operation;
-        $this->preparedQuery = $current_query;
-        $this->preparedArgs = $current_args;
-        $this->table = $current_table;
-        $this->error = $error;
+    public function __construct(
+        private readonly string $operation,
+        private readonly string $query,
+        private readonly array $args,
+        private readonly ITable $table,
+        private readonly string $error,
+    ) {
+        parent::__construct("{$operation} operation failed on query: {$query} using args: " . print_r($args, true) . " [{$error}]");
     }
 
-    public function getOperation()
+    public function getOperation(): string
     {
         return $this->operation;
     }
 
-    public function getQuery()
+    public function getQuery(): string
     {
-        return $this->preparedQuery;
+        return $this->query;
     }
 
-    public function getTable()
+    public function getTable(): ITable
     {
         return $this->table;
     }
 
-    public function getArgs()
+    public function getArgs(): array
     {
-        return $this->preparedArgs;
+        return $this->args;
     }
 
-    public function getError()
+    public function getError(): string
     {
         return $this->error;
     }

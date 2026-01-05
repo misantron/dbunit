@@ -28,7 +28,6 @@ class TableFilter extends AbstractTable
     /**
      * Creates a new table filter using the original table
      *
-     * @param ITable $originalTable
      * @param array $excludeColumns @deprecated, use the set* methods instead
      */
     public function __construct(ITable $originalTable, array $excludeColumns = [])
@@ -41,9 +40,7 @@ class TableFilter extends AbstractTable
     /**
      * Returns the an associative array keyed by columns for the given row.
      *
-     * @param int $row
      *
-     * @return array
      */
     public function getRow(int $row): array
     {
@@ -54,8 +51,6 @@ class TableFilter extends AbstractTable
 
     /**
      * Returns the number of rows in this table.
-     *
-     * @return int
      */
     public function getRowCount(): int
     {
@@ -66,11 +61,8 @@ class TableFilter extends AbstractTable
 
     /**
      * Returns the value for the given column on the given row.
-     *
-     * @param int $row
-     * @param string $column
      */
-    public function getValue(int $row, string $column)
+    public function getValue(int $row, string $column): mixed
     {
         if (\in_array($column, $this->getTableMetaData()->getColumns(), true)) {
             return $this->originalTable->getValue($row, $column);
@@ -83,8 +75,6 @@ class TableFilter extends AbstractTable
 
     /**
      * Sets the columns to include in the table.
-     *
-     * @param array $includeColumns
      */
     public function addIncludeColumns(array $includeColumns): void
     {
@@ -101,8 +91,6 @@ class TableFilter extends AbstractTable
 
     /**
      * Sets the columns to exclude from the table.
-     *
-     * @param array $excludeColumns
      */
     public function addExcludeColumns(array $excludeColumns): void
     {
@@ -120,9 +108,7 @@ class TableFilter extends AbstractTable
     /**
      * Checks if a given row is in the table
      *
-     * @param array $row
      *
-     * @return bool
      */
     public function assertContainsRow(array $row): bool
     {

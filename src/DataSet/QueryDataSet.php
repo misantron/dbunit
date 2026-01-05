@@ -37,8 +37,6 @@ class QueryDataSet extends AbstractDataSet
 
     /**
      * Creates a new dataset using the given database connection.
-     *
-     * @param Connection $databaseConnection
      */
     public function __construct(Connection $databaseConnection)
     {
@@ -57,7 +55,6 @@ class QueryDataSet extends AbstractDataSet
     /**
      * Returns a table object for the given table.
      *
-     * @param string $tableName
      *
      * @return Table
      */
@@ -72,8 +69,6 @@ class QueryDataSet extends AbstractDataSet
 
     /**
      * Returns a list of table names for the database
-     *
-     * @return array
      */
     public function getTableNames(): array
     {

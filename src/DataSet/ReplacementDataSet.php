@@ -33,11 +33,6 @@ class ReplacementDataSet extends AbstractDataSet
      */
     protected $subStrReplacements;
 
-    /**
-     * @param IDataSet $dataSet
-     * @param array $fullReplacements
-     * @param array $subStrReplacements
-     */
     public function __construct(IDataSet $dataSet, array $fullReplacements = [], array $subStrReplacements = [])
     {
         $this->dataSet = $dataSet;
@@ -49,9 +44,6 @@ class ReplacementDataSet extends AbstractDataSet
      * Adds a new full replacement
      *
      * Full replacements will only replace values if the FULL value is a match
-     *
-     * @param string $value
-     * @param string|null $replacement
      */
     public function addFullReplacement(string $value, ?string $replacement): void
     {
@@ -75,9 +67,7 @@ class ReplacementDataSet extends AbstractDataSet
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
      *
-     * @param bool $reverse
      *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {

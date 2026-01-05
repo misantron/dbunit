@@ -20,8 +20,6 @@ class DefaultTable extends AbstractTable
 {
     /**
      * Creates a new table object using the given $tableMetaData
-     *
-     * @param ITableMetadata $tableMetaData
      */
     public function __construct(ITableMetadata $tableMetaData)
     {
@@ -34,7 +32,7 @@ class DefaultTable extends AbstractTable
      *
      * @param array $values
      */
-    public function addRow($values = []): void
+    public function addRow(array $values = []): void
     {
         $this->data[] = array_replace(
             array_fill_keys($this->getTableMetaData()->getColumns(), null),
@@ -44,8 +42,6 @@ class DefaultTable extends AbstractTable
 
     /**
      * Adds the rows in the passed table to the current table.
-     *
-     * @param ITable $table
      */
     public function addTableRows(ITable $table): void
     {
@@ -69,7 +65,7 @@ class DefaultTable extends AbstractTable
      * @param string $column
      * @param mixed $value
      */
-    public function setValue($row, $column, $value): void
+    public function setValue(int $row, string $column, mixed $value): void
     {
         if (!isset($this->data[$row])) {
             throw new InvalidArgumentException('The row given does not exist.');

@@ -11,7 +11,6 @@
 
 namespace PHPUnit\DbUnit\DataSet;
 
-use PDO;
 use PHPUnit\DbUnit\Database\Connection;
 
 /**
@@ -36,10 +35,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Creates a new database query table object.
-     *
-     * @param string $tableName
-     * @param string $query
-     * @param Connection $databaseConnection
      */
     public function __construct(string $tableName, string $query, Connection $databaseConnection)
     {
@@ -50,8 +45,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Returns the table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
@@ -63,9 +56,7 @@ class QueryTable extends AbstractTable
     /**
      * Checks if a given row is in the table
      *
-     * @param array $row
      *
-     * @return bool
      */
     public function assertContainsRow(array $row): bool
     {
@@ -76,8 +67,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Returns the number of rows in this table.
-     *
-     * @return int
      */
     public function getRowCount(): int
     {
@@ -88,13 +77,8 @@ class QueryTable extends AbstractTable
 
     /**
      * Returns the value for the given column on the given row.
-     *
-     * @param int $row
-     * @param string $column
-     *
-     * @return mixed
      */
-    public function getValue(int $row, string $column)
+    public function getValue(int $row, string $column): mixed
     {
         $this->loadData();
 
@@ -104,9 +88,7 @@ class QueryTable extends AbstractTable
     /**
      * Returns the an associative array keyed by columns for the given row.
      *
-     * @param int $row
      *
-     * @return array
      */
     public function getRow(int $row): array
     {
@@ -118,9 +100,7 @@ class QueryTable extends AbstractTable
     /**
      * Asserts that the given table matches this table.
      *
-     * @param ITable $other
      *
-     * @return bool
      */
     public function matches(ITable $other): bool
     {
@@ -133,7 +113,7 @@ class QueryTable extends AbstractTable
     {
         if ($this->data === null) {
             $pdoStatement = $this->databaseConnection->getConnection()->query($this->query);
-            $this->data = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
+            $this->data = $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
         }
     }
 

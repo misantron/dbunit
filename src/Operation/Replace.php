@@ -21,12 +21,8 @@ use PHPUnit\DbUnit\DataSet\ITableMetadata;
  */
 class Replace extends RowBased
 {
-    protected $operationName = 'REPLACE';
+    protected string $operationName = 'REPLACE';
 
-    /**
-     * @param Connection $connection
-     * @param IDataSet $dataSet
-     */
     public function execute(Connection $connection, IDataSet $dataSet): void
     {
         $insertOperation = new Insert();
@@ -55,7 +51,7 @@ class Replace extends RowBased
                 try {
                     $selectStatement->execute($selectArgs);
 
-                    if ($selectStatement->fetchColumn(0) > 0) {
+                    if ($selectStatement->fetchColumn() > 0) {
                         $updateArgs = $updateOperation->buildOperationArguments($databaseTableMetaData, $table, $i);
                         $query = $updateQuery;
                         $args = $updateArgs;

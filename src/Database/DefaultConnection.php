@@ -36,9 +36,6 @@ class DefaultConnection implements Connection
 
     /**
      * Creates a new database connection
-     *
-     * @param \PDO    $connection
-     * @param string  $schema
      */
     public function __construct(\PDO $connection, string $schema = '')
     {
@@ -58,8 +55,6 @@ class DefaultConnection implements Connection
     /**
      * Returns a database metadata object that can be used to retrieve table
      * meta data from the database.
-     *
-     * @return Metadata
      */
     public function getMetaData(): Metadata
     {
@@ -68,8 +63,6 @@ class DefaultConnection implements Connection
 
     /**
      * Returns the schema for the connection.
-     *
-     * @return string
      */
     public function getSchema(): string
     {
@@ -81,9 +74,7 @@ class DefaultConnection implements Connection
      * names are specified then it will created a dataset over the entire
      * database.
      *
-     * @param array|null $tableNames
      *
-     * @return IDataSet
      *
      * @todo Implement the filtered data set.
      */
@@ -118,8 +109,6 @@ class DefaultConnection implements Connection
 
     /**
      * Returns a PDO Connection
-     *
-     * @return \PDO
      */
     public function getConnection(): \PDO
     {
@@ -132,8 +121,6 @@ class DefaultConnection implements Connection
      *
      * @param string $tableName
      * @param string $whereClause
-     *
-     * @return int
      */
     public function getRowCount($tableName, $whereClause = null): int
     {
@@ -149,9 +136,7 @@ class DefaultConnection implements Connection
     /**
      * Returns a quoted schema object. (table name, column name, etc)
      *
-     * @param string $object
      *
-     * @return string
      */
     public function quoteSchemaObject(string $object): string
     {
@@ -160,8 +145,6 @@ class DefaultConnection implements Connection
 
     /**
      * Returns the command used to truncate a table.
-     *
-     * @return string
      */
     public function getTruncateCommand(): string
     {
@@ -170,8 +153,6 @@ class DefaultConnection implements Connection
 
     /**
      * Returns true if the connection allows cascading
-     *
-     * @return bool
      */
     public function allowsCascading(): bool
     {
@@ -180,8 +161,6 @@ class DefaultConnection implements Connection
 
     /**
      * Disables primary keys if connection does not allow setting them otherwise
-     *
-     * @param string $tableName
      */
     public function disablePrimaryKeys(string $tableName): void
     {
@@ -190,8 +169,6 @@ class DefaultConnection implements Connection
 
     /**
      * Reenables primary keys after they have been disabled
-     *
-     * @param string $tableName
      */
     public function enablePrimaryKeys(string $tableName): void
     {

@@ -32,7 +32,7 @@ class FlatXml implements Specification
      *
      * @return FlatXmlDataSet
      */
-    public function getDataSet($dataSetSpec)
+    public function getDataSet(string $dataSetSpec): FlatXmlDataSet
     {
         return new FlatXmlDataSet($dataSetSpec);
     }

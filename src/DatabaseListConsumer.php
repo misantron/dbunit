@@ -18,8 +18,6 @@ interface DatabaseListConsumer
 {
     /**
      * Sets the database for the spec
-     *
-     * @param array $databases
      */
-    public function setDatabases(array $databases);
+    public function setDatabases(array $databases): void;
 }

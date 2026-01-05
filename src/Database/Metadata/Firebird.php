@@ -32,7 +32,7 @@ class Firebird extends AbstractMetadata
      *
      * @return array
      */
-    public function getTableNames()
+    public function getTableNames(): array
     {
         $query = '
             select
@@ -65,7 +65,7 @@ class Firebird extends AbstractMetadata
      *
      * @return array
      */
-    public function getTableColumns($tableName)
+    public function getTableColumns(string $tableName): array
     {
         if (!isset($this->columns[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -82,7 +82,7 @@ class Firebird extends AbstractMetadata
      *
      * @return array
      */
-    public function getTablePrimaryKeys($tableName)
+    public function getTablePrimaryKeys(string $tableName): array
     {
         if (!isset($this->keys[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -96,7 +96,7 @@ class Firebird extends AbstractMetadata
      *
      * @return string
      */
-    public function getSchema()
+    public function getSchema(): string
     {
         if (empty($this->schema)) {
             return 'public';
@@ -110,7 +110,7 @@ class Firebird extends AbstractMetadata
      *
      * @return bool
      */
-    public function allowsCascading()
+    public function allowsCascading(): bool
     {
         return false;
     }
@@ -122,7 +122,7 @@ class Firebird extends AbstractMetadata
      *
      * @return string
      */
-    public function quoteSchemaObject($object)
+    public function quoteSchemaObject(string $object): string
     {
         return $object; //firebird does not allow object quoting
     }
@@ -132,20 +132,10 @@ class Firebird extends AbstractMetadata
      *
      * @param string $tableName
      */
-    protected function loadColumnInfo($tableName): void
+    protected function loadColumnInfo(string $tableName): void
     {
         $this->columns[$tableName] = [];
         $this->keys[$tableName] = [];
-
-        $columnQuery = '
-            SELECT DISTINCT
-                COLUMN_NAME, ORDINAL_POSITION
-            FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE
-                TABLE_NAME = ? AND
-                TABLE_SCHEMA = ?
-            ORDER BY ORDINAL_POSITION
-        ';
 
         $columnQuery = '
             select
@@ -165,22 +155,6 @@ class Firebird extends AbstractMetadata
         while ($columName = $columnStatement->fetchColumn(0)) {
             $this->columns[$tableName][] = $columName;
         }
-
-        $keyQuery = "
-            SELECT
-                KCU.COLUMN_NAME,
-                KCU.ORDINAL_POSITION
-            FROM
-                INFORMATION_SCHEMA.KEY_COLUMN_USAGE as KCU
-            LEFT JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS as TC
-                ON TC.TABLE_NAME = KCU.TABLE_NAME
-            WHERE
-                TC.CONSTRAINT_TYPE = 'PRIMARY KEY' AND
-                TC.TABLE_NAME = ? AND
-                TC.TABLE_SCHEMA = ?
-            ORDER BY
-                KCU.ORDINAL_POSITION ASC
-        ";
 
         $keyQuery = "
             select

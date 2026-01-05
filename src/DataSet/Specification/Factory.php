@@ -25,29 +25,16 @@ class Factory implements IFactory
      *
      * @return Specification
      */
-    public function getDataSetSpecByType($type)
+    public function getDataSetSpecByType(string $type): Specification
     {
-        switch ($type) {
-            case 'xml':
-                return new Xml();
-
-            case 'flatxml':
-                return new FlatXml();
-
-            case 'csv':
-                return new Csv();
-
-            case 'yaml':
-                return new Yaml();
-
-            case 'dbtable':
-                return new Table();
-
-            case 'dbquery':
-                return new Query();
-
-            default:
-                throw new RuntimeException("I don't know what you want from me.");
-        }
+        return match ($type) {
+            'xml' => new Xml(),
+            'flatxml' => new FlatXml(),
+            'csv' => new Csv(),
+            'yaml' => new Yaml(),
+            'dbtable' => new Table(),
+            'dbquery' => new Query(),
+            default => throw new RuntimeException("I don't know what you want from me."),
+        };
     }
 }

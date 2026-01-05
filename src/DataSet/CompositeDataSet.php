@@ -26,8 +26,6 @@ class CompositeDataSet extends AbstractDataSet
      * Creates a new Composite dataset
      *
      * You can pass in any data set that implements PHPUnit_Extensions_Database_DataSet_IDataSet
-     *
-     * @param array $dataSets
      */
     public function __construct(array $dataSets = [])
     {
@@ -42,8 +40,6 @@ class CompositeDataSet extends AbstractDataSet
      * Adds a new data set to the composite.
      *
      * The dataset may not define tables that already exist in the composite.
-     *
-     * @param IDataSet $dataSet
      */
     public function addDataSet(IDataSet $dataSet): void
     {
@@ -69,9 +65,7 @@ class CompositeDataSet extends AbstractDataSet
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
      *
-     * @param bool $reverse
      *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {

@@ -24,8 +24,6 @@ interface Tester
 {
     /**
      * Closes the specified connection.
-     *
-     * @param Connection $connection
      */
     public function closeConnection(Connection $connection);
 
@@ -55,8 +53,6 @@ interface Tester
 
     /**
      * Sets the test dataset to use.
-     *
-     * @param IDataSet $dataSet
      */
     public function setDataSet(IDataSet $dataSet);
 
@@ -69,15 +65,11 @@ interface Tester
 
     /**
      * Sets the DatabaseOperation to call when starting the test.
-     *
-     * @param Operation $setUpOperation
      */
     public function setSetUpOperation(Operation $setUpOperation);
 
     /**
      * Sets the DatabaseOperation to call when stopping the test.
-     *
-     * @param Operation $tearDownOperation
      */
     public function setTearDownOperation(Operation $tearDownOperation);
 }

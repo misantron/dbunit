@@ -20,7 +20,7 @@ class MysqlXmlDataSet extends AbstractXmlDataSet
 {
     protected function getTableInfo(array &$tableColumns, array &$tableValues): void
     {
-        if ($this->xmlFileContents->getName() != 'mysqldump') {
+        if ($this->xmlFileContents->getName() !== 'mysqldump') {
             throw new RuntimeException('The root element of a MySQL XML data set file must be called <mysqldump>');
         }
 
@@ -49,7 +49,7 @@ class MysqlXmlDataSet extends AbstractXmlDataSet
 
                     $columnName = (string) $columnElement['name'];
 
-                    if (!\in_array($columnName, $tableColumns[$tableName])) {
+                    if (!\in_array($columnName, $tableColumns[$tableName], true)) {
                         $tableColumns[$tableName][] = $columnName;
                     }
                 }
@@ -69,6 +69,9 @@ class MysqlXmlDataSet extends AbstractXmlDataSet
 
                     $column = $fields[0];
                     $attr = $column->attributes('http://www.w3.org/2001/XMLSchema-instance');
+                    if ($attr === null) {
+                        continue;
+                    }
 
                     if (isset($attr['type']) && (string) $attr['type'] === 'xs:hexBinary') {
                         $columnValue = pack('H*', (string) $column);
@@ -98,7 +101,7 @@ class MysqlXmlDataSet extends AbstractXmlDataSet
 
                 $columnName = (string) (empty($fieldElement['Field']) ? $fieldElement['field'] : $fieldElement['Field']);
 
-                if (!\in_array($columnName, $tableColumns[$tableName])) {
+                if (!\in_array($columnName, $tableColumns[$tableName], true)) {
                     $tableColumns[$tableName][] = $columnName;
                 }
             }

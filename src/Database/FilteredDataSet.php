@@ -23,9 +23,6 @@ class FilteredDataSet extends DataSet
 
     /**
      * Creates a new dataset using the given database connection.
-     *
-     * @param Connection $databaseConnection
-     * @param array $tableNames
      */
     public function __construct(Connection $databaseConnection, array $tableNames)
     {
@@ -36,8 +33,6 @@ class FilteredDataSet extends DataSet
 
     /**
      * Returns a list of table names for the database
-     *
-     * @return array
      */
     public function getTableNames(): array
     {

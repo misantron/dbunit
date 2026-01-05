@@ -12,7 +12,7 @@
 namespace PHPUnit\DbUnit\DataSet\Specification;
 
 use PHPUnit\DbUnit\DataSet\CsvDataSet;
-use ReflectionClass;
+use Webmozart\Assert\Assert;
 
 /**
  * Creates CsvDataSets based off of a spec string.
@@ -37,11 +37,13 @@ class Csv implements Specification
      *
      * @return CsvDataSet
      */
-    public function getDataSet($dataSetSpec)
+    public function getDataSet(string $dataSetSpec): CsvDataSet
     {
         $csvDataSetArgs = $this->getCsvOptions($dataSetSpec);
-        $csvDataSetRfl = new ReflectionClass(CsvDataSet::class);
+        $csvDataSetRfl = new \ReflectionClass(CsvDataSet::class);
         $csvDataSet = $csvDataSetRfl->newInstanceArgs($csvDataSetArgs);
+
+        Assert::notNull($csvDataSet);
 
         foreach ($this->getTableFileMap($dataSetSpec) as $tableName => $file) {
             $csvDataSet->addTable($tableName, $file);
@@ -61,7 +63,7 @@ class Csv implements Specification
      *
      * @return array
      */
-    protected function getCsvOptions($dataSetSpec)
+    protected function getCsvOptions(string $dataSetSpec): array
     {
         [$csvOptStr] = explode('|', $dataSetSpec, 2);
 
@@ -79,7 +81,7 @@ class Csv implements Specification
      *
      * @return array
      */
-    protected function getTableFileMap($dataSetSpec)
+    protected function getTableFileMap(string $dataSetSpec): array
     {
         $tables = [];
 

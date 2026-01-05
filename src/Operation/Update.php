@@ -20,9 +20,9 @@ use PHPUnit\DbUnit\DataSet\ITableMetadata;
  */
 class Update extends RowBased
 {
-    protected $operationName = 'UPDATE';
+    protected string $operationName = 'UPDATE';
 
-    protected function buildOperationQuery(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection)
+    protected function buildOperationQuery(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection): string
     {
         $keys = $databaseTableMetaData->getPrimaryKeys();
         $columns = $table->getTableMetaData()->getColumns();

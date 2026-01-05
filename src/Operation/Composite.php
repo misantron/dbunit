@@ -26,7 +26,7 @@ class Composite implements Operation
     /**
      * @var Operation[]
      */
-    protected $operations = [];
+    protected array $operations = [];
 
     /**
      * @param Operation[] $operations

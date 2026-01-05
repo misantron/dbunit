@@ -40,8 +40,6 @@ class DataSet extends AbstractDataSet
 
     /**
      * Creates a new dataset using the given database connection.
-     *
-     * @param Connection $databaseConnection
      */
     public function __construct(Connection $databaseConnection)
     {
@@ -51,10 +49,7 @@ class DataSet extends AbstractDataSet
     /**
      * Creates the query necessary to pull all of the data from a table.
      *
-     * @param ITableMetadata $tableMetaData
-     * @param Connection|null $databaseConnection
      *
-     * @return string
      */
     public static function buildTableSelect(ITableMetadata $tableMetaData, ?Connection $databaseConnection = null): string
     {
@@ -68,7 +63,7 @@ class DataSet extends AbstractDataSet
         $columns = $tableMetaData->getColumns();
 
         if ($databaseConnection) {
-            $columns = array_map([$databaseConnection, 'quoteSchemaObject'], $columns);
+            $columns = array_map($databaseConnection->quoteSchemaObject(...), $columns);
         }
         $columnList = implode(', ', $columns);
 
@@ -81,7 +76,7 @@ class DataSet extends AbstractDataSet
         $primaryKeys = $tableMetaData->getPrimaryKeys();
 
         if ($databaseConnection) {
-            $primaryKeys = array_map([$databaseConnection, 'quoteSchemaObject'], $primaryKeys);
+            $primaryKeys = array_map($databaseConnection->quoteSchemaObject(...), $primaryKeys);
         }
 
         if (\count($primaryKeys)) {
@@ -96,7 +91,6 @@ class DataSet extends AbstractDataSet
     /**
      * Returns a table object for the given table.
      *
-     * @param string $tableName
      *
      * @return Table
      */
@@ -116,7 +110,6 @@ class DataSet extends AbstractDataSet
     /**
      * Returns a table meta data object for the given table.
      *
-     * @param string $tableName
      *
      * @return DefaultTableMetadata
      */
@@ -131,8 +124,6 @@ class DataSet extends AbstractDataSet
 
     /**
      * Returns a list of table names for the database
-     *
-     * @return array
      */
     public function getTableNames(): array
     {
@@ -143,7 +134,6 @@ class DataSet extends AbstractDataSet
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
      *
-     * @param bool $reverse
      *
      * @return TableIterator
      */

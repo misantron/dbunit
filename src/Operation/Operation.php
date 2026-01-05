@@ -24,8 +24,6 @@ interface Operation
      * Executes the database operation against the given $connection for the
      * given $dataSet.
      *
-     * @param Connection $connection
-     * @param IDataSet   $dataSet
      *
      * @throws \Throwable
      */

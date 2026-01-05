@@ -112,7 +112,7 @@ class RowBasedTest extends TestCase
         );
 
         $mockOperation
-            ->expects(self::exactly(2))
+            ->expects($this->exactly(2))
             ->method('buildOperationQuery')
             ->willReturnCallback(function (ITableMetadata $metadata, ITable $table) use ($connection, $table1, $table2) {
                 switch ([$metadata, $table]) {
@@ -126,7 +126,7 @@ class RowBasedTest extends TestCase
             });
 
         $mockOperation
-            ->expects(self::exactly(3))
+            ->expects($this->exactly(3))
             ->method('buildOperationArguments')
             ->willReturnCallback(function (ITableMetadata $metadata, ITable $table, int $row) use ($connection, $table1, $table2) {
                 switch ([$metadata, $table, $row]) {
@@ -197,7 +197,6 @@ class RowBasedTest extends TestCase
     {
         $this->expectException(OperationException::class);
 
-        $rowCount = 1;
         $mockTableMetaData = $this->createMock(ITableMetadata::class);
         $mockTableMetaData
             ->method('getTableName')
@@ -209,7 +208,7 @@ class RowBasedTest extends TestCase
         $mockTable
             ->expects($this->once())
             ->method('getRowCount')
-            ->willReturn($rowCount);
+            ->willReturn(1);
 
         $mockDatabaseDataSet = $this->createMock(DefaultDataSet::class);
         $mockDatabaseDataSet
@@ -257,9 +256,9 @@ class RowBasedTest extends TestCase
         $mockOperation
             ->expects($this->once())
             ->method('buildOperationQuery')
-            ->willReturn('');
+            ->willReturn('SQL QUERY...');
         $mockOperation
-            ->expects($this->exactly($rowCount))
+            ->expects($this->once())
             ->method('buildOperationArguments')
             ->willReturn([]);
 
