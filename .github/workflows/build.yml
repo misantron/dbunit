@@ -72,6 +72,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
+          ini-values: display_errors=1
           extensions: pdo_mysql, libxml, dom
           coverage: none
       - name: Install composer dependencies
