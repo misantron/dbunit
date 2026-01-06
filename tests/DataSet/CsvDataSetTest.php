@@ -86,6 +86,8 @@ asdflkjsadf asdfsadfhl "adsf, halsdf" sadfhlasdf',
         $csvDataSet->addTable('table1', TEST_FILES_PATH . 'CsvDataSets/table1.csv');
         $csvDataSet->addTable('table2', TEST_FILES_PATH . 'CsvDataSets/table2.csv');
 
+        dd($expectedDataSet, $csvDataSet);exit;
+
         TestCase::assertDataSetsEqual($expectedDataSet, $csvDataSet);
     }
 }
