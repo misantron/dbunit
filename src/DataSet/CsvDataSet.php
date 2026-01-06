@@ -30,7 +30,7 @@ class CsvDataSet extends AbstractDataSet
     public function __construct(
         protected string $delimiter = ',',
         protected string $enclosure = '"',
-        protected string $escape = '"'
+        protected string $escape = '"',
     ) {
     }
 
@@ -52,7 +52,7 @@ class CsvDataSet extends AbstractDataSet
 
         $file = new \SplFileObject($csvFile, 'rb');
         $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE);
-        $file->setCsvControl($this->delimiter, $this->enclosure, $this->escape);
+        $file->setCsvControl(separator: $this->delimiter, enclosure: $this->enclosure, escape: $this->escape);
 
         $columns = $this->getCsvRow($file);
         if ($columns === null) {
@@ -96,7 +96,7 @@ class CsvDataSet extends AbstractDataSet
      */
     private function getCsvRow(\SplFileObject $file): ?array
     {
-        $row = $file->fgetcsv();
+        $row = $file->fgetcsv(separator: $this->delimiter, enclosure: $this->enclosure, escape: $this->escape);
         if ($row === false) {
             return null;
         }

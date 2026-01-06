@@ -125,8 +125,6 @@ trait TestCaseTrait
      * Gets the IDatabaseTester for this testCase. If the IDatabaseTester is
      * not set yet, this method calls newDatabaseTester() to obtain a new
      * instance.
-     *
-     * @return Tester
      */
     protected function getDatabaseTester(): Tester
     {
@@ -139,8 +137,6 @@ trait TestCaseTrait
 
     /**
      * Returns the test dataset.
-     *
-     * @return IDataSet
      */
     abstract protected function getDataSet(): IDataSet;
 
