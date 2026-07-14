@@ -28,7 +28,7 @@ class CsvDataSet extends AbstractDataSet
      * You can pass in the parameters for how csv files will be read.
      */
     public function __construct(
-        protected string $delimiter = ',',
+        protected string $separator = ',',
         protected string $enclosure = '"',
         protected string $escape = '"',
     ) {
@@ -52,7 +52,7 @@ class CsvDataSet extends AbstractDataSet
 
         $file = new \SplFileObject($csvFile, 'rb');
         $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE);
-        $file->setCsvControl(separator: $this->delimiter, enclosure: $this->enclosure, escape: $this->escape);
+        $file->setCsvControl(separator: $this->separator, enclosure: $this->enclosure, escape: $this->escape);
 
         $columns = $this->getCsvRow($file);
         if ($columns === null) {
@@ -96,7 +96,7 @@ class CsvDataSet extends AbstractDataSet
      */
     private function getCsvRow(\SplFileObject $file): ?array
     {
-        $row = $file->fgetcsv(separator: $this->delimiter, enclosure: $this->enclosure, escape: $this->escape);
+        $row = $file->fgetcsv();
         if ($row === false) {
             return null;
         }

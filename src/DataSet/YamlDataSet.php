@@ -18,20 +18,15 @@ namespace PHPUnit\DbUnit\DataSet;
  */
 class YamlDataSet extends AbstractDataSet
 {
-    /**
-     * @var array
-     */
-    protected $tables = [];
-
-    protected IYamlParser $parser;
+    protected array $tables = [];
 
     /**
      * Creates a new YAML dataset
      */
-    public function __construct(string $yamlFile, IYamlParser $parser = null)
-    {
-        $this->parser = $parser ?? new SymfonyYamlParser();
-
+    public function __construct(
+        string $yamlFile,
+        private readonly IYamlParser $parser = new SymfonyYamlParser(),
+    ) {
         $this->addYamlFile($yamlFile);
     }
 
