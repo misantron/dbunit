@@ -21,10 +21,10 @@ class DefaultTableIterator implements ITableIterator
      */
     public function __construct(
         /**
-     * An array of tables in the iterator.
-     *
-     * @var array<int, ITable>
-     */
+         * An array of tables in the iterator.
+         *
+         * @var array<int, ITable>
+         */
         protected array $tables, /**
      * If this property is true then the tables will be iterated in reverse
      * order.
@@ -47,7 +47,8 @@ class DefaultTableIterator implements ITableIterator
      */
     public function getTableMetaData(): ITableMetadata
     {
-        return $this->current()->getTableMetaData();
+        return $this->current()
+            ->getTableMetaData();
     }
 
     /**
@@ -63,7 +64,9 @@ class DefaultTableIterator implements ITableIterator
      */
     public function key(): string
     {
-        return $this->current()->getTableMetaData()->getTableName();
+        return $this->current()
+            ->getTableMetaData()
+            ->getTableName();
     }
 
     /**

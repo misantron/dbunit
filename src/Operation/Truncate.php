@@ -27,7 +27,6 @@ class Truncate implements Operation
     }
 
     /**
-     *
      * @throws \Throwable
      */
     public function execute(Connection $connection, IDataSet $dataSet): void
@@ -43,7 +42,8 @@ class Truncate implements Operation
 
             try {
                 $this->disableForeignKeyChecksForMysql($connection);
-                $connection->getConnection()->exec($query);
+                $connection->getConnection()
+                    ->exec($query);
                 $this->enableForeignKeyChecksForMysql($connection);
             } catch (\Throwable $e) {
                 $this->enableForeignKeyChecksForMysql($connection);
@@ -60,20 +60,24 @@ class Truncate implements Operation
     private function disableForeignKeyChecksForMysql(Connection $connection): void
     {
         if ($this->isMysql($connection)) {
-            $connection->getConnection()->exec('SET @PHPUNIT_OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS');
-            $connection->getConnection()->exec('SET FOREIGN_KEY_CHECKS = 0');
+            $connection->getConnection()
+                ->exec('SET @PHPUNIT_OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS');
+            $connection->getConnection()
+                ->exec('SET FOREIGN_KEY_CHECKS = 0');
         }
     }
 
     private function enableForeignKeyChecksForMysql(Connection $connection): void
     {
         if ($this->isMysql($connection)) {
-            $connection->getConnection()->exec('SET FOREIGN_KEY_CHECKS=@PHPUNIT_OLD_FOREIGN_KEY_CHECKS');
+            $connection->getConnection()
+                ->exec('SET FOREIGN_KEY_CHECKS=@PHPUNIT_OLD_FOREIGN_KEY_CHECKS');
         }
     }
 
     private function isMysql(Connection $connection): bool
     {
-        return $connection->getConnection()->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'mysql';
+        return $connection->getConnection()
+            ->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'mysql';
     }
 }

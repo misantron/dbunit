@@ -34,7 +34,8 @@ class AbstractTable implements ITable
 
     public function __toString(): string
     {
-        $columns = $this->getTableMetaData()->getColumns();
+        $columns = $this->getTableMetaData()
+            ->getColumns();
         $count = \count($columns);
 
         // if count less than 0 (when table is empty), then set count to 1
@@ -44,7 +45,8 @@ class AbstractTable implements ITable
         $lineLength = \strlen($lineSeparator) - 1;
 
         $tableString = $lineSeparator;
-        $tblName = $this->getTableMetaData()->getTableName();
+        $tblName = $this->getTableMetaData()
+            ->getTableName();
         $tableString .= '| ' . str_pad($tblName, $lineLength - 4) . " |\n";
         $tableString .= $lineSeparator;
         $rows = $this->rowToString($columns);
@@ -117,8 +119,6 @@ class AbstractTable implements ITable
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     *
      */
     public function getRow(int $row): array
     {
@@ -133,8 +133,6 @@ class AbstractTable implements ITable
 
     /**
      * Asserts that the given table matches this table.
-     *
-     *
      */
     public function matches(ITable $other): bool
     {

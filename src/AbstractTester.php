@@ -65,7 +65,8 @@ abstract class AbstractTester implements Tester
      */
     public function onSetUp(): void
     {
-        $this->getSetUpOperation()->execute($this->getConnection(), $this->getDataSet());
+        $this->getSetUpOperation()
+            ->execute($this->getConnection(), $this->getDataSet());
     }
 
     /**
@@ -73,7 +74,8 @@ abstract class AbstractTester implements Tester
      */
     public function onTearDown(): void
     {
-        $this->getTearDownOperation()->execute($this->getConnection(), $this->getDataSet());
+        $this->getTearDownOperation()
+            ->execute($this->getConnection(), $this->getDataSet());
     }
 
     /**

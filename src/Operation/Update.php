@@ -25,7 +25,8 @@ class Update extends RowBased
     protected function buildOperationQuery(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection): string
     {
         $keys = $databaseTableMetaData->getPrimaryKeys();
-        $columns = $table->getTableMetaData()->getColumns();
+        $columns = $table->getTableMetaData()
+            ->getColumns();
         $whereStatement = 'WHERE ' . implode(' AND ', $this->buildPreparedColumnArray($keys, $connection));
         $setStatement = 'SET ' . implode(', ', $this->buildPreparedColumnArray($columns, $connection));
 

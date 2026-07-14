@@ -55,8 +55,6 @@ class Table implements Specification, DatabaseListConsumer
 
     /**
      * Creates a DB Data Set from a data set spec.
-     *
-     *
      */
     public function getDataSet(string $dataSetSpec): IDataSet
     {

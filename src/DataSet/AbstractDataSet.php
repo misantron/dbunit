@@ -50,7 +50,8 @@ abstract class AbstractDataSet implements IDataSet
      */
     public function getTableMetaData(string $tableName): ITableMetadata
     {
-        return $this->getTable($tableName)->getTableMetaData();
+        return $this->getTable($tableName)
+            ->getTableMetaData();
     }
 
     /**

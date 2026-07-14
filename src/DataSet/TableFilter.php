@@ -25,8 +25,8 @@ class TableFilter extends AbstractTable
      */
     public function __construct(
         /**
-     * The table meta data being decorated.
-     */
+         * The table meta data being decorated.
+         */
         protected ITable $originalTable,
         array $excludeColumns = []
     ) {
@@ -36,8 +36,6 @@ class TableFilter extends AbstractTable
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     *
      */
     public function getRow(int $row): array
     {
@@ -104,8 +102,6 @@ class TableFilter extends AbstractTable
 
     /**
      * Checks if a given row is in the table
-     *
-     *
      */
     public function assertContainsRow(array $row): bool
     {

@@ -57,8 +57,8 @@ class Filter extends AbstractDataSet
      */
     public function __construct(
         /**
-     * The dataset being decorated.
-     */
+         * The dataset being decorated.
+         */
         protected IDataSet $originalDataSet,
         array $excludeTables = []
     ) {
@@ -116,8 +116,6 @@ class Filter extends AbstractDataSet
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     *
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {
@@ -125,7 +123,8 @@ class Filter extends AbstractDataSet
         $newTables = [];
 
         foreach ($originalTables as $table) {
-            $tableName = $table->getTableMetaData()->getTableName();
+            $tableName = $table->getTableMetaData()
+                ->getTableName();
             if (!\in_array($tableName, $this->includeTables, true) && $this->includeTables !== []) {
                 continue;
             }

@@ -58,8 +58,6 @@ class Firebird extends AbstractMetadata
     /**
      * Returns an array containing the names of all the columns in the
      * $tableName table,
-     *
-     *
      */
     public function getTableColumns(string $tableName): array
     {
@@ -73,8 +71,6 @@ class Firebird extends AbstractMetadata
     /**
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
-     *
-     *
      */
     public function getTablePrimaryKeys(string $tableName): array
     {
@@ -99,12 +95,10 @@ class Firebird extends AbstractMetadata
 
     /**
      * Returns a quoted schema object. (table name, column name, etc)
-     *
-     *
      */
     public function quoteSchemaObject(string $object): string
     {
-        return $object; //firebird does not allow object quoting
+        return $object; // firebird does not allow object quoting
     }
 
     /**

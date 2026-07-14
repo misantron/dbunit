@@ -38,8 +38,6 @@ class MySQL extends AbstractMetadata
     /**
      * Returns an array containing the names of all the columns in the
      * $tableName table,
-     *
-     *
      */
     public function getTableColumns(string $tableName): array
     {
@@ -58,8 +56,6 @@ class MySQL extends AbstractMetadata
     /**
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
-     *
-     *
      */
     public function getTablePrimaryKeys(string $tableName): array
     {

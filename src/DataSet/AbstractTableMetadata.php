@@ -54,8 +54,6 @@ abstract class AbstractTableMetadata implements ITableMetadata
 
     /**
      * Asserts that the given tableMetaData matches this tableMetaData.
-     *
-     *
      */
     public function matches(ITableMetadata $other): bool
     {

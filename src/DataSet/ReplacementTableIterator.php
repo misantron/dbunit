@@ -74,7 +74,8 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
      */
     public function getTableMetaData(): ITableMetadata
     {
-        return $this->current()->getTableMetaData();
+        return $this->current()
+            ->getTableMetaData();
     }
 
     /**
@@ -94,7 +95,9 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
      */
     public function key(): string
     {
-        return $this->current()->getTableMetaData()->getTableName();
+        return $this->current()
+            ->getTableMetaData()
+            ->getTableName();
     }
 
     /**

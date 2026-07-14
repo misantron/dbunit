@@ -40,8 +40,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Checks if a given row is in the table
-     *
-     *
      */
     public function assertContainsRow(array $row): bool
     {
@@ -72,8 +70,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     *
      */
     public function getRow(int $row): array
     {
@@ -84,8 +80,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Asserts that the given table matches this table.
-     *
-     *
      */
     public function matches(ITable $other): bool
     {
@@ -97,7 +91,8 @@ class QueryTable extends AbstractTable
     protected function loadData(): void
     {
         if ($this->data === null) {
-            $pdoStatement = $this->databaseConnection->getConnection()->query($this->query);
+            $pdoStatement = $this->databaseConnection->getConnection()
+                ->query($this->query);
             $this->data = $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
         }
     }
@@ -114,7 +109,8 @@ class QueryTable extends AbstractTable
                 // get column names from data
                 $columns = array_keys($this->data[0]);
             } else {
-                $columns = $this->databaseConnection->getMetaData()->getTableColumns($this->tableName);
+                $columns = $this->databaseConnection->getMetaData()
+                    ->getTableColumns($this->tableName);
             }
 
             // create metadata

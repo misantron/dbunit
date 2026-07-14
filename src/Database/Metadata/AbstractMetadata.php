@@ -124,7 +124,6 @@ abstract class AbstractMetadata implements Metadata
      *
      * Returns an associative array containing the 'schema' and the 'table'.
      *
-     *
      * @return array{schema: string|null, table: string}
      */
     public function splitTableName(string $fullTableName): array

@@ -42,8 +42,8 @@ class TableMetadataFilter extends AbstractTableMetadata
      */
     public function __construct(
         /**
-     * The table meta data being decorated.
-     */
+         * The table meta data being decorated.
+         */
         protected ITableMetadata $originalMetaData,
         array $excludeColumns = []
     ) {

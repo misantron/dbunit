@@ -25,7 +25,8 @@ class DeleteAll implements Operation
             $query = 'DELETE FROM ' . $connection->quoteSchemaObject($table->getTableMetaData()->getTableName());
 
             try {
-                $connection->getConnection()->exec($query);
+                $connection->getConnection()
+                    ->exec($query);
             } catch (\PDOException $e) {
                 throw new Exception('DELETE_ALL', $query, [], $table, $e->getMessage());
             }

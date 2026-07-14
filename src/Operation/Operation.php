@@ -24,7 +24,6 @@ interface Operation
      * Executes the database operation against the given $connection for the
      * given $dataSet.
      *
-     *
      * @throws \Throwable
      */
     public function execute(Connection $connection, IDataSet $dataSet): void;

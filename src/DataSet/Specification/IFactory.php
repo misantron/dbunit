@@ -18,8 +18,6 @@ interface IFactory
 {
     /**
      * Returns the data set
-     *
-     *
      */
     public function getDataSetSpecByType(string $type): Specification;
 }

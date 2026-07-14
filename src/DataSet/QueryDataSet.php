@@ -51,7 +51,6 @@ class QueryDataSet extends AbstractDataSet
     /**
      * Returns a table object for the given table.
      *
-     *
      * @return Table
      */
     public function getTable(string $tableName): ITable

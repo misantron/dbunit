@@ -36,7 +36,8 @@ class ReplacementTable implements ITable
 
     public function __toString(): string
     {
-        $columns = $this->getTableMetaData()->getColumns();
+        $columns = $this->getTableMetaData()
+            ->getColumns();
 
         $lineSeparator = str_repeat('+----------------------', \count($columns)) . "+\n";
         $lineLength = \strlen($lineSeparator) - 1;
@@ -104,7 +105,6 @@ class ReplacementTable implements ITable
 
     /**
      * Returns the value for the given column on the given row.
-     *
      */
     public function getValue(int $row, string $column): mixed
     {
@@ -113,8 +113,6 @@ class ReplacementTable implements ITable
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     *
      */
     public function getRow(int $row): array
     {
@@ -125,8 +123,6 @@ class ReplacementTable implements ITable
 
     /**
      * Asserts that the given table matches this table.
-     *
-     *
      */
     public function matches(ITable $other): bool
     {

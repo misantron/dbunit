@@ -60,15 +60,14 @@ class DefaultConnection implements Connection
      */
     public function getSchema(): string
     {
-        return $this->getMetaData()->getSchema();
+        return $this->getMetaData()
+            ->getSchema();
     }
 
     /**
      * Creates a dataset containing the specified table names. If no table
      * names are specified then it will created a dataset over the entire
      * database.
-     *
-     *
      *
      * @todo Implement the filtered data set.
      */
@@ -124,17 +123,17 @@ class DefaultConnection implements Connection
             $query .= ' WHERE ' . $whereClause;
         }
 
-        return (int) $this->connection->query($query)->fetchColumn();
+        return (int) $this->connection->query($query)
+            ->fetchColumn();
     }
 
     /**
      * Returns a quoted schema object. (table name, column name, etc)
-     *
-     *
      */
     public function quoteSchemaObject(string $object): string
     {
-        return $this->getMetaData()->quoteSchemaObject($object);
+        return $this->getMetaData()
+            ->quoteSchemaObject($object);
     }
 
     /**
@@ -142,7 +141,8 @@ class DefaultConnection implements Connection
      */
     public function getTruncateCommand(): string
     {
-        return $this->getMetaData()->getTruncateCommand();
+        return $this->getMetaData()
+            ->getTruncateCommand();
     }
 
     /**
@@ -150,7 +150,8 @@ class DefaultConnection implements Connection
      */
     public function allowsCascading(): bool
     {
-        return $this->getMetaData()->allowsCascading();
+        return $this->getMetaData()
+            ->allowsCascading();
     }
 
     /**
@@ -158,7 +159,8 @@ class DefaultConnection implements Connection
      */
     public function disablePrimaryKeys(string $tableName): void
     {
-        $this->getMetaData()->disablePrimaryKeys($tableName);
+        $this->getMetaData()
+            ->disablePrimaryKeys($tableName);
     }
 
     /**
@@ -166,6 +168,7 @@ class DefaultConnection implements Connection
      */
     public function enablePrimaryKeys(string $tableName): void
     {
-        $this->getMetaData()->enablePrimaryKeys($tableName);
+        $this->getMetaData()
+            ->enablePrimaryKeys($tableName);
     }
 }

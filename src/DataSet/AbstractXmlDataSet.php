@@ -21,7 +21,7 @@ abstract class AbstractXmlDataSet extends AbstractDataSet
 {
     protected array $tables;
 
-    protected \SimpleXmlElement|false $xmlFileContents;
+    protected \SimpleXMLElement|false $xmlFileContents;
 
     public function __construct(string $xmlFile)
     {

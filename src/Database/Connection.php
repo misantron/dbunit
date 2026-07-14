@@ -29,8 +29,6 @@ interface Connection
      * Creates a dataset containing the specified table names. If no table
      * names are specified then it will created a dataset over the entire
      * database.
-     *
-     *
      */
     public function createDataSet(?array $tableNames = null): IDataSet;
 
@@ -58,7 +56,6 @@ interface Connection
      * optional where clause to return a subset of the table.
      *
      * @param string $whereClause
-     *
      */
     public function getRowCount(string $tableName, $whereClause = null): int;
 
@@ -69,8 +66,6 @@ interface Connection
 
     /**
      * Returns a quoted schema object. (table name, column name, etc)
-     *
-     *
      */
     public function quoteSchemaObject(string $object): string;
 

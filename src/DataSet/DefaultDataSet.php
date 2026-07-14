@@ -35,8 +35,6 @@ class DefaultDataSet extends AbstractDataSet
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     *
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {

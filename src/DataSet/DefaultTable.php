@@ -43,7 +43,8 @@ class DefaultTable extends AbstractTable
      */
     public function addTableRows(ITable $table): void
     {
-        $tableColumns = $this->getTableMetaData()->getColumns();
+        $tableColumns = $this->getTableMetaData()
+            ->getColumns();
         $rowCount = $table->getRowCount();
 
         for ($i = 0; $i < $rowCount; $i++) {

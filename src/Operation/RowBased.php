@@ -73,7 +73,8 @@ abstract class RowBased implements Operation
                 $connection->disablePrimaryKeys($databaseTableMetaData->getTableName());
             }
 
-            $statement = $connection->getConnection()->prepare($query);
+            $statement = $connection->getConnection()
+                ->prepare($query);
 
             for ($i = 0; $i < $rowCount; $i++) {
                 $args = $this->buildOperationArguments($databaseTableMetaData, $table, $i);

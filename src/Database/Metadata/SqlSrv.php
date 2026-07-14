@@ -53,8 +53,6 @@ class SqlSrv extends AbstractMetadata
     /**
      * Returns an array containing the names of all the columns in the
      * $tableName table.
-     *
-     *
      */
     public function getTableColumns(string $tableName): array
     {

@@ -49,7 +49,8 @@ final class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/DeleteOperationResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -130,7 +131,8 @@ final class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/InsertOperationResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -145,7 +147,8 @@ final class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/UpdateOperationResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -160,7 +163,8 @@ final class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/ReplaceOperationResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -175,7 +179,8 @@ final class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/EmptyTableInsertResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -190,7 +195,8 @@ final class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/AllEmptyTableInsertResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 

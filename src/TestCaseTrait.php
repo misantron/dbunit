@@ -38,9 +38,12 @@ trait TestCaseTrait
 
         $this->databaseTester = null;
 
-        $this->getDatabaseTester()->setSetUpOperation($this->getSetUpOperation());
-        $this->getDatabaseTester()->setDataSet($this->getDataSet());
-        $this->getDatabaseTester()->onSetUp();
+        $this->getDatabaseTester()
+            ->setSetUpOperation($this->getSetUpOperation());
+        $this->getDatabaseTester()
+            ->setDataSet($this->getDataSet());
+        $this->getDatabaseTester()
+            ->onSetUp();
     }
 
     /**
@@ -50,9 +53,12 @@ trait TestCaseTrait
     {
         parent::tearDown();
 
-        $this->getDatabaseTester()->setTearDownOperation($this->getTearDownOperation());
-        $this->getDatabaseTester()->setDataSet($this->getDataSet());
-        $this->getDatabaseTester()->onTearDown();
+        $this->getDatabaseTester()
+            ->setTearDownOperation($this->getTearDownOperation());
+        $this->getDatabaseTester()
+            ->setDataSet($this->getDataSet());
+        $this->getDatabaseTester()
+            ->onTearDown();
 
         /*
          * Destroy the tester after the test is run to keep DB connections
@@ -91,7 +97,8 @@ trait TestCaseTrait
     public function assertTableRowCount(string $tableName, int $expected, string $message = ''): void
     {
         $constraint = new TableRowCount($tableName, $expected);
-        $actual = $this->getConnection()->getRowCount($tableName);
+        $actual = $this->getConnection()
+            ->getRowCount($tableName);
 
         self::assertThat($actual, $constraint, $message);
     }
@@ -113,7 +120,8 @@ trait TestCaseTrait
      */
     protected function closeConnection(Connection $connection): void
     {
-        $this->getDatabaseTester()->closeConnection($connection);
+        $this->getDatabaseTester()
+            ->closeConnection($connection);
     }
 
     /**
@@ -188,7 +196,6 @@ trait TestCaseTrait
      *         array("id" => 2, "name" => "...", "address" => "...")
      *     )
      * )
-     *
      */
     protected function createArrayDataSet(array $data): ArrayDataSet
     {

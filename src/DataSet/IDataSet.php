@@ -23,15 +23,11 @@ interface IDataSet extends \IteratorAggregate, \Stringable
 
     /**
      * Returns a table meta data object for the given table.
-     *
-     *
      */
     public function getTableMetaData(string $tableName): ITableMetadata;
 
     /**
      * Returns a table object for the given table.
-     *
-     *
      */
     public function getTable(string $tableName): ITable;
 
@@ -42,8 +38,6 @@ interface IDataSet extends \IteratorAggregate, \Stringable
 
     /**
      * Asserts that the given data set matches this data set.
-     *
-     *
      */
     public function matches(self $other): bool;
 }

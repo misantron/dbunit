@@ -32,8 +32,6 @@ class Csv implements Specification
 {
     /**
      * Creates CSV Data Set from a data set spec.
-     *
-     *
      */
     public function getDataSet(string $dataSetSpec): CsvDataSet
     {
@@ -56,8 +54,6 @@ class Csv implements Specification
      * Returns an array containing the options that will be passed to the
      * PHPUnit_Extensions_Database_DataSet_CsvDataSet constructor. The options
      * are determined by the given $dataSetSpec.
-     *
-     *
      */
     protected function getCsvOptions(string $dataSetSpec): array
     {
@@ -72,8 +68,6 @@ class Csv implements Specification
      * Returns an associative array containing a mapping of tables (the key)
      * to files (the values.) The tables and files are determined by the given
      * $dataSetSpec
-     *
-     *
      */
     protected function getTableFileMap(string $dataSetSpec): array
     {

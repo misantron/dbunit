@@ -50,7 +50,8 @@ final class QueryDataSetTest extends TestCase
 
     public function testGetTable(): void
     {
-        $expectedTable1 = $this->getConnection()->createDataSet(['table1'])->getTable('table1');
+        $expectedTable1 = $this->getConnection()
+            ->createDataSet(['table1'])->getTable('table1');
 
         $expectedTable2 = new DefaultTable(
             new DefaultTableMetadata('query1', ['tc1', 'tc2'])
@@ -72,7 +73,8 @@ final class QueryDataSetTest extends TestCase
 
     public function testCreateIterator(): void
     {
-        $expectedTable1 = $this->getConnection()->createDataSet(['table1'])->getTable('table1');
+        $expectedTable1 = $this->getConnection()
+            ->createDataSet(['table1'])->getTable('table1');
 
         $expectedTable2 = new DefaultTable(
             new DefaultTableMetadata('query1', ['tc1', 'tc2'])

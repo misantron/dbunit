@@ -20,8 +20,6 @@ interface Specification
 {
     /**
      * Creates a data set from a data set spec string.
-     *
-     *
      */
     public function getDataSet(string $dataSetSpec): IDataSet;
 }

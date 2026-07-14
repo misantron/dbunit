@@ -130,7 +130,8 @@ asdflkjsadf asdfsadfhl "adsf, halsdf" sadfhlasdf',
     public function testCompatibleTablesInDifferentDataSetsNonDuplicateRows(): void
     {
         $compatibleTable = new DefaultTable(
-            $this->expectedDataSet3->getTable('table3')->getTableMetaData()
+            $this->expectedDataSet3->getTable('table3')
+                ->getTableMetaData()
         );
 
         $compatibleTable->addRow([

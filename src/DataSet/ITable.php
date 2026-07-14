@@ -33,15 +33,11 @@ interface ITable extends \Stringable
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     *
      */
     public function getRow(int $row): array;
 
     /**
      * Asserts that the given table matches this table.
-     *
-     *
      */
     public function matches(self $other): bool;
 }

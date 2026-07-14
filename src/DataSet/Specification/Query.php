@@ -56,8 +56,6 @@ class Query implements Specification, DatabaseListConsumer
 
     /**
      * Creates a Default Data Set with a query table from a data set spec.
-     *
-     *
      */
     public function getDataSet(string $dataSetSpec): DefaultDataSet
     {

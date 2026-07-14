@@ -27,8 +27,6 @@ class FlatXml implements Specification
 {
     /**
      * Creates Flat XML Data Set from a data set spec.
-     *
-     *
      */
     public function getDataSet(string $dataSetSpec): FlatXmlDataSet
     {

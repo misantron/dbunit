@@ -44,8 +44,6 @@ class DataSet extends AbstractDataSet
 
     /**
      * Creates the query necessary to pull all of the data from a table.
-     *
-     *
      */
     public static function buildTableSelect(ITableMetadata $tableMetaData, ?Connection $databaseConnection = null): string
     {
@@ -84,7 +82,6 @@ class DataSet extends AbstractDataSet
     /**
      * Returns a table object for the given table.
      *
-     *
      * @return Table
      */
     public function getTable(string $tableName): ITable
@@ -103,15 +100,16 @@ class DataSet extends AbstractDataSet
     /**
      * Returns a table meta data object for the given table.
      *
-     *
      * @return DefaultTableMetadata
      */
     public function getTableMetaData(string $tableName): ITableMetadata
     {
         return new DefaultTableMetadata(
             $tableName,
-            $this->databaseConnection->getMetaData()->getTableColumns($tableName),
-            $this->databaseConnection->getMetaData()->getTablePrimaryKeys($tableName)
+            $this->databaseConnection->getMetaData()
+                ->getTableColumns($tableName),
+            $this->databaseConnection->getMetaData()
+                ->getTablePrimaryKeys($tableName)
         );
     }
 
@@ -120,13 +118,13 @@ class DataSet extends AbstractDataSet
      */
     public function getTableNames(): array
     {
-        return $this->databaseConnection->getMetaData()->getTableNames();
+        return $this->databaseConnection->getMetaData()
+            ->getTableNames();
     }
 
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
      *
      * @return TableIterator
      */

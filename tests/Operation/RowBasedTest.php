@@ -123,7 +123,8 @@ final class RowBasedTest extends TestCase
     public function testExecuteWithBadQuery(): void
     {
         $mockDatabaseDataSet = $this->createMock(DefaultDataSet::class);
-        $mockDatabaseDataSet->expects($this->never())->method('getTableMetaData');
+        $mockDatabaseDataSet->expects($this->never())
+            ->method('getTableMetaData');
 
         $mockConnection = $this->createMock(Connection::class);
         $mockConnection
@@ -132,7 +133,8 @@ final class RowBasedTest extends TestCase
             ->willReturn($mockDatabaseDataSet);
 
         foreach (['getConnection', 'disablePrimaryKeys', 'enablePrimaryKeys'] as $method) {
-            $mockConnection->expects($this->never())->method($method);
+            $mockConnection->expects($this->never())
+                ->method($method);
         }
 
         $mockTableMetaData = $this->createMock(ITableMetadata::class);
@@ -158,8 +160,10 @@ final class RowBasedTest extends TestCase
             RowBased::class,
             ['buildOperationQuery', 'buildOperationArguments']
         );
-        $mockOperation->expects($this->never())->method('buildOperationArguments');
-        $mockOperation->expects($this->never())->method('buildOperationQuery');
+        $mockOperation->expects($this->never())
+            ->method('buildOperationArguments');
+        $mockOperation->expects($this->never())
+            ->method('buildOperationQuery');
 
         $mockOperation->execute($mockConnection, $mockDataSet);
     }

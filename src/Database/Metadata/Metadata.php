@@ -24,16 +24,12 @@ interface Metadata
     /**
      * Returns an array containing the names of all the columns in the
      * $tableName table,
-     *
-     *
      */
     public function getTableColumns(string $tableName): array;
 
     /**
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
-     *
-     *
      */
     public function getTablePrimaryKeys(string $tableName): array;
 
@@ -44,8 +40,6 @@ interface Metadata
 
     /**
      * Returns a quoted schema object. (table name, column name, etc)
-     *
-     *
      */
     public function quoteSchemaObject(string $object): string;
 

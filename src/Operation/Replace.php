@@ -37,9 +37,12 @@ class Replace extends RowBased
             $updateQuery = $updateOperation->buildOperationQuery($databaseTableMetaData, $table, $connection);
             $selectQuery = $this->buildOperationQuery($databaseTableMetaData, $table, $connection);
 
-            $insertStatement = $connection->getConnection()->prepare($insertQuery);
-            $updateStatement = $connection->getConnection()->prepare($updateQuery);
-            $selectStatement = $connection->getConnection()->prepare($selectQuery);
+            $insertStatement = $connection->getConnection()
+                ->prepare($insertQuery);
+            $updateStatement = $connection->getConnection()
+                ->prepare($updateQuery);
+            $selectStatement = $connection->getConnection()
+                ->prepare($selectQuery);
 
             $rowCount = $table->getRowCount();
 

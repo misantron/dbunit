@@ -63,8 +63,6 @@ class YamlDataSet extends AbstractDataSet
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     *
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {
@@ -79,9 +77,7 @@ class YamlDataSet extends AbstractDataSet
      * into one row set. sfYaml, however, does not provide multiple tables
      * with the same name, it only supplies the last table.
      *
-     * @params all the rows in a table.
-     *
-     *
+     * @param all $rows the rows in a table.
      */
     private function getColumns(array $rows): array
     {
