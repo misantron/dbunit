@@ -66,7 +66,7 @@ final class AbstractTableTest extends TestCase
     public function testMatchesWithNonMatchingMetaData(): void
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
-        $otherMetaData = $this->createMock(ITableMetadata::class);
+        $otherMetaData = $this->createStub(ITableMetadata::class);
 
         $otherTable = $this->createMock(ITable::class);
         $otherTable->expects($this->once())
@@ -85,7 +85,7 @@ final class AbstractTableTest extends TestCase
     public function testMatchesWithNonMatchingRowCount(): void
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
-        $otherMetaData = $this->createMock(ITableMetadata::class);
+        $otherMetaData = $this->createStub(ITableMetadata::class);
         $otherTable = $this->createMock(ITable::class);
 
         /** @var MockObject|DefaultTable $table */
@@ -117,7 +117,7 @@ final class AbstractTableTest extends TestCase
     public function testMatchesWithColumnValueComparisons(array $tableColumnValues, array $otherColumnValues, bool $matches): void
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
-        $otherMetaData = $this->createMock(ITableMetadata::class);
+        $otherMetaData = $this->createStub(ITableMetadata::class);
         $otherTable = $this->createMock(ITable::class);
 
         /** @var MockObject|DefaultTable $table */

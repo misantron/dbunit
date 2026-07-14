@@ -240,7 +240,7 @@ final class ReplacementTableTest extends \PHPUnit\Framework\TestCase
     public function testMatchesWithNonMatchingMetaData(): void
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
-        $otherMetaData = $this->createMock(ITableMetadata::class);
+        $otherMetaData = $this->createStub(ITableMetadata::class);
         $table = $this->createMock(ITable::class);
         $otherTable = $this->createMock(ITable::class);
 
@@ -264,7 +264,7 @@ final class ReplacementTableTest extends \PHPUnit\Framework\TestCase
     public function testMatchesWithNonMatchingRowCount(): void
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
-        $otherMetaData = $this->createMock(ITableMetadata::class);
+        $otherMetaData = $this->createStub(ITableMetadata::class);
         $table = $this->createMock(ITable::class);
         $otherTable = $this->createMock(ITable::class);
 
@@ -301,7 +301,7 @@ final class ReplacementTableTest extends \PHPUnit\Framework\TestCase
     public function testMatchesWithColumnValueComparisons(array $tableColumnValues, array $otherColumnValues, bool $matches): void
     {
         $tableMetaData = $this->createMock(ITableMetadata::class);
-        $otherMetaData = $this->createMock(ITableMetadata::class);
+        $otherMetaData = $this->createStub(ITableMetadata::class);
         $table = $this->createMock(ITable::class);
         $otherTable = $this->createMock(ITable::class);
 
