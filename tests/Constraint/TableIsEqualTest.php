@@ -20,7 +20,7 @@ use PHPUnit\DbUnit\Exception\InvalidArgumentException;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
-class TableIsEqualTest extends TestCase
+final class TableIsEqualTest extends TestCase
 {
     public function testMatch(): void
     {
@@ -33,12 +33,9 @@ class TableIsEqualTest extends TestCase
             new DefaultTableMetadata('table2', ['id', 'col2'], ['id']),
         );
 
-        self::assertTrue($constraint->evaluate($table1, '', true));
-        self::assertFalse($constraint->evaluate($table2, '', true));
-        self::assertSame(
-            sprintf('is equal to expected %s', $table1),
-            $constraint->toString()
-        );
+        $this->assertTrue($constraint->evaluate($table1, '', true));
+        $this->assertFalse($constraint->evaluate($table2, '', true));
+        $this->assertSame(sprintf('is equal to expected %s', $table1), $constraint->toString());
     }
 
     public function testMatchInvalidType(): void
@@ -68,7 +65,7 @@ class TableIsEqualTest extends TestCase
             )
         );
 
-        self::assertThat($table2, $this->createConstraint());
+        $this->assertThat($table2, $this->createConstraint());
     }
 
     private function createConstraint(): TableIsEqual

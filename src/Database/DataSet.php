@@ -32,29 +32,18 @@ class DataSet extends AbstractDataSet
     protected $tables = [];
 
     /**
-     * The database connection this dataset is using.
-     *
-     * @var Connection
-     */
-    protected $databaseConnection;
-
-    /**
      * Creates a new dataset using the given database connection.
-     *
-     * @param Connection $databaseConnection
      */
-    public function __construct(Connection $databaseConnection)
-    {
-        $this->databaseConnection = $databaseConnection;
+    public function __construct(
+        /**
+         * The database connection this dataset is using.
+         */
+        protected Connection $databaseConnection
+    ) {
     }
 
     /**
      * Creates the query necessary to pull all of the data from a table.
-     *
-     * @param ITableMetadata $tableMetaData
-     * @param Connection|null $databaseConnection
-     *
-     * @return string
      */
     public static function buildTableSelect(ITableMetadata $tableMetaData, ?Connection $databaseConnection = null): string
     {
@@ -67,12 +56,13 @@ class DataSet extends AbstractDataSet
 
         $columns = $tableMetaData->getColumns();
 
-        if ($databaseConnection) {
-            $columns = array_map([$databaseConnection, 'quoteSchemaObject'], $columns);
+        if ($databaseConnection instanceof Connection) {
+            $columns = array_map($databaseConnection->quoteSchemaObject(...), $columns);
         }
+
         $columnList = implode(', ', $columns);
 
-        if ($databaseConnection) {
+        if ($databaseConnection instanceof Connection) {
             $tableName = $databaseConnection->quoteSchemaObject($tableMetaData->getTableName());
         } else {
             $tableName = $tableMetaData->getTableName();
@@ -80,30 +70,24 @@ class DataSet extends AbstractDataSet
 
         $primaryKeys = $tableMetaData->getPrimaryKeys();
 
-        if ($databaseConnection) {
-            $primaryKeys = array_map([$databaseConnection, 'quoteSchemaObject'], $primaryKeys);
+        if ($databaseConnection instanceof Connection) {
+            $primaryKeys = array_map($databaseConnection->quoteSchemaObject(...), $primaryKeys);
         }
 
-        if (\count($primaryKeys)) {
-            $orderBy = 'ORDER BY ' . implode(' ASC, ', $primaryKeys) . ' ASC';
-        } else {
-            $orderBy = '';
-        }
+        $orderBy = \count($primaryKeys) ? 'ORDER BY ' . implode(' ASC, ', $primaryKeys) . ' ASC' : '';
 
-        return "SELECT {$columnList} FROM {$tableName} {$orderBy}";
+        return sprintf('SELECT %s FROM %s %s', $columnList, $tableName, $orderBy);
     }
 
     /**
      * Returns a table object for the given table.
-     *
-     * @param string $tableName
      *
      * @return Table
      */
     public function getTable(string $tableName): ITable
     {
         if (!\in_array($tableName, $this->getTableNames(), true)) {
-            throw new InvalidArgumentException("$tableName is not a table in the current database.");
+            throw new InvalidArgumentException($tableName . ' is not a table in the current database.');
         }
 
         if (empty($this->tables[$tableName])) {
@@ -116,34 +100,31 @@ class DataSet extends AbstractDataSet
     /**
      * Returns a table meta data object for the given table.
      *
-     * @param string $tableName
-     *
      * @return DefaultTableMetadata
      */
     public function getTableMetaData(string $tableName): ITableMetadata
     {
         return new DefaultTableMetadata(
             $tableName,
-            $this->databaseConnection->getMetaData()->getTableColumns($tableName),
-            $this->databaseConnection->getMetaData()->getTablePrimaryKeys($tableName)
+            $this->databaseConnection->getMetaData()
+                ->getTableColumns($tableName),
+            $this->databaseConnection->getMetaData()
+                ->getTablePrimaryKeys($tableName)
         );
     }
 
     /**
      * Returns a list of table names for the database
-     *
-     * @return array
      */
     public function getTableNames(): array
     {
-        return $this->databaseConnection->getMetaData()->getTableNames();
+        return $this->databaseConnection->getMetaData()
+            ->getTableNames();
     }
 
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     * @param bool $reverse
      *
      * @return TableIterator
      */

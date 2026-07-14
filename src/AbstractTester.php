@@ -21,15 +21,9 @@ use PHPUnit\DbUnit\Operation\Operation;
  */
 abstract class AbstractTester implements Tester
 {
-    /**
-     * @var Operation
-     */
-    protected $setUpOperation;
+    protected Operation $setUpOperation;
 
-    /**
-     * @var Operation
-     */
-    protected $tearDownOperation;
+    protected Operation $tearDownOperation;
 
     /**
      * @var IDataSet
@@ -52,8 +46,6 @@ abstract class AbstractTester implements Tester
 
     /**
      * Closes the specified connection.
-     *
-     * @param Connection $connection
      */
     public function closeConnection(Connection $connection): void
     {
@@ -62,10 +54,8 @@ abstract class AbstractTester implements Tester
 
     /**
      * Returns the test dataset.
-     *
-     * @return IDataSet
      */
-    public function getDataSet()
+    public function getDataSet(): IDataSet
     {
         return $this->dataSet;
     }
@@ -75,7 +65,8 @@ abstract class AbstractTester implements Tester
      */
     public function onSetUp(): void
     {
-        $this->getSetUpOperation()->execute($this->getConnection(), $this->getDataSet());
+        $this->getSetUpOperation()
+            ->execute($this->getConnection(), $this->getDataSet());
     }
 
     /**
@@ -83,13 +74,12 @@ abstract class AbstractTester implements Tester
      */
     public function onTearDown(): void
     {
-        $this->getTearDownOperation()->execute($this->getConnection(), $this->getDataSet());
+        $this->getTearDownOperation()
+            ->execute($this->getConnection(), $this->getDataSet());
     }
 
     /**
      * Sets the test dataset to use.
-     *
-     * @param IDataSet $dataSet
      */
     public function setDataSet(IDataSet $dataSet): void
     {
@@ -98,18 +88,14 @@ abstract class AbstractTester implements Tester
 
     /**
      * Sets the schema value.
-     *
-     * @param string $schema
      */
-    public function setSchema($schema): void
+    public function setSchema(string $schema): void
     {
         $this->schema = $schema;
     }
 
     /**
      * Sets the DatabaseOperation to call when starting the test.
-     *
-     * @param Operation $setUpOperation
      */
     public function setSetUpOperation(Operation $setUpOperation): void
     {
@@ -118,8 +104,6 @@ abstract class AbstractTester implements Tester
 
     /**
      * Sets the DatabaseOperation to call when ending the test.
-     *
-     * @param Operation $tearDownOperation
      */
     public function setTearDownOperation(Operation $tearDownOperation): void
     {
@@ -128,30 +112,24 @@ abstract class AbstractTester implements Tester
 
     /**
      * Returns the schema value
-     *
-     * @return string
      */
-    protected function getSchema()
+    protected function getSchema(): string
     {
         return $this->schema;
     }
 
     /**
      * Returns the database operation that will be called when starting the test.
-     *
-     * @return Operation
      */
-    protected function getSetUpOperation()
+    protected function getSetUpOperation(): Operation
     {
         return $this->setUpOperation;
     }
 
     /**
      * Returns the database operation that will be called when ending the test.
-     *
-     * @return Operation
      */
-    protected function getTearDownOperation()
+    protected function getTearDownOperation(): Operation
     {
         return $this->tearDownOperation;
     }

@@ -11,7 +11,6 @@
 
 namespace PHPUnit\DbUnit\DataSet;
 
-use PDO;
 use PHPUnit\DbUnit\Database\Connection;
 
 /**
@@ -20,38 +19,17 @@ use PHPUnit\DbUnit\Database\Connection;
 class QueryTable extends AbstractTable
 {
     /**
-     * @var string
-     */
-    protected $query;
-
-    /**
-     * @var Connection
-     */
-    protected $databaseConnection;
-
-    /**
-     * @var string
-     */
-    protected $tableName;
-
-    /**
      * Creates a new database query table object.
-     *
-     * @param string $tableName
-     * @param string $query
-     * @param Connection $databaseConnection
      */
-    public function __construct(string $tableName, string $query, Connection $databaseConnection)
-    {
-        $this->tableName = $tableName;
-        $this->query = $query;
-        $this->databaseConnection = $databaseConnection;
+    public function __construct(
+        protected string $tableName,
+        protected string $query,
+        protected Connection $databaseConnection
+    ) {
     }
 
     /**
      * Returns the table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
@@ -62,10 +40,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Checks if a given row is in the table
-     *
-     * @param array $row
-     *
-     * @return bool
      */
     public function assertContainsRow(array $row): bool
     {
@@ -76,8 +50,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Returns the number of rows in this table.
-     *
-     * @return int
      */
     public function getRowCount(): int
     {
@@ -88,13 +60,8 @@ class QueryTable extends AbstractTable
 
     /**
      * Returns the value for the given column on the given row.
-     *
-     * @param int $row
-     * @param string $column
-     *
-     * @return mixed
      */
-    public function getValue(int $row, string $column)
+    public function getValue(int $row, string $column): mixed
     {
         $this->loadData();
 
@@ -103,10 +70,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     * @param int $row
-     *
-     * @return array
      */
     public function getRow(int $row): array
     {
@@ -117,10 +80,6 @@ class QueryTable extends AbstractTable
 
     /**
      * Asserts that the given table matches this table.
-     *
-     * @param ITable $other
-     *
-     * @return bool
      */
     public function matches(ITable $other): bool
     {
@@ -132,8 +91,9 @@ class QueryTable extends AbstractTable
     protected function loadData(): void
     {
         if ($this->data === null) {
-            $pdoStatement = $this->databaseConnection->getConnection()->query($this->query);
-            $this->data = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
+            $pdoStatement = $this->databaseConnection->getConnection()
+                ->query($this->query);
+            $this->data = $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
         }
     }
 
@@ -149,8 +109,10 @@ class QueryTable extends AbstractTable
                 // get column names from data
                 $columns = array_keys($this->data[0]);
             } else {
-                $columns = $this->databaseConnection->getMetaData()->getTableColumns($this->tableName);
+                $columns = $this->databaseConnection->getMetaData()
+                    ->getTableColumns($this->tableName);
             }
+
             // create metadata
             $this->tableMetaData = new DefaultTableMetadata($this->tableName, $columns);
         }

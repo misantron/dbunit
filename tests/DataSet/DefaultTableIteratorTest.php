@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -16,7 +18,7 @@ use PHPUnit\DbUnit\DataSet\DefaultTableIterator;
 use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
 use PHPUnit\Framework\TestCase;
 
-class DefaultTableIteratorTest extends TestCase
+final class DefaultTableIteratorTest extends TestCase
 {
     public function testKey(): void
     {
@@ -39,10 +41,10 @@ class DefaultTableIteratorTest extends TestCase
 
         $iterator = new DefaultTableIterator($tables);
 
-        self::assertSame('table1', $iterator->key());
+        $this->assertSame('table1', $iterator->key());
 
         $iterator->next();
 
-        self::assertSame('table2', $iterator->key());
+        $this->assertSame('table2', $iterator->key());
     }
 }

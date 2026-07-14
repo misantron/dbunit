@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -18,10 +20,6 @@ interface IFactory
 {
     /**
      * Returns the data set
-     *
-     * @param string $type
-     *
-     * @return Specification
      */
-    public function getDataSetSpecByType($type);
+    public function getDataSetSpecByType(string $type): Specification;
 }

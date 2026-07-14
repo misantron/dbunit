@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -15,11 +17,12 @@ use DatabaseTestUtility;
 use PHPUnit\DbUnit\Database\DefaultConnection;
 use PHPUnit\DbUnit\DataSet\DefaultTable;
 use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
+use PHPUnit\DbUnit\DataSet\FlatXmlDataSet;
 use PHPUnit\DbUnit\DataSet\ITable;
 use PHPUnit\DbUnit\DataSet\QueryDataSet;
 use PHPUnit\DbUnit\TestCase;
 
-class QueryDataSetTest extends TestCase
+final class QueryDataSetTest extends TestCase
 {
     /**
      * @var ITable[]
@@ -47,7 +50,8 @@ class QueryDataSetTest extends TestCase
 
     public function testGetTable(): void
     {
-        $expectedTable1 = $this->getConnection()->createDataSet(['table1'])->getTable('table1');
+        $expectedTable1 = $this->getConnection()
+            ->createDataSet(['table1'])->getTable('table1');
 
         $expectedTable2 = new DefaultTable(
             new DefaultTableMetadata('query1', ['tc1', 'tc2'])
@@ -69,7 +73,8 @@ class QueryDataSetTest extends TestCase
 
     public function testCreateIterator(): void
     {
-        $expectedTable1 = $this->getConnection()->createDataSet(['table1'])->getTable('table1');
+        $expectedTable1 = $this->getConnection()
+            ->createDataSet(['table1'])->getTable('table1');
 
         $expectedTable2 = new DefaultTable(
             new DefaultTableMetadata('query1', ['tc1', 'tc2'])
@@ -80,29 +85,21 @@ class QueryDataSetTest extends TestCase
             'tc2' => 'blah',
         ]);
 
-        foreach ($this->dataSet as $i => $table) {
-            switch ($table->getTableMetaData()->getTableName()) {
-                case 'table1':
-                    self::assertTablesEqual($expectedTable1, $table);
-                    break;
-                case 'query1':
-                    self::assertTablesEqual($expectedTable2, $table);
-                    break;
-                default:
-                    $this->fail('Proper keys not present from the iterator');
-            }
+        foreach ($this->dataSet as $table) {
+            match ($table->getTableMetaData()->getTableName()) {
+                'table1' => self::assertTablesEqual($expectedTable1, $table),
+                'query1' => self::assertTablesEqual($expectedTable2, $table),
+                default => $this->fail('Proper keys not present from the iterator'),
+            };
         }
     }
 
-    /**
-     * @return DefaultConnection
-     */
     protected function getConnection(): DefaultConnection
     {
         return $this->createDefaultDBConnection($this->pdo, 'test');
     }
 
-    protected function getDataSet()
+    protected function getDataSet(): FlatXmlDataSet
     {
         return $this->createFlatXMLDataSet(TEST_FILES_PATH . 'XmlDataSets/QueryDataSetTest.xml');
     }

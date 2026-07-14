@@ -18,10 +18,8 @@ class Factory
 {
     /**
      * Returns a null database operation
-     *
-     * @return Operation
      */
-    public static function NONE()
+    public static function NONE(): Operation
     {
         return new None();
     }
@@ -31,10 +29,8 @@ class Factory
      * from the table prior to re-inserting rows.
      *
      * @param bool $cascadeTruncates set to true to force truncates to cascade on databases that support this
-     *
-     * @return Operation
      */
-    public static function CLEAN_INSERT(bool $cascadeTruncates = false)
+    public static function CLEAN_INSERT(bool $cascadeTruncates = false): Operation
     {
         return new Composite([
             self::TRUNCATE($cascadeTruncates),
@@ -44,10 +40,8 @@ class Factory
 
     /**
      * Returns an insert database operation.
-     *
-     * @return Operation
      */
-    public static function INSERT()
+    public static function INSERT(): Operation
     {
         return new Insert();
     }
@@ -56,10 +50,8 @@ class Factory
      * Returns a truncate database operation.
      *
      * @param bool $cascadeTruncates set to true to force truncates to cascade on databases that support this
-     *
-     * @return Operation
      */
-    public static function TRUNCATE($cascadeTruncates = false)
+    public static function TRUNCATE(bool $cascadeTruncates = false): Operation
     {
         $truncate = new Truncate();
         $truncate->setCascade($cascadeTruncates);
@@ -69,30 +61,24 @@ class Factory
 
     /**
      * Returns a delete database operation.
-     *
-     * @return Operation
      */
-    public static function DELETE()
+    public static function DELETE(): Operation
     {
         return new Delete();
     }
 
     /**
      * Returns a delete_all database operation.
-     *
-     * @return Operation
      */
-    public static function DELETE_ALL()
+    public static function DELETE_ALL(): Operation
     {
         return new DeleteAll();
     }
 
     /**
      * Returns an update database operation.
-     *
-     * @return Operation
      */
-    public static function UPDATE()
+    public static function UPDATE(): Operation
     {
         return new Update();
     }

@@ -12,7 +12,7 @@
 namespace PHPUnit\DbUnit\DataSet\Specification;
 
 use PHPUnit\DbUnit\DataSet\CsvDataSet;
-use ReflectionClass;
+use Webmozart\Assert\Assert;
 
 /**
  * Creates CsvDataSets based off of a spec string.
@@ -32,16 +32,14 @@ class Csv implements Specification
 {
     /**
      * Creates CSV Data Set from a data set spec.
-     *
-     * @param string $dataSetSpec
-     *
-     * @return CsvDataSet
      */
-    public function getDataSet($dataSetSpec)
+    public function getDataSet(string $dataSetSpec): CsvDataSet
     {
         $csvDataSetArgs = $this->getCsvOptions($dataSetSpec);
-        $csvDataSetRfl = new ReflectionClass(CsvDataSet::class);
+        $csvDataSetRfl = new \ReflectionClass(CsvDataSet::class);
         $csvDataSet = $csvDataSetRfl->newInstanceArgs($csvDataSetArgs);
+
+        Assert::notNull($csvDataSet);
 
         foreach ($this->getTableFileMap($dataSetSpec) as $tableName => $file) {
             $csvDataSet->addTable($tableName, $file);
@@ -56,12 +54,8 @@ class Csv implements Specification
      * Returns an array containing the options that will be passed to the
      * PHPUnit_Extensions_Database_DataSet_CsvDataSet constructor. The options
      * are determined by the given $dataSetSpec.
-     *
-     * @param string $dataSetSpec
-     *
-     * @return array
      */
-    protected function getCsvOptions($dataSetSpec)
+    protected function getCsvOptions(string $dataSetSpec): array
     {
         [$csvOptStr] = explode('|', $dataSetSpec, 2);
 
@@ -74,12 +68,8 @@ class Csv implements Specification
      * Returns an associative array containing a mapping of tables (the key)
      * to files (the values.) The tables and files are determined by the given
      * $dataSetSpec
-     *
-     * @param string $dataSetSpec
-     *
-     * @return array
      */
-    protected function getTableFileMap($dataSetSpec)
+    protected function getTableFileMap(string $dataSetSpec): array
     {
         $tables = [];
 

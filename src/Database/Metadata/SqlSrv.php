@@ -11,9 +11,6 @@
 
 namespace PHPUnit\DbUnit\Database\Metadata;
 
-use PDO;
-use PDOException;
-
 /**
  * Provides functionality to retrieve meta data from a Microsoft SQL Server database.
  */
@@ -35,17 +32,14 @@ class SqlSrv extends AbstractMetadata
 
     /**
      * Returns an array containing the names of all the tables in the database.
-     *
-     * @return array
      */
-    public function getTableNames()
+    public function getTableNames(): array
     {
         $query = "SELECT name
                     FROM sysobjects
                    WHERE type='U'";
 
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
+        $statement = $this->pdo->query($query);
 
         $tableNames = [];
 
@@ -59,20 +53,15 @@ class SqlSrv extends AbstractMetadata
     /**
      * Returns an array containing the names of all the columns in the
      * $tableName table.
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
-    public function getTableColumns($tableName)
+    public function getTableColumns(string $tableName): array
     {
         $query = "SELECT c.name
                     FROM syscolumns c
                LEFT JOIN sysobjects o ON c.id = o.id
-                   WHERE o.name = '$tableName'";
+                   WHERE o.name = '{$tableName}'";
 
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
+        $statement = $this->pdo->query($query);
 
         $columnNames = [];
 
@@ -86,17 +75,12 @@ class SqlSrv extends AbstractMetadata
     /**
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
-    public function getTablePrimaryKeys($tableName)
+    public function getTablePrimaryKeys(string $tableName): array
     {
-        $query = "EXEC sp_statistics '$tableName'";
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
-        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $query = sprintf("EXEC sp_statistics '%s'", $tableName);
+        $statement = $this->pdo->query($query);
+        $statement->setFetchMode(\PDO::FETCH_ASSOC);
 
         $columnNames = [];
 
@@ -111,30 +95,26 @@ class SqlSrv extends AbstractMetadata
 
     /**
      * Allow overwriting identities for the given table.
-     *
-     * @param string $tableName
      */
-    public function disablePrimaryKeys($tableName): void
+    public function disablePrimaryKeys(string $tableName): void
     {
         try {
-            $query = "SET IDENTITY_INSERT $tableName ON";
+            $query = sprintf('SET IDENTITY_INSERT %s ON', $tableName);
             $this->pdo->exec($query);
-        } catch (PDOException $e) {
+        } catch (\PDOException) {
             // ignore the error here - can happen if primary key is not an identity
         }
     }
 
     /**
      * Reenable auto creation of identities for the given table.
-     *
-     * @param string $tableName
      */
-    public function enablePrimaryKeys($tableName): void
+    public function enablePrimaryKeys(string $tableName): void
     {
         try {
-            $query = "SET IDENTITY_INSERT $tableName OFF";
+            $query = sprintf('SET IDENTITY_INSERT %s OFF', $tableName);
             $this->pdo->exec($query);
-        } catch (PDOException $e) {
+        } catch (\PDOException) {
             // ignore the error here - can happen if primary key is not an identity
         }
     }

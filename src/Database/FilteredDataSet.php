@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -17,27 +19,17 @@ namespace PHPUnit\DbUnit\Database;
 class FilteredDataSet extends DataSet
 {
     /**
-     * @var array
-     */
-    protected $tableNames;
-
-    /**
      * Creates a new dataset using the given database connection.
-     *
-     * @param Connection $databaseConnection
-     * @param array $tableNames
      */
-    public function __construct(Connection $databaseConnection, array $tableNames)
-    {
+    public function __construct(
+        Connection $databaseConnection,
+        protected array $tableNames
+    ) {
         parent::__construct($databaseConnection);
-
-        $this->tableNames = $tableNames;
     }
 
     /**
      * Returns a list of table names for the database
-     *
-     * @return array
      */
     public function getTableNames(): array
     {

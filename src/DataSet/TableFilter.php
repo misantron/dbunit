@@ -19,31 +19,23 @@ use PHPUnit\DbUnit\Exception\InvalidArgumentException;
 class TableFilter extends AbstractTable
 {
     /**
-     * The table meta data being decorated.
-     *
-     * @var ITable
-     */
-    protected $originalTable;
-
-    /**
      * Creates a new table filter using the original table
      *
-     * @param ITable $originalTable
      * @param array $excludeColumns @deprecated, use the set* methods instead
      */
-    public function __construct(ITable $originalTable, array $excludeColumns = [])
-    {
-        $this->originalTable = $originalTable;
-        $this->setTableMetaData(new TableMetadataFilter($originalTable->getTableMetaData()));
+    public function __construct(
+        /**
+         * The table meta data being decorated.
+         */
+        protected ITable $originalTable,
+        array $excludeColumns = []
+    ) {
+        $this->setTableMetaData(new TableMetadataFilter($this->originalTable->getTableMetaData()));
         $this->addExcludeColumns($excludeColumns);
     }
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     * @param int $row
-     *
-     * @return array
      */
     public function getRow(int $row): array
     {
@@ -54,8 +46,6 @@ class TableFilter extends AbstractTable
 
     /**
      * Returns the number of rows in this table.
-     *
-     * @return int
      */
     public function getRowCount(): int
     {
@@ -66,25 +56,20 @@ class TableFilter extends AbstractTable
 
     /**
      * Returns the value for the given column on the given row.
-     *
-     * @param int $row
-     * @param string $column
      */
-    public function getValue(int $row, string $column)
+    public function getValue(int $row, string $column): mixed
     {
         if (\in_array($column, $this->getTableMetaData()->getColumns(), true)) {
             return $this->originalTable->getValue($row, $column);
         }
 
         throw new InvalidArgumentException(
-            "The given row ({$row}) and column ({$column}) do not exist in table {$this->getTableMetaData()->getTableName()}"
+            sprintf('The given row (%d) and column (%s) do not exist in table %s', $row, $column, $this->getTableMetaData()->getTableName())
         );
     }
 
     /**
      * Sets the columns to include in the table.
-     *
-     * @param array $includeColumns
      */
     public function addIncludeColumns(array $includeColumns): void
     {
@@ -101,8 +86,6 @@ class TableFilter extends AbstractTable
 
     /**
      * Sets the columns to exclude from the table.
-     *
-     * @param array $excludeColumns
      */
     public function addExcludeColumns(array $excludeColumns): void
     {
@@ -119,10 +102,6 @@ class TableFilter extends AbstractTable
 
     /**
      * Checks if a given row is in the table
-     *
-     * @param array $row
-     *
-     * @return bool
      */
     public function assertContainsRow(array $row): bool
     {
@@ -145,8 +124,10 @@ class TableFilter extends AbstractTable
                 foreach ($this->getTableMetaData()->getColumns() as $col) {
                     $tRow[$col] = $this->getValue($row, $col);
                 }
+
                 $data[$row] = $tRow;
             }
+
             $this->data = $data;
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -16,25 +18,16 @@ namespace PHPUnit\DbUnit\DataSet;
  */
 class DefaultDataSet extends AbstractDataSet
 {
-    /**
-     * An array of ITable objects.
-     *
-     * @var ITable[]
-     */
-    protected array $tables;
-
-    /**
-     * @param array $tables
-     */
-    public function __construct(array $tables = [])
-    {
-        $this->tables = $tables;
+    public function __construct(
+        /**
+         * An array of ITable objects.
+         */
+        protected array $tables = []
+    ) {
     }
 
     /**
      * Adds a table to the dataset.
-     *
-     * @param ITable $table
      */
     public function addTable(ITable $table): void
     {
@@ -44,10 +37,6 @@ class DefaultDataSet extends AbstractDataSet
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     * @param bool $reverse
-     *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {

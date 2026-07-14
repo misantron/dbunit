@@ -36,8 +36,6 @@ class ArrayDataSet extends AbstractDataSet
      *         array("id" => 2, "name" => "...", "address" => "...")
      *     )
      * )
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {
@@ -54,6 +52,7 @@ class ArrayDataSet extends AbstractDataSet
             foreach ($rows as $row) {
                 $table->addRow($row);
             }
+
             $this->tables[$tableName] = $table;
         }
     }
@@ -61,7 +60,7 @@ class ArrayDataSet extends AbstractDataSet
     public function getTable(string $tableName): ITable
     {
         if (!isset($this->tables[$tableName])) {
-            throw new InvalidArgumentException("{$tableName} is not a table in the current database.");
+            throw new InvalidArgumentException($tableName . ' is not a table in the current database.');
         }
 
         return $this->tables[$tableName];

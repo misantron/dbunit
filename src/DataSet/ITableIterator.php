@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -18,15 +20,11 @@ interface ITableIterator extends \Iterator
 {
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function getTable(): ITable;
 
     /**
      * Returns the current table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata;
 }

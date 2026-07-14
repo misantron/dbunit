@@ -19,39 +19,22 @@ namespace PHPUnit\DbUnit\DataSet;
 class ReplacementDataSet extends AbstractDataSet
 {
     /**
-     * @var IDataSet
-     */
-    protected $dataSet;
-
-    /**
      * @var array
      */
     protected $fullReplacements;
 
-    /**
-     * @var array
-     */
-    protected $subStrReplacements;
-
-    /**
-     * @param IDataSet $dataSet
-     * @param array $fullReplacements
-     * @param array $subStrReplacements
-     */
-    public function __construct(IDataSet $dataSet, array $fullReplacements = [], array $subStrReplacements = [])
-    {
-        $this->dataSet = $dataSet;
+    public function __construct(
+        protected IDataSet $dataSet,
+        array $fullReplacements = [],
+        protected array $subStrReplacements = []
+    ) {
         $this->fullReplacements = $fullReplacements;
-        $this->subStrReplacements = $subStrReplacements;
     }
 
     /**
      * Adds a new full replacement
      *
      * Full replacements will only replace values if the FULL value is a match
-     *
-     * @param string $value
-     * @param string|null $replacement
      */
     public function addFullReplacement(string $value, ?string $replacement): void
     {
@@ -74,10 +57,6 @@ class ReplacementDataSet extends AbstractDataSet
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     * @param bool $reverse
-     *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {

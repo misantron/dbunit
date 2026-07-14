@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -15,9 +17,9 @@ use PDO;
 use PHPUnit\DbUnit\Database\DefaultConnection;
 use PHPUnit\Framework\TestCase;
 
-class DefaultDatabaseConnectionTest extends TestCase
+final class DefaultDatabaseConnectionTest extends TestCase
 {
-    private $db;
+    private \PDO $db;
 
     protected function setUp(): void
     {
@@ -34,8 +36,8 @@ class DefaultDatabaseConnectionTest extends TestCase
 
     public function testRowCountForTableWithTwoRowsReturnsTwo(): void
     {
-        $this->db->exec('INSERT INTO test (field1) VALUES (\'foobar\')');
-        $this->db->exec('INSERT INTO test (field1) VALUES (\'foobarbaz\')');
+        $this->db->exec("INSERT INTO test (field1) VALUES ('foobar')");
+        $this->db->exec("INSERT INTO test (field1) VALUES ('foobarbaz')");
 
         $conn = new DefaultConnection($this->db);
         $this->assertSame(2, $conn->getRowCount('test'));

@@ -20,12 +20,13 @@ use PHPUnit\DbUnit\DataSet\ITableMetadata;
  */
 class Update extends RowBased
 {
-    protected $operationName = 'UPDATE';
+    protected string $operationName = 'UPDATE';
 
-    protected function buildOperationQuery(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection)
+    protected function buildOperationQuery(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection): string
     {
         $keys = $databaseTableMetaData->getPrimaryKeys();
-        $columns = $table->getTableMetaData()->getColumns();
+        $columns = $table->getTableMetaData()
+            ->getColumns();
         $whereStatement = 'WHERE ' . implode(' AND ', $this->buildPreparedColumnArray($keys, $connection));
         $setStatement = 'SET ' . implode(', ', $this->buildPreparedColumnArray($columns, $connection));
 
@@ -53,6 +54,6 @@ class Update extends RowBased
 
     protected function disablePrimaryKeys(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection): bool
     {
-        return \count($databaseTableMetaData->getPrimaryKeys()) > 0;
+        return $databaseTableMetaData->getPrimaryKeys() !== [];
     }
 }

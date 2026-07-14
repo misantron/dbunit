@@ -17,38 +17,25 @@ namespace PHPUnit\DbUnit\DataSet;
 class DefaultTableIterator implements ITableIterator
 {
     /**
-     * An array of tables in the iterator.
-     *
-     * @var array<int, ITable>
+     * Creates a new default table iterator object.
      */
-    protected $tables;
-
-    /**
+    public function __construct(
+        /**
+         * An array of tables in the iterator.
+         *
+         * @var array<int, ITable>
+         */
+        protected array $tables, /**
      * If this property is true then the tables will be iterated in reverse
      * order.
-     *
-     * @var bool
      */
-    protected $reverse;
-
-    /**
-     * Creates a new default table iterator object.
-     *
-     * @param array $tables
-     * @param bool $reverse
-     */
-    public function __construct(array $tables, bool $reverse = false)
-    {
-        $this->tables = $tables;
-        $this->reverse = $reverse;
-
+        protected bool $reverse = false
+    ) {
         $this->rewind();
     }
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function getTable(): ITable
     {
@@ -57,18 +44,15 @@ class DefaultTableIterator implements ITableIterator
 
     /**
      * Returns the current table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
-        return $this->current()->getTableMetaData();
+        return $this->current()
+            ->getTableMetaData();
     }
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function current(): ITable
     {
@@ -77,12 +61,12 @@ class DefaultTableIterator implements ITableIterator
 
     /**
      * Returns the name of the current table.
-     *
-     * @return string
      */
     public function key(): string
     {
-        return $this->current()->getTableMetaData()->getTableName();
+        return $this->current()
+            ->getTableMetaData()
+            ->getTableName();
     }
 
     /**
@@ -111,8 +95,6 @@ class DefaultTableIterator implements ITableIterator
 
     /**
      * Returns true if the current index is valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {

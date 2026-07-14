@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -17,8 +19,6 @@ namespace PHPUnit\DbUnit\DataSet;
 interface IYamlParser
 {
     /**
-     * @param string $yamlFile
-     *
      * @return array parsed YAML
      */
     public function parseYaml(string $yamlFile): array;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -18,7 +20,7 @@ use PHPUnit\DbUnit\DataSet\DefaultTable;
 use PHPUnit\DbUnit\DataSet\DefaultTableMetadata;
 use PHPUnit\DbUnit\TestCase;
 
-class CompositeDataSetTest extends \PHPUnit\Framework\TestCase
+final class CompositeDataSetTest extends \PHPUnit\Framework\TestCase
 {
     protected $expectedDataSet1;
 
@@ -128,7 +130,8 @@ asdflkjsadf asdfsadfhl "adsf, halsdf" sadfhlasdf',
     public function testCompatibleTablesInDifferentDataSetsNonDuplicateRows(): void
     {
         $compatibleTable = new DefaultTable(
-            $this->expectedDataSet3->getTable('table3')->getTableMetaData()
+            $this->expectedDataSet3->getTable('table3')
+                ->getTableMetaData()
         );
 
         $compatibleTable->addRow([
@@ -144,7 +147,7 @@ asdflkjsadf asdfsadfhl "adsf, halsdf" sadfhlasdf',
             $this->expectedDataSet2,
         ]);
 
-        $this->assertEquals(4, $compositeDataSet->getTable('table3')->getRowCount());
+        $this->assertSame(4, $compositeDataSet->getTable('table3')->getRowCount());
     }
 
     public function testExceptionOnIncompatibleTablesSameTableNames(): void

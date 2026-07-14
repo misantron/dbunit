@@ -19,7 +19,7 @@ use PHPUnit\DbUnit\DataSet\IDataSet;
  */
 class Truncate implements Operation
 {
-    protected $useCascade = false;
+    private bool $useCascade = false;
 
     public function setCascade(bool $cascade = true): void
     {
@@ -27,9 +27,6 @@ class Truncate implements Operation
     }
 
     /**
-     * @param Connection $connection
-     * @param IDataSet $dataSet
-     *
      * @throws \Throwable
      */
     public function execute(Connection $connection, IDataSet $dataSet): void
@@ -37,7 +34,7 @@ class Truncate implements Operation
         $truncateCommand = $connection->getTruncateCommand();
 
         foreach ($dataSet->getReverseIterator() as $table) {
-            $query = "{$truncateCommand} {$connection->quoteSchemaObject($table->getTableMetaData()->getTableName())}";
+            $query = sprintf('%s %s', $truncateCommand, $connection->quoteSchemaObject($table->getTableMetaData()->getTableName()));
 
             if ($this->useCascade && $connection->allowsCascading()) {
                 $query .= ' CASCADE';
@@ -45,7 +42,8 @@ class Truncate implements Operation
 
             try {
                 $this->disableForeignKeyChecksForMysql($connection);
-                $connection->getConnection()->exec($query);
+                $connection->getConnection()
+                    ->exec($query);
                 $this->enableForeignKeyChecksForMysql($connection);
             } catch (\Throwable $e) {
                 $this->enableForeignKeyChecksForMysql($connection);
@@ -62,20 +60,24 @@ class Truncate implements Operation
     private function disableForeignKeyChecksForMysql(Connection $connection): void
     {
         if ($this->isMysql($connection)) {
-            $connection->getConnection()->exec('SET @PHPUNIT_OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS');
-            $connection->getConnection()->exec('SET FOREIGN_KEY_CHECKS = 0');
+            $connection->getConnection()
+                ->exec('SET @PHPUNIT_OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS');
+            $connection->getConnection()
+                ->exec('SET FOREIGN_KEY_CHECKS = 0');
         }
     }
 
     private function enableForeignKeyChecksForMysql(Connection $connection): void
     {
         if ($this->isMysql($connection)) {
-            $connection->getConnection()->exec('SET FOREIGN_KEY_CHECKS=@PHPUNIT_OLD_FOREIGN_KEY_CHECKS');
+            $connection->getConnection()
+                ->exec('SET FOREIGN_KEY_CHECKS=@PHPUNIT_OLD_FOREIGN_KEY_CHECKS');
         }
     }
 
     private function isMysql(Connection $connection): bool
     {
-        return $connection->getConnection()->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'mysql';
+        return $connection->getConnection()
+            ->getAttribute(\PDO::ATTR_DRIVER_NAME) === 'mysql';
     }
 }

@@ -20,9 +20,9 @@ use PHPUnit\DbUnit\DataSet\ITableMetadata;
  */
 class Delete extends RowBased
 {
-    protected $operationName = 'DELETE';
+    protected string $operationName = 'DELETE';
 
-    protected $iteratorDirection = self::ITERATOR_TYPE_REVERSE;
+    protected int $iteratorDirection = self::ITERATOR_TYPE_REVERSE;
 
     protected function buildOperationQuery(ITableMetadata $databaseTableMetaData, ITable $table, Connection $connection): string
     {

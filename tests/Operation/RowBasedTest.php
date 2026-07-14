@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -26,7 +28,7 @@ use PHPUnit\DbUnit\Operation\Exception as OperationException;
 use PHPUnit\DbUnit\Operation\RowBased;
 use PHPUnit\DbUnit\TestCase;
 
-class RowBasedTest extends TestCase
+final class RowBasedTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -35,37 +37,6 @@ class RowBasedTest extends TestCase
         }
 
         parent::setUp();
-    }
-
-    public function getConnection(): Connection
-    {
-        return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
-    }
-
-    public function getDataSet(): IDataSet
-    {
-        $tables = [
-            new DefaultTable(
-                new DefaultTableMetadata(
-                    'table1',
-                    ['table1_id', 'column1', 'column2', 'column3', 'column4']
-                )
-            ),
-            new DefaultTable(
-                new DefaultTableMetadata(
-                    'table2',
-                    ['table2_id', 'column5', 'column6', 'column7', 'column8']
-                )
-            ),
-            new DefaultTable(
-                new DefaultTableMetadata(
-                    'table3',
-                    ['table3_id', 'column9', 'column10', 'column11', 'column12']
-                )
-            ),
-        ];
-
-        return new DefaultDataSet($tables);
     }
 
     public function testExecute(): void
@@ -112,9 +83,9 @@ class RowBasedTest extends TestCase
         );
 
         $mockOperation
-            ->expects(self::exactly(2))
+            ->expects($this->exactly(2))
             ->method('buildOperationQuery')
-            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table) use ($connection, $table1, $table2) {
+            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table) use ($connection, $table1, $table2): string {
                 switch ([$metadata, $table]) {
                     case [$connection->createDataSet()->getTableMetaData('table1'), $table1]:
                         return 'INSERT INTO table1 (table1_id, column1, column2, column3, column4) VALUES (?, ?, ?, ?, ?)';
@@ -126,9 +97,9 @@ class RowBasedTest extends TestCase
             });
 
         $mockOperation
-            ->expects(self::exactly(3))
+            ->expects($this->exactly(3))
             ->method('buildOperationArguments')
-            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table, int $row) use ($connection, $table1, $table2) {
+            ->willReturnCallback(function (ITableMetadata $metadata, ITable $table, int $row) use ($connection, $table1, $table2): array {
                 switch ([$metadata, $table, $row]) {
                     case [$connection->createDataSet()->getTableMetaData('table1'), $table1, 0]:
                         return [1, 'foo', 42, 4.2, 'bar'];
@@ -152,7 +123,8 @@ class RowBasedTest extends TestCase
     public function testExecuteWithBadQuery(): void
     {
         $mockDatabaseDataSet = $this->createMock(DefaultDataSet::class);
-        $mockDatabaseDataSet->expects($this->never())->method('getTableMetaData');
+        $mockDatabaseDataSet->expects($this->never())
+            ->method('getTableMetaData');
 
         $mockConnection = $this->createMock(Connection::class);
         $mockConnection
@@ -161,7 +133,8 @@ class RowBasedTest extends TestCase
             ->willReturn($mockDatabaseDataSet);
 
         foreach (['getConnection', 'disablePrimaryKeys', 'enablePrimaryKeys'] as $method) {
-            $mockConnection->expects($this->never())->method($method);
+            $mockConnection->expects($this->never())
+                ->method($method);
         }
 
         $mockTableMetaData = $this->createMock(ITableMetadata::class);
@@ -187,8 +160,10 @@ class RowBasedTest extends TestCase
             RowBased::class,
             ['buildOperationQuery', 'buildOperationArguments']
         );
-        $mockOperation->expects($this->never())->method('buildOperationArguments');
-        $mockOperation->expects($this->never())->method('buildOperationQuery');
+        $mockOperation->expects($this->never())
+            ->method('buildOperationArguments');
+        $mockOperation->expects($this->never())
+            ->method('buildOperationQuery');
 
         $mockOperation->execute($mockConnection, $mockDataSet);
     }
@@ -197,7 +172,6 @@ class RowBasedTest extends TestCase
     {
         $this->expectException(OperationException::class);
 
-        $rowCount = 1;
         $mockTableMetaData = $this->createMock(ITableMetadata::class);
         $mockTableMetaData
             ->method('getTableName')
@@ -209,7 +183,7 @@ class RowBasedTest extends TestCase
         $mockTable
             ->expects($this->once())
             ->method('getRowCount')
-            ->willReturn($rowCount);
+            ->willReturn(1);
 
         $mockDatabaseDataSet = $this->createMock(DefaultDataSet::class);
         $mockDatabaseDataSet
@@ -221,7 +195,7 @@ class RowBasedTest extends TestCase
         $mockPdoStatement
             ->expects($this->once())
             ->method('execute')
-            ->will($this->throwException(new \Exception()));
+            ->willThrowException(new \Exception());
         $mockPdoConnection = $this->createMock(\PDO::class);
         $mockPdoConnection
             ->expects($this->once())
@@ -257,12 +231,43 @@ class RowBasedTest extends TestCase
         $mockOperation
             ->expects($this->once())
             ->method('buildOperationQuery')
-            ->willReturn('');
+            ->willReturn('SQL QUERY...');
         $mockOperation
-            ->expects($this->exactly($rowCount))
+            ->expects($this->once())
             ->method('buildOperationArguments')
             ->willReturn([]);
 
         $mockOperation->execute($mockConnection, $mockDataSet);
+    }
+
+    protected function getConnection(): Connection
+    {
+        return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
+    }
+
+    protected function getDataSet(): IDataSet
+    {
+        $tables = [
+            new DefaultTable(
+                new DefaultTableMetadata(
+                    'table1',
+                    ['table1_id', 'column1', 'column2', 'column3', 'column4']
+                )
+            ),
+            new DefaultTable(
+                new DefaultTableMetadata(
+                    'table2',
+                    ['table2_id', 'column5', 'column6', 'column7', 'column8']
+                )
+            ),
+            new DefaultTable(
+                new DefaultTableMetadata(
+                    'table3',
+                    ['table3_id', 'column9', 'column10', 'column11', 'column12']
+                )
+            ),
+        ];
+
+        return new DefaultDataSet($tables);
     }
 }

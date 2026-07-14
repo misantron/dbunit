@@ -11,8 +11,6 @@
 
 namespace PHPUnit\DbUnit\Database\Metadata;
 
-use PDO;
-
 /**
  * Provides functionality to retrieve meta data from a MySQL database.
  */
@@ -22,14 +20,11 @@ class MySQL extends AbstractMetadata
 
     /**
      * Returns an array containing the names of all the tables in the database.
-     *
-     * @return array
      */
-    public function getTableNames()
+    public function getTableNames(): array
     {
         $query = 'SHOW TABLES';
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
+        $statement = $this->pdo->query($query);
 
         $tableNames = [];
 
@@ -43,16 +38,11 @@ class MySQL extends AbstractMetadata
     /**
      * Returns an array containing the names of all the columns in the
      * $tableName table,
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
-    public function getTableColumns($tableName)
+    public function getTableColumns(string $tableName): array
     {
         $query = 'SHOW COLUMNS FROM ' . $this->quoteSchemaObject($tableName);
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
+        $statement = $this->pdo->query($query);
 
         $columnNames = [];
 
@@ -66,17 +56,12 @@ class MySQL extends AbstractMetadata
     /**
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
-    public function getTablePrimaryKeys($tableName)
+    public function getTablePrimaryKeys(string $tableName): array
     {
         $query = 'SHOW INDEX FROM ' . $this->quoteSchemaObject($tableName);
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
-        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $statement = $this->pdo->query($query);
+        $statement->setFetchMode(\PDO::FETCH_ASSOC);
 
         $columnNames = [];
 

@@ -29,20 +29,14 @@ class QueryDataSet extends AbstractDataSet
     protected $tables = [];
 
     /**
-     * The database connection this dataset is using.
-     *
-     * @var Connection
-     */
-    protected $databaseConnection;
-
-    /**
      * Creates a new dataset using the given database connection.
-     *
-     * @param Connection $databaseConnection
      */
-    public function __construct(Connection $databaseConnection)
-    {
-        $this->databaseConnection = $databaseConnection;
+    public function __construct(
+        /**
+         * The database connection this dataset is using.
+         */
+        protected Connection $databaseConnection
+    ) {
     }
 
     public function addTable(string $tableName, $query = null): void
@@ -57,14 +51,12 @@ class QueryDataSet extends AbstractDataSet
     /**
      * Returns a table object for the given table.
      *
-     * @param string $tableName
-     *
      * @return Table
      */
     public function getTable(string $tableName): ITable
     {
         if (!isset($this->tables[$tableName])) {
-            throw new InvalidArgumentException("$tableName is not a table in the current database.");
+            throw new InvalidArgumentException($tableName . ' is not a table in the current database.');
         }
 
         return $this->tables[$tableName];
@@ -72,8 +64,6 @@ class QueryDataSet extends AbstractDataSet
 
     /**
      * Returns a list of table names for the database
-     *
-     * @return array
      */
     public function getTableNames(): array
     {

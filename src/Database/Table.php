@@ -21,9 +21,6 @@ class Table extends AbstractTable
 {
     /**
      * Creates a new database table object.
-     *
-     * @param ITableMetadata $tableMetaData
-     * @param Connection     $databaseConnection
      */
     public function __construct(ITableMetadata $tableMetaData, Connection $databaseConnection)
     {

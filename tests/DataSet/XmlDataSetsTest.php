@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -20,7 +22,7 @@ use PHPUnit\DbUnit\DataSet\MysqlXmlDataSet;
 use PHPUnit\DbUnit\DataSet\XmlDataSet;
 use PHPUnit\Framework\TestCase;
 
-class XmlDataSetsTest extends TestCase
+final class XmlDataSetsTest extends TestCase
 {
     protected $expectedDataSet;
 
@@ -90,7 +92,7 @@ class XmlDataSetsTest extends TestCase
         $constraint = new DataSetIsEqual($this->expectedDataSet);
         $xmlFlatDataSet = new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/FlatXmlDataSet.xml');
 
-        self::assertThat($xmlFlatDataSet, $constraint);
+        $this->assertThat($xmlFlatDataSet, $constraint);
     }
 
     public function testXmlDataSet(): void
@@ -98,7 +100,7 @@ class XmlDataSetsTest extends TestCase
         $constraint = new DataSetIsEqual($this->expectedDataSet);
         $xmlDataSet = new XmlDataSet(TEST_FILES_PATH . 'XmlDataSets/XmlDataSet.xml');
 
-        self::assertThat($xmlDataSet, $constraint);
+        $this->assertThat($xmlDataSet, $constraint);
     }
 
     public function testMysqlXmlDataSet(): void
@@ -106,6 +108,6 @@ class XmlDataSetsTest extends TestCase
         $constraint = new DataSetIsEqual($this->expectedDataSet);
         $mysqlXmlDataSet = new MysqlXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/MysqlXmlDataSet.xml');
 
-        self::assertThat($mysqlXmlDataSet, $constraint);
+        $this->assertThat($mysqlXmlDataSet, $constraint);
     }
 }

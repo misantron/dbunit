@@ -20,41 +20,16 @@ use PHPUnit\DbUnit\DataSet\ITableMetadata;
  */
 class TableIterator implements ITableIterator
 {
-    /**
-     * An array of table names.
-     *
-     * @var array
-     */
-    protected $tableNames;
-
-    /**
-     * If this property is true then the tables will be iterated in reverse
-     * order.
-     *
-     * @var bool
-     */
-    protected $reverse;
-
-    /**
-     * The database dataset that this iterator iterates over.
-     *
-     * @var DataSet
-     */
-    protected $dataSet;
-
-    public function __construct(array $tableNames, DataSet $dataSet, bool $reverse = false)
-    {
-        $this->tableNames = $tableNames;
-        $this->dataSet = $dataSet;
-        $this->reverse = $reverse;
-
+    public function __construct(
+        private array $tableNames,
+        private readonly DataSet $dataSet,
+        private readonly bool $reverse = false,
+    ) {
         $this->rewind();
     }
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function getTable(): ITable
     {
@@ -63,18 +38,15 @@ class TableIterator implements ITableIterator
 
     /**
      * Returns the current table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
-        return $this->current()->getTableMetaData();
+        return $this->current()
+            ->getTableMetaData();
     }
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function current(): ITable
     {
@@ -85,12 +57,12 @@ class TableIterator implements ITableIterator
 
     /**
      * Returns the name of the current table.
-     *
-     * @return string
      */
     public function key(): string
     {
-        return $this->current()->getTableMetaData()->getTableName();
+        return $this->current()
+            ->getTableMetaData()
+            ->getTableName();
     }
 
     /**
@@ -119,8 +91,6 @@ class TableIterator implements ITableIterator
 
     /**
      * Returns true if the current index is valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {

@@ -44,9 +44,9 @@ class XmlDataSet extends AbstractXmlDataSet
             foreach ($tableElement->xpath('./column') as $columnElement) {
                 $columnName = (string) $columnElement;
 
-                if (empty($columnName)) {
+                if ($columnName === '' || $columnName === '0') {
                     throw new RuntimeException(
-                        "Missing <column> elements for table $tableName. Add one or more <column> elements to the <table> element."
+                        sprintf('Missing <column> elements for table %s. Add one or more <column> elements to the <table> element.', $tableName)
                     );
                 }
 
@@ -65,7 +65,7 @@ class XmlDataSet extends AbstractXmlDataSet
                 foreach ($rowElement->children() as $columnValue) {
                     if ($index >= $numOfTableInstanceColumns) {
                         throw new RuntimeException(
-                            "Row contains more values than the number of columns defined for table {$tableName}."
+                            sprintf('Row contains more values than the number of columns defined for table %s.', $tableName)
                         );
                     }
 
@@ -81,7 +81,7 @@ class XmlDataSet extends AbstractXmlDataSet
 
                             break;
                         default:
-                            throw new RuntimeException("Unknown element {$columnValue->getName()} in a row element.");
+                            throw new RuntimeException(sprintf('Unknown element %s in a row element.', $columnValue->getName()));
                     }
                 }
 

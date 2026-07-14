@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -21,7 +23,7 @@ use PHPUnit\DbUnit\DataSet\FlatXmlDataSet;
 use PHPUnit\DbUnit\Operation\Truncate;
 use PHPUnit\DbUnit\TestCase;
 
-class OperationsMySQLTest extends TestCase
+final class OperationsMySQLTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -34,16 +36,6 @@ class OperationsMySQLTest extends TestCase
         }
 
         parent::setUp();
-    }
-
-    public function getConnection()
-    {
-        return new DefaultConnection(DatabaseTestUtility::getMySQLDB(), 'mysql');
-    }
-
-    public function getDataSet()
-    {
-        return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsMySQLTestFixture.xml');
     }
 
     public function testTruncate(): void
@@ -112,5 +104,15 @@ class OperationsMySQLTest extends TestCase
         ]);
 
         self::assertDataSetsEqual($expectedDataSet, $this->getConnection()->createDataSet());
+    }
+
+    protected function getConnection(): DefaultConnection
+    {
+        return new DefaultConnection(DatabaseTestUtility::getMySQLDB(), 'mysql');
+    }
+
+    protected function getDataSet(): FlatXmlDataSet
+    {
+        return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsMySQLTestFixture.xml');
     }
 }

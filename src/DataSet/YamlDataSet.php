@@ -18,33 +18,20 @@ namespace PHPUnit\DbUnit\DataSet;
  */
 class YamlDataSet extends AbstractDataSet
 {
-    /**
-     * @var array
-     */
-    protected $tables = [];
-
-    /**
-     * @var IYamlParser
-     */
-    protected $parser;
+    protected array $tables = [];
 
     /**
      * Creates a new YAML dataset
-     *
-     * @param string      $yamlFile
-     * @param IYamlParser $parser
      */
-    public function __construct(string $yamlFile, IYamlParser $parser = null)
-    {
-        $this->parser = $parser ?? new SymfonyYamlParser();
-
+    public function __construct(
+        string $yamlFile,
+        private readonly IYamlParser $parser = new SymfonyYamlParser(),
+    ) {
         $this->addYamlFile($yamlFile);
     }
 
     /**
      * Adds a new yaml file to the dataset.
-     *
-     * @param string $yamlFile
      */
     public function addYamlFile(string $yamlFile): void
     {
@@ -76,10 +63,6 @@ class YamlDataSet extends AbstractDataSet
     /**
      * Creates an iterator over the tables in the data set. If $reverse is
      * true a reverse iterator will be returned.
-     *
-     * @param bool $reverse
-     *
-     * @return ITableIterator
      */
     protected function createIterator(bool $reverse = false): ITableIterator
     {
@@ -94,11 +77,7 @@ class YamlDataSet extends AbstractDataSet
      * into one row set. sfYaml, however, does not provide multiple tables
      * with the same name, it only supplies the last table.
      *
-     * @params all the rows in a table.
-     *
-     * @param array $rows
-     *
-     * @return array
+     * @param all $rows the rows in a table.
      */
     private function getColumns(array $rows): array
     {

@@ -11,9 +11,7 @@
 
 namespace PHPUnit\DbUnit\Database\Metadata;
 
-use PDO;
 use PHPUnit\DbUnit\Exception\RuntimeException;
-use ReflectionClass;
 
 /**
  * Provides a basic constructor for all meta data classes and a factory for
@@ -33,20 +31,6 @@ abstract class AbstractMetadata implements Metadata
     ];
 
     /**
-     * The PDO connection used to retreive database meta data
-     *
-     * @var PDO
-     */
-    protected $pdo;
-
-    /**
-     * The default schema name for the meta data object.
-     *
-     * @var string
-     */
-    protected $schema;
-
-    /**
      * The character used to quote schema objects.
      */
     protected $schemaObjectQuoteChar = '"';
@@ -59,40 +43,32 @@ abstract class AbstractMetadata implements Metadata
     /**
      * Creates a new database meta data object using the given pdo connection
      * and schema name.
-     *
-     * @param PDO    $pdo
-     * @param string $schema
      */
-    final public function __construct(PDO $pdo, $schema = '')
-    {
-        $this->pdo = $pdo;
-        $this->schema = $schema;
+    final public function __construct(
+        protected \PDO $pdo,
+        protected string $schema = '',
+    ) {
     }
 
     /**
      * Creates a meta data object based on the driver of given $pdo object and
      * $schema name.
-     *
-     * @param PDO    $pdo
-     * @param string $schema
-     *
-     * @return AbstractMetadata
      */
-    public static function createMetaData(PDO $pdo, $schema = '')
+    public static function createMetaData(\PDO $pdo, string $schema = ''): self
     {
-        $driverName = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+        $driverName = $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME);
 
         if (isset(self::$metaDataClassMap[$driverName])) {
             $className = self::$metaDataClassMap[$driverName];
 
-            if ($className instanceof ReflectionClass) {
+            if ($className instanceof \ReflectionClass) {
                 return $className->newInstance($pdo, $schema);
             }
 
             return self::registerClassWithDriver($className, $driverName)->newInstance($pdo, $schema);
         }
 
-        throw new RuntimeException("Could not find a meta data driver for {$driverName} pdo driver.");
+        throw new RuntimeException(sprintf('Could not find a meta data driver for %s pdo driver.', $driverName));
     }
 
     /**
@@ -102,45 +78,34 @@ abstract class AbstractMetadata implements Metadata
      * PDO::ATTR_DRIVER_NAME attribute for a pdo object.
      *
      * A reflection of the $className is returned.
-     *
-     * @param string $className
-     * @param string $pdoDriver
-     *
-     * @return ReflectionClass
      */
-    public static function registerClassWithDriver($className, $pdoDriver)
+    public static function registerClassWithDriver(string $className, string $pdoDriver): \ReflectionClass
     {
         if (!class_exists($className)) {
-            throw new RuntimeException("Specified class for {$pdoDriver} driver ({$className}) does not exist.");
+            throw new RuntimeException(sprintf('Specified class for %s driver (%s) does not exist.', $pdoDriver, $className));
         }
 
-        $reflection = new ReflectionClass($className);
+        $reflection = new \ReflectionClass($className);
 
         if ($reflection->isSubclassOf(self::class)) {
             return self::$metaDataClassMap[$pdoDriver] = $reflection;
         }
 
-        throw new RuntimeException("Specified class for {$pdoDriver} driver ({$className}) does not extend PHPUnit_Extensions_Database_DB_MetaData.");
+        throw new RuntimeException(sprintf('Specified class for %s driver (%s) does not extend PHPUnit_Extensions_Database_DB_MetaData.', $pdoDriver, $className));
     }
 
     /**
      * Returns the schema for the connection.
-     *
-     * @return string
      */
-    public function getSchema()
+    public function getSchema(): string
     {
         return $this->schema;
     }
 
     /**
      * Returns a quoted schema object. (table name, column name, etc)
-     *
-     * @param string $object
-     *
-     * @return string
      */
-    public function quoteSchemaObject($object)
+    public function quoteSchemaObject(string $object): string
     {
         $parts = explode('.', $object);
         $quotedParts = [];
@@ -159,11 +124,9 @@ abstract class AbstractMetadata implements Metadata
      *
      * Returns an associative array containing the 'schema' and the 'table'.
      *
-     * @param string $fullTableName
-     *
-     * @return array
+     * @return array{schema: string|null, table: string}
      */
-    public function splitTableName($fullTableName)
+    public function splitTableName(string $fullTableName): array
     {
         $dot = strpos($fullTableName, '.');
 
@@ -182,41 +145,31 @@ abstract class AbstractMetadata implements Metadata
 
     /**
      * Returns the command for the database to truncate a table.
-     *
-     * @return string
      */
-    public function getTruncateCommand()
+    public function getTruncateCommand(): string
     {
         return $this->truncateCommand;
     }
 
     /**
      * Returns true if the rdbms allows cascading
-     *
-     * @return bool
      */
-    public function allowsCascading()
+    public function allowsCascading(): bool
     {
         return false;
     }
 
     /**
      * Disables primary keys if the rdbms does not allow setting them otherwise
-     *
-     * @param string $tableName
      */
-    public function disablePrimaryKeys($tableName): void
+    public function disablePrimaryKeys(string $tableName): void
     {
-        return;
     }
 
     /**
      * Reenables primary keys after they have been disabled
-     *
-     * @param string $tableName
      */
-    public function enablePrimaryKeys($tableName): void
+    public function enablePrimaryKeys(string $tableName): void
     {
-        return;
     }
 }

@@ -27,17 +27,12 @@ class ResultSetTable extends AbstractTable
      * Creates a new result set table.
      *
      * @param string        $tableName
-     * @param \PDOStatement $pdoStatement
      */
     public function __construct($tableName, \PDOStatement $pdoStatement)
     {
         $this->data = $pdoStatement->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (\count($this->data)) {
-            $columns = array_keys($this->data[0]);
-        } else {
-            $columns = [];
-        }
+        $columns = \count($this->data) ? array_keys($this->data[0]) : [];
 
         $this->setTableMetaData(new DefaultTableMetadata($tableName, $columns));
     }

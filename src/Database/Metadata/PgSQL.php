@@ -22,10 +22,8 @@ class PgSQL extends AbstractMetadata
 
     /**
      * Returns an array containing the names of all the tables in the database.
-     *
-     * @return array
      */
-    public function getTableNames()
+    public function getTableNames(): array
     {
         $query = "
             SELECT DISTINCT
@@ -52,12 +50,8 @@ class PgSQL extends AbstractMetadata
     /**
      * Returns an array containing the names of all the columns in the
      * $tableName table,
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
-    public function getTableColumns($tableName)
+    public function getTableColumns(string $tableName): array
     {
         if (!isset($this->columns[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -69,12 +63,8 @@ class PgSQL extends AbstractMetadata
     /**
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
-    public function getTablePrimaryKeys($tableName)
+    public function getTablePrimaryKeys(string $tableName): array
     {
         if (!isset($this->keys[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -85,12 +75,10 @@ class PgSQL extends AbstractMetadata
 
     /**
      * Returns the schema for the connection.
-     *
-     * @return string
      */
-    public function getSchema()
+    public function getSchema(): string
     {
-        if (empty($this->schema)) {
+        if ($this->schema === '' || $this->schema === '0') {
             return 'public';
         }
 
@@ -99,20 +87,16 @@ class PgSQL extends AbstractMetadata
 
     /**
      * Returns true if the rdbms allows cascading
-     *
-     * @return bool
      */
-    public function allowsCascading()
+    public function allowsCascading(): bool
     {
         return true;
     }
 
     /**
      * Loads column info from a database table.
-     *
-     * @param string $tableName
      */
-    protected function loadColumnInfo($tableName): void
+    protected function loadColumnInfo(string $tableName): void
     {
         $this->columns[$tableName] = [];
         $this->keys[$tableName] = [];

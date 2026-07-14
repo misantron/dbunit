@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -24,60 +26,46 @@ interface Tester
 {
     /**
      * Closes the specified connection.
-     *
-     * @param Connection $connection
      */
-    public function closeConnection(Connection $connection);
+    public function closeConnection(Connection $connection): void;
 
     /**
      * Returns the test database connection.
-     *
-     * @return Connection
      */
-    public function getConnection();
+    public function getConnection(): Connection;
 
     /**
      * Returns the test dataset.
-     *
-     * @return IDataSet
      */
-    public function getDataSet();
+    public function getDataSet(): IDataSet;
 
     /**
      * TestCases must call this method inside setUp().
      */
-    public function onSetUp();
+    public function onSetUp(): void;
 
     /**
      * TestCases must call this method inside tearDown().
      */
-    public function onTearDown();
+    public function onTearDown(): void;
 
     /**
      * Sets the test dataset to use.
-     *
-     * @param IDataSet $dataSet
      */
-    public function setDataSet(IDataSet $dataSet);
+    public function setDataSet(IDataSet $dataSet): void;
 
     /**
      * Sets the schema value.
-     *
-     * @param string $schema
      */
-    public function setSchema($schema);
+    public function setSchema(string $schema): void;
 
     /**
      * Sets the DatabaseOperation to call when starting the test.
-     *
-     * @param Operation $setUpOperation
      */
-    public function setSetUpOperation(Operation $setUpOperation);
+    public function setSetUpOperation(Operation $setUpOperation): void;
 
     /**
      * Sets the DatabaseOperation to call when stopping the test.
-     *
-     * @param Operation $tearDownOperation
      */
-    public function setTearDownOperation(Operation $tearDownOperation);
+    public function setTearDownOperation(Operation $tearDownOperation): void;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -27,12 +29,8 @@ class FlatXml implements Specification
 {
     /**
      * Creates Flat XML Data Set from a data set spec.
-     *
-     * @param string $dataSetSpec
-     *
-     * @return FlatXmlDataSet
      */
-    public function getDataSet($dataSetSpec)
+    public function getDataSet(string $dataSetSpec): FlatXmlDataSet
     {
         return new FlatXmlDataSet($dataSetSpec);
     }

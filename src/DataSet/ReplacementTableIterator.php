@@ -16,8 +16,6 @@ namespace PHPUnit\DbUnit\DataSet;
  */
 class ReplacementTableIterator implements \OuterIterator, ITableIterator
 {
-    protected $innerIterator;
-
     /**
      * @var array<string, string>
      */
@@ -31,16 +29,14 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
     /**
      * Creates a new replacement table iterator object.
      *
-     * @param ITableIterator $innerIterator
      * @param array<string, string> $fullReplacements
      * @param array<string, string> $subStrReplacements
      */
     public function __construct(
-        ITableIterator $innerIterator,
+        protected ITableIterator $innerIterator,
         array $fullReplacements = [],
         array $subStrReplacements = []
     ) {
-        $this->innerIterator = $innerIterator;
         $this->fullReplacements = $fullReplacements;
         $this->subStrReplacements = $subStrReplacements;
     }
@@ -49,9 +45,6 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
      * Adds a new full replacement
      *
      * Full replacements will only replace values if the FULL value is a match
-     *
-     * @param string $value
-     * @param string $replacement
      */
     public function addFullReplacement(string $value, string $replacement): void
     {
@@ -62,9 +55,6 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
      * Adds a new substr replacement
      *
      * Substr replacements will replace all occurrences of the substr in every column
-     *
-     * @param string $value
-     * @param string $replacement
      */
     public function addSubStrReplacement(string $value, string $replacement): void
     {
@@ -73,8 +63,6 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function getTable(): ITable
     {
@@ -83,18 +71,15 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
 
     /**
      * Returns the current table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
-        return $this->current()->getTableMetaData();
+        return $this->current()
+            ->getTableMetaData();
     }
 
     /**
      * Returns the current table.
-     *
-     * @return ITable
      */
     public function current(): ITable
     {
@@ -107,12 +92,12 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
 
     /**
      * Returns the name of the current table.
-     *
-     * @return string
      */
     public function key(): string
     {
-        return $this->current()->getTableMetaData()->getTableName();
+        return $this->current()
+            ->getTableMetaData()
+            ->getTableName();
     }
 
     /**
@@ -133,8 +118,6 @@ class ReplacementTableIterator implements \OuterIterator, ITableIterator
 
     /**
      * Returns true if the current index is valid
-     *
-     * @return bool
      */
     public function valid(): bool
     {

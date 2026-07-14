@@ -23,28 +23,19 @@ use PHPUnit\DbUnit\DataSet\QueryTable;
 class DefaultConnection implements Connection
 {
     /**
-     * @var \PDO
-     */
-    protected $connection;
-
-    /**
      * The metadata object used to retrieve table meta data from the database.
-     *
-     * @var Metadata
      */
-    protected $metaData;
+    protected AbstractMetadata $metaData;
 
     /**
      * Creates a new database connection
-     *
-     * @param \PDO    $connection
-     * @param string  $schema
      */
-    public function __construct(\PDO $connection, string $schema = '')
-    {
-        $this->connection = $connection;
-        $this->metaData = AbstractMetadata::createMetaData($connection, $schema);
-        $connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    public function __construct(
+        protected \PDO $connection,
+        string $schema = ''
+    ) {
+        $this->metaData = AbstractMetadata::createMetaData($this->connection, $schema);
+        $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**
@@ -58,8 +49,6 @@ class DefaultConnection implements Connection
     /**
      * Returns a database metadata object that can be used to retrieve table
      * meta data from the database.
-     *
-     * @return Metadata
      */
     public function getMetaData(): Metadata
     {
@@ -68,12 +57,11 @@ class DefaultConnection implements Connection
 
     /**
      * Returns the schema for the connection.
-     *
-     * @return string
      */
     public function getSchema(): string
     {
-        return $this->getMetaData()->getSchema();
+        return $this->getMetaData()
+            ->getSchema();
     }
 
     /**
@@ -81,15 +69,11 @@ class DefaultConnection implements Connection
      * names are specified then it will created a dataset over the entire
      * database.
      *
-     * @param array|null $tableNames
-     *
-     * @return IDataSet
-     *
      * @todo Implement the filtered data set.
      */
     public function createDataSet(?array $tableNames = null): IDataSet
     {
-        if (empty($tableNames)) {
+        if ($tableNames === null || $tableNames === []) {
             return new DataSet($this);
         }
 
@@ -118,8 +102,6 @@ class DefaultConnection implements Connection
 
     /**
      * Returns a PDO Connection
-     *
-     * @return \PDO
      */
     public function getConnection(): \PDO
     {
@@ -132,69 +114,61 @@ class DefaultConnection implements Connection
      *
      * @param string $tableName
      * @param string $whereClause
-     *
-     * @return int
      */
     public function getRowCount($tableName, $whereClause = null): int
     {
-        $query = "SELECT COUNT(*) FROM {$this->quoteSchemaObject($tableName)}";
+        $query = 'SELECT COUNT(*) FROM ' . $this->quoteSchemaObject($tableName);
 
         if (isset($whereClause)) {
-            $query .= " WHERE {$whereClause}";
+            $query .= ' WHERE ' . $whereClause;
         }
 
-        return (int) $this->connection->query($query)->fetchColumn();
+        return (int) $this->connection->query($query)
+            ->fetchColumn();
     }
 
     /**
      * Returns a quoted schema object. (table name, column name, etc)
-     *
-     * @param string $object
-     *
-     * @return string
      */
     public function quoteSchemaObject(string $object): string
     {
-        return $this->getMetaData()->quoteSchemaObject($object);
+        return $this->getMetaData()
+            ->quoteSchemaObject($object);
     }
 
     /**
      * Returns the command used to truncate a table.
-     *
-     * @return string
      */
     public function getTruncateCommand(): string
     {
-        return $this->getMetaData()->getTruncateCommand();
+        return $this->getMetaData()
+            ->getTruncateCommand();
     }
 
     /**
      * Returns true if the connection allows cascading
-     *
-     * @return bool
      */
     public function allowsCascading(): bool
     {
-        return $this->getMetaData()->allowsCascading();
+        return $this->getMetaData()
+            ->allowsCascading();
     }
 
     /**
      * Disables primary keys if connection does not allow setting them otherwise
-     *
-     * @param string $tableName
      */
     public function disablePrimaryKeys(string $tableName): void
     {
-        $this->getMetaData()->disablePrimaryKeys($tableName);
+        $this->getMetaData()
+            ->disablePrimaryKeys($tableName);
     }
 
     /**
      * Reenables primary keys after they have been disabled
-     *
-     * @param string $tableName
      */
     public function enablePrimaryKeys(string $tableName): void
     {
-        $this->getMetaData()->enablePrimaryKeys($tableName);
+        $this->getMetaData()
+            ->enablePrimaryKeys($tableName);
     }
 }

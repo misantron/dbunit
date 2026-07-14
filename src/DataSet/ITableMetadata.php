@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -18,31 +20,21 @@ interface ITableMetadata
 {
     /**
      * Returns the names of the columns in the table.
-     *
-     * @return array
      */
     public function getColumns(): array;
 
     /**
      * Returns the names of the primary key columns in the table.
-     *
-     * @return array
      */
     public function getPrimaryKeys(): array;
 
     /**
      * Returns the name of the table.
-     *
-     * @return string
      */
     public function getTableName(): string;
 
     /**
      * Asserts that the given tableMetaData matches this tableMetaData.
-     *
-     * @param ITableMetadata $other
-     *
-     * @return bool
      */
     public function matches(self $other): bool;
 }

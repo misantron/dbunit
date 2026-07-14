@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -25,7 +27,7 @@ use PHPUnit\DbUnit\Operation\Truncate;
 use PHPUnit\DbUnit\Operation\Update;
 use PHPUnit\DbUnit\TestCase;
 
-class OperationsTest extends TestCase
+final class OperationsTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -34,16 +36,6 @@ class OperationsTest extends TestCase
         }
 
         parent::setUp();
-    }
-
-    public function getConnection()
-    {
-        return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
-    }
-
-    public function getDataSet()
-    {
-        return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsTestFixture.xml');
     }
 
     public function testDelete(): void
@@ -57,7 +49,8 @@ class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/DeleteOperationResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -138,7 +131,8 @@ class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/InsertOperationResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -153,7 +147,8 @@ class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/UpdateOperationResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -168,7 +163,8 @@ class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/ReplaceOperationResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -183,7 +179,8 @@ class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/EmptyTableInsertResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
     }
 
@@ -198,7 +195,18 @@ class OperationsTest extends TestCase
 
         self::assertDataSetsEqual(
             new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/AllEmptyTableInsertResult.xml'),
-            $this->getConnection()->createDataSet()
+            $this->getConnection()
+                ->createDataSet()
         );
+    }
+
+    protected function getConnection(): DefaultConnection
+    {
+        return new DefaultConnection(DatabaseTestUtility::getSQLiteMemoryDB(), 'sqlite');
+    }
+
+    protected function getDataSet(): FlatXmlDataSet
+    {
+        return new FlatXmlDataSet(TEST_FILES_PATH . 'XmlDataSets/OperationsTestFixture.xml');
     }
 }

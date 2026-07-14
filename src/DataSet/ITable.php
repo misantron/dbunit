@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -18,41 +20,26 @@ interface ITable extends \Stringable
 {
     /**
      * Returns the table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata;
 
     /**
      * Returns the number of rows in this table.
-     *
-     * @return int
      */
     public function getRowCount(): int;
 
     /**
      * Returns the value for the given column on the given row.
-     *
-     * @param int $row
-     * @param string $column
      */
-    public function getValue(int $row, string $column);
+    public function getValue(int $row, string $column): mixed;
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     * @param int $row
-     *
-     * @return array
      */
     public function getRow(int $row): array;
 
     /**
      * Asserts that the given table matches this table.
-     *
-     * @param ITable $other
-     *
-     * @return bool
      */
     public function matches(self $other): bool;
 }

@@ -27,10 +27,7 @@ use PHPUnit\DbUnit\Operation\Operation;
 
 trait TestCaseTrait
 {
-    /**
-     * @var Tester
-     */
-    protected $databaseTester;
+    protected ?Tester $databaseTester = null;
 
     /**
      * Performs operation returned by getSetUpOperation().
@@ -41,9 +38,12 @@ trait TestCaseTrait
 
         $this->databaseTester = null;
 
-        $this->getDatabaseTester()->setSetUpOperation($this->getSetUpOperation());
-        $this->getDatabaseTester()->setDataSet($this->getDataSet());
-        $this->getDatabaseTester()->onSetUp();
+        $this->getDatabaseTester()
+            ->setSetUpOperation($this->getSetUpOperation());
+        $this->getDatabaseTester()
+            ->setDataSet($this->getDataSet());
+        $this->getDatabaseTester()
+            ->onSetUp();
     }
 
     /**
@@ -53,9 +53,12 @@ trait TestCaseTrait
     {
         parent::tearDown();
 
-        $this->getDatabaseTester()->setTearDownOperation($this->getTearDownOperation());
-        $this->getDatabaseTester()->setDataSet($this->getDataSet());
-        $this->getDatabaseTester()->onTearDown();
+        $this->getDatabaseTester()
+            ->setTearDownOperation($this->getTearDownOperation());
+        $this->getDatabaseTester()
+            ->setDataSet($this->getDataSet());
+        $this->getDatabaseTester()
+            ->onTearDown();
 
         /*
          * Destroy the tester after the test is run to keep DB connections
@@ -66,12 +69,8 @@ trait TestCaseTrait
 
     /**
      * Asserts that two given tables are equal.
-     *
-     * @param ITable $expected
-     * @param ITable $actual
-     * @param string $message
      */
-    public static function assertTablesEqual(ITable $expected, ITable $actual, $message = ''): void
+    public static function assertTablesEqual(ITable $expected, ITable $actual, string $message = ''): void
     {
         $constraint = new TableIsEqual($expected);
 
@@ -80,12 +79,8 @@ trait TestCaseTrait
 
     /**
      * Asserts that two given datasets are equal.
-     *
-     * @param IDataSet $expected
-     * @param IDataSet $actual
-     * @param string $message
      */
-    public static function assertDataSetsEqual(IDataSet $expected, IDataSet $actual, $message = ''): void
+    public static function assertDataSetsEqual(IDataSet $expected, IDataSet $actual, string $message = ''): void
     {
         $constraint = new DataSetIsEqual($expected);
 
@@ -99,10 +94,11 @@ trait TestCaseTrait
      * @param int    $expected  Expected amount of rows in the table
      * @param string $message   Optional message
      */
-    public function assertTableRowCount($tableName, $expected, $message = ''): void
+    public function assertTableRowCount(string $tableName, int $expected, string $message = ''): void
     {
         $constraint = new TableRowCount($tableName, $expected);
-        $actual = $this->getConnection()->getRowCount($tableName);
+        $actual = $this->getConnection()
+            ->getRowCount($tableName);
 
         self::assertThat($actual, $constraint, $message);
     }
@@ -114,36 +110,31 @@ trait TestCaseTrait
      * @param ITable $table       Table to look into
      * @param string $message     Optional message
      */
-    public function assertTableContains(array $expectedRow, ITable $table, $message = ''): void
+    public function assertTableContains(array $expectedRow, ITable $table, string $message = ''): void
     {
         self::assertThat($table->assertContainsRow($expectedRow), self::isTrue(), $message);
     }
 
     /**
      * Closes the specified connection.
-     *
-     * @param Connection $connection
      */
     protected function closeConnection(Connection $connection): void
     {
-        $this->getDatabaseTester()->closeConnection($connection);
+        $this->getDatabaseTester()
+            ->closeConnection($connection);
     }
 
     /**
      * Returns the test database connection.
-     *
-     * @return Connection
      */
-    abstract protected function getConnection();
+    abstract protected function getConnection(): Connection;
 
     /**
      * Gets the IDatabaseTester for this testCase. If the IDatabaseTester is
      * not set yet, this method calls newDatabaseTester() to obtain a new
      * instance.
-     *
-     * @return Tester
      */
-    protected function getDatabaseTester()
+    protected function getDatabaseTester(): Tester
     {
         if (empty($this->databaseTester)) {
             $this->databaseTester = $this->newDatabaseTester();
@@ -154,27 +145,21 @@ trait TestCaseTrait
 
     /**
      * Returns the test dataset.
-     *
-     * @return IDataSet
      */
-    abstract protected function getDataSet();
+    abstract protected function getDataSet(): IDataSet;
 
     /**
      * Returns the database operation executed in test setup.
-     *
-     * @return Operation
      */
-    protected function getSetUpOperation()
+    protected function getSetUpOperation(): Operation
     {
         return Factory::CLEAN_INSERT();
     }
 
     /**
      * Returns the database operation executed in test cleanup.
-     *
-     * @return Operation
      */
-    protected function getTearDownOperation()
+    protected function getTearDownOperation(): Operation
     {
         return Factory::NONE();
     }
@@ -184,7 +169,7 @@ trait TestCaseTrait
      *
      * @return Tester
      */
-    protected function newDatabaseTester()
+    protected function newDatabaseTester(): DefaultTester
     {
         return new DefaultTester($this->getConnection());
     }
@@ -192,13 +177,8 @@ trait TestCaseTrait
     /**
      * Creates a new DefaultDatabaseConnection using the given PDO connection
      * and database schema name.
-     *
-     * @param \PDO    $connection
-     * @param string $schema
-     *
-     * @return DefaultConnection
      */
-    protected function createDefaultDBConnection(\PDO $connection, $schema = ''): DefaultConnection
+    protected function createDefaultDBConnection(\PDO $connection, string $schema = ''): DefaultConnection
     {
         return new DefaultConnection($connection, $schema);
     }
@@ -216,48 +196,32 @@ trait TestCaseTrait
      *         array("id" => 2, "name" => "...", "address" => "...")
      *     )
      * )
-     *
-     * @param array $data
-     *
-     * @return ArrayDataSet
      */
-    protected function createArrayDataSet(array $data)
+    protected function createArrayDataSet(array $data): ArrayDataSet
     {
         return new ArrayDataSet($data);
     }
 
     /**
      * Creates a new FlatXmlDataSet with the given $xmlFile. (absolute path.)
-     *
-     * @param string $xmlFile
-     *
-     * @return FlatXmlDataSet
      */
-    protected function createFlatXMLDataSet($xmlFile)
+    protected function createFlatXMLDataSet(string $xmlFile): FlatXmlDataSet
     {
         return new FlatXmlDataSet($xmlFile);
     }
 
     /**
      * Creates a new XMLDataSet with the given $xmlFile. (absolute path.)
-     *
-     * @param string $xmlFile
-     *
-     * @return XmlDataSet
      */
-    protected function createXMLDataSet($xmlFile)
+    protected function createXMLDataSet(string $xmlFile): XmlDataSet
     {
         return new XmlDataSet($xmlFile);
     }
 
     /**
      * Create a a new MysqlXmlDataSet with the given $xmlFile. (absolute path.)
-     *
-     * @param string $xmlFile
-     *
-     * @return MysqlXmlDataSet
      */
-    protected function createMySQLXMLDataSet($xmlFile)
+    protected function createMySQLXMLDataSet(string $xmlFile): MysqlXmlDataSet
     {
         return new MysqlXmlDataSet($xmlFile);
     }
@@ -265,10 +229,8 @@ trait TestCaseTrait
     /**
      * Returns an operation factory instance that can be used to instantiate
      * new operations.
-     *
-     * @return Factory
      */
-    protected function getOperations()
+    protected function getOperations(): Factory
     {
         return new Factory();
     }

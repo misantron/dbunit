@@ -19,37 +19,25 @@ namespace PHPUnit\DbUnit\DataSet;
 class ReplacementTable implements ITable
 {
     /**
-     * @var ITable
-     */
-    protected $table;
-
-    /**
      * @var array
      */
     protected $fullReplacements;
 
     /**
-     * @var array
-     */
-    protected $subStrReplacements;
-
-    /**
      * Creates a new replacement table
-     *
-     * @param ITable $table
-     * @param array $fullReplacements
-     * @param array $subStrReplacements
      */
-    public function __construct(ITable $table, array $fullReplacements = [], array $subStrReplacements = [])
-    {
-        $this->table = $table;
+    public function __construct(
+        protected ITable $table,
+        array $fullReplacements = [],
+        protected array $subStrReplacements = []
+    ) {
         $this->fullReplacements = $fullReplacements;
-        $this->subStrReplacements = $subStrReplacements;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        $columns = $this->getTableMetaData()->getColumns();
+        $columns = $this->getTableMetaData()
+            ->getColumns();
 
         $lineSeparator = str_repeat('+----------------------', \count($columns)) . "+\n";
         $lineLength = \strlen($lineSeparator) - 1;
@@ -80,9 +68,6 @@ class ReplacementTable implements ITable
      * Adds a new full replacement
      *
      * Full replacements will only replace values if the FULL value is a match
-     *
-     * @param string $value
-     * @param string|null $replacement
      */
     public function addFullReplacement(string $value, ?string $replacement): void
     {
@@ -104,8 +89,6 @@ class ReplacementTable implements ITable
 
     /**
      * Returns the table's meta data.
-     *
-     * @return ITableMetadata
      */
     public function getTableMetaData(): ITableMetadata
     {
@@ -114,8 +97,6 @@ class ReplacementTable implements ITable
 
     /**
      * Returns the number of rows in this table.
-     *
-     * @return int
      */
     public function getRowCount(): int
     {
@@ -124,37 +105,24 @@ class ReplacementTable implements ITable
 
     /**
      * Returns the value for the given column on the given row.
-     *
-     * @param int $row
-     * @param string $column
-     *
-     * @return mixed
      */
-    public function getValue(int $row, string $column)
+    public function getValue(int $row, string $column): mixed
     {
         return $this->getReplacedValue($this->table->getValue($row, $column));
     }
 
     /**
      * Returns the an associative array keyed by columns for the given row.
-     *
-     * @param int $row
-     *
-     * @return array
      */
     public function getRow(int $row): array
     {
         $row = $this->table->getRow($row);
 
-        return array_map([$this, 'getReplacedValue'], $row);
+        return array_map($this->getReplacedValue(...), $row);
     }
 
     /**
      * Asserts that the given table matches this table.
-     *
-     * @param ITable $other
-     *
-     * @return bool
      */
     public function matches(ITable $other): bool
     {

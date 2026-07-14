@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -20,28 +22,18 @@ use PHPUnit\DbUnit\Database\Connection;
 class DefaultTester extends AbstractTester
 {
     /**
-     * @var Connection
-     */
-    protected $connection;
-
-    /**
      * Creates a new default database tester using the given connection.
-     *
-     * @param Connection $connection
      */
-    public function __construct(Connection $connection)
-    {
+    public function __construct(
+        protected Connection $connection
+    ) {
         parent::__construct();
-
-        $this->connection = $connection;
     }
 
     /**
      * Returns the test database connection.
-     *
-     * @return Connection
      */
-    public function getConnection()
+    public function getConnection(): Connection
     {
         return $this->connection;
     }

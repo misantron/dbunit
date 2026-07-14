@@ -30,22 +30,14 @@ class Oci extends AbstractMetadata
      */
     protected $truncateCommand = 'TRUNCATE TABLE';
 
-    /**
-     * @var array
-     */
-    protected $columns = [];
+    protected array $columns = [];
 
-    /**
-     * @var array
-     */
-    protected $keys = [];
+    protected array $keys = [];
 
     /**
      * Returns an array containing the names of all the tables in the database.
-     *
-     * @return array
      */
-    public function getTableNames()
+    public function getTableNames(): array
     {
         $tableNames = [];
 
@@ -66,12 +58,8 @@ class Oci extends AbstractMetadata
     /**
      * Returns an array containing the names of all the columns in the
      * $tableName table,
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
-    public function getTableColumns($tableName)
+    public function getTableColumns(string $tableName): array
     {
         if (!isset($this->columns[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -83,12 +71,8 @@ class Oci extends AbstractMetadata
     /**
      * Returns an array containing the names of all the primary key columns in
      * the $tableName table.
-     *
-     * @param string $tableName
-     *
-     * @return array
      */
-    public function getTablePrimaryKeys($tableName)
+    public function getTablePrimaryKeys(string $tableName): array
     {
         if (!isset($this->keys[$tableName])) {
             $this->loadColumnInfo($tableName);
@@ -99,10 +83,8 @@ class Oci extends AbstractMetadata
 
     /**
      * Loads column info from a oracle database.
-     *
-     * @param string $tableName
      */
-    protected function loadColumnInfo($tableName): void
+    protected function loadColumnInfo(string $tableName): void
     {
         $ownerQuery = '';
         $conOwnerQuery = '';
@@ -112,14 +94,14 @@ class Oci extends AbstractMetadata
         $this->keys[$tableName] = [];
 
         if (!empty($tableParts['schema'])) {
-            $ownerQuery = " AND OWNER = '{$tableParts['schema']}'";
-            $conOwnerQuery = " AND a.owner = '{$tableParts['schema']}'";
+            $ownerQuery = sprintf(" AND OWNER = '%s'", $tableParts['schema']);
+            $conOwnerQuery = sprintf(" AND a.owner = '%s'", $tableParts['schema']);
         }
 
         $query = "SELECT DISTINCT COLUMN_NAME
                     FROM USER_TAB_COLUMNS
                    WHERE TABLE_NAME='" . $tableParts['table'] . "'
-                    $ownerQuery
+                    {$ownerQuery}
                    ORDER BY COLUMN_NAME";
 
         $result = $this->pdo->query($query);
@@ -132,7 +114,7 @@ class Oci extends AbstractMetadata
                        FROM user_constraints a, user_cons_columns b
                       WHERE a.constraint_type='P'
                         AND a.constraint_name=b.constraint_name
-                        $conOwnerQuery
+                        {$conOwnerQuery}
                         AND a.table_name = '" . $tableParts['table'] . "' ";
 
         $result = $this->pdo->query($keyQuery);

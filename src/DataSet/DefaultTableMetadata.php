@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -20,10 +22,6 @@ class DefaultTableMetadata extends AbstractTableMetadata
 {
     /**
      * Creates a new default table meta data object.
-     *
-     * @param string $tableName
-     * @param array $columns
-     * @param array $primaryKeys
      */
     public function __construct(string $tableName, array $columns, array $primaryKeys = [])
     {
@@ -35,6 +33,7 @@ class DefaultTableMetadata extends AbstractTableMetadata
             if (!\in_array($columnName, $this->columns, true)) {
                 throw new InvalidArgumentException('Primary key column passed that is not in the column list.');
             }
+
             $this->primaryKeys[] = $columnName;
         }
     }

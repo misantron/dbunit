@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -15,23 +17,20 @@ use PHPUnit\DbUnit\Constraint\TableRowCount;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
-class TableRowCountTest extends TestCase
+final class TableRowCountTest extends TestCase
 {
     public function testConstraint(): void
     {
         $constraint = new TableRowCount('name', 42);
 
-        self::assertTrue($constraint->evaluate(42, '', true));
-        self::assertFalse($constraint->evaluate(24, '', true));
-        self::assertSame('is equal to expected row count 42', $constraint->toString());
+        $this->assertTrue($constraint->evaluate(42, '', true));
+        $this->assertFalse($constraint->evaluate(24, '', true));
+        $this->assertSame('is equal to expected row count 42', $constraint->toString());
 
         try {
-            self::assertThat(24, $constraint);
-        } catch (ExpectationFailedException $e) {
-            self::assertSame(
-                'Failed asserting that 24 is equal to expected row count 42.',
-                $e->getMessage()
-            );
+            $this->assertThat(24, $constraint);
+        } catch (ExpectationFailedException $expectationFailedException) {
+            $this->assertSame('Failed asserting that 24 is equal to expected row count 42.', $expectationFailedException->getMessage());
         }
     }
 }

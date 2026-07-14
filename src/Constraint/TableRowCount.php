@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of DbUnit.
  *
@@ -18,30 +20,14 @@ use PHPUnit\Framework\Constraint\Constraint;
  */
 class TableRowCount extends Constraint
 {
-    /**
-     * @var int
-     */
-    protected $value;
-
-    /**
-     * @var string
-     */
-    protected $tableName;
-
-    /**
-     * @param string $tableName
-     * @param int $value
-     */
-    public function __construct(string $tableName, int $value)
-    {
-        $this->tableName = $tableName;
-        $this->value = $value;
+    public function __construct(
+        protected string $tableName,
+        protected int $value,
+    ) {
     }
 
     /**
      * Returns a string representation of the constraint.
-     *
-     * @return string
      */
     public function toString(): string
     {
@@ -55,10 +41,8 @@ class TableRowCount extends Constraint
      * This method can be overridden to implement the evaluation algorithm.
      *
      * @param mixed $other value or object to evaluate
-     *
-     * @return bool
      */
-    protected function matches($other): bool
+    protected function matches(mixed $other): bool
     {
         return $other === $this->value;
     }
